@@ -1,5 +1,8 @@
 FROM node:18-alpine as build
 
+ARG API_BASE_URL
+ENV NEXT_PUBLIC_API_BASE_URL=$API_BASE_URL
+
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
