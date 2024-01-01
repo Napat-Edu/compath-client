@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
 
   const shootAPI = async () => {
-    const result = await fetch(`${process.env.API_BASE_URL}`);
+    const result = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}`);
     const message = await result.json();
     console.log(message.msg);
   };
