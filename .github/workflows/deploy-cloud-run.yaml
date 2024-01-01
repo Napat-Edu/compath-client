@@ -2,6 +2,9 @@ name: Deploy to Cloud Run (Test)
 
 on: [workflow_dispatch]
 
+env:
+  PROJECT_ID: "${{ secrets.GCP_PROJECT_ID }}"
+
 jobs:
   deploy:
     permissions:
@@ -24,10 +27,10 @@ jobs:
         run: gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-west2-docker.pkg.dev
 
       - name: Build Docker Image
-        run: docker build -t us-west2-docker.pkg.dev/cloud-run-source-deploy/compath-client --build-arg API_BASE_URL=${{secrets.API_BASE_URL}} .
+        run: docker build -t us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy --build-arg API_BASE_URL=${{secrets.API_BASE_URL}} .
 
       - name: Push Image to Artifact Registry
-        run: docker push us-west2-docker.pkg.dev/cloud-run-source-deploy/compath-client
+        run: docker push us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy
 
       - name: Deploy to Cloud Run
         id: deploy
@@ -35,7 +38,7 @@ jobs:
         with:
           service: compath
           region: us-west2
-          image: us-west2-docker.pkg.dev/cloud-run-source-deploy/compath-client
+          image: us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
