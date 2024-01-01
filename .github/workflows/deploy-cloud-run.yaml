@@ -24,7 +24,7 @@ jobs:
         run: gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-west2-docker.pkg.dev
 
       - name: Build Docker Image
-        run: docker build -t us-west2-docker.pkg.dev/compath-client/deploy --build-arg API_BASE_URL=${{secrets.API_BASE_URL}} ./frontend
+        run: docker build -t us-west2-docker.pkg.dev/compath-client/deploy --build-arg API_BASE_URL=${{secrets.API_BASE_URL}} .
 
       - name: Push Image to Artifact Registry
         run: docker push us-west2-docker.pkg.dev/compath-client/deploy
@@ -35,7 +35,7 @@ jobs:
         with:
           service: compath
           region: us-west2
-          image: us-west2-docker.pkg.dev/compath-client/front/deploy
+          image: us-west2-docker.pkg.dev/compath-client/deploy
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
