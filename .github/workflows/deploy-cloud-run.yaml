@@ -1,0 +1,41 @@
+name: Deploy to Cloud Run (Test)
+
+on: [workflow_dispatch]
+
+jobs:
+  deploy:
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Google Auth
+        id: auth
+        uses: "google-github-actions/auth@v1"
+        with:
+          workload_identity_provider: "${{ secrets.WIF_PROVIDER }}" # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
+          service_account: "${{ secrets.WIF_SERVICE_ACCOUNT }}" # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+
+      - name: Login Docker
+        run: gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-west2-docker.pkg.dev
+
+      - name: Build Docker Image
+        run: docker build -t us-west2-docker.pkg.dev/compath-client/deploy --build-arg API_BASE_URL=${{secrets.API_BASE_URL}} ./frontend
+
+      - name: Push Image to Artifact Registry
+        run: docker push us-west2-docker.pkg.dev/compath-client/deploy
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v0
+        with:
+          service: compath
+          region: us-west2
+          image: us-west2-docker.pkg.dev/compath-client/front/deploy
+
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}
