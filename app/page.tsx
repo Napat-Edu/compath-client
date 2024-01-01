@@ -6,7 +6,7 @@ export default function Home() {
   const shootAPI = async () => {
     const result = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}`);
     const message = await result.json();
-    console.log(message.msg);
+    console.log(message);
   };
 
   return (
