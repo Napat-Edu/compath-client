@@ -1,6 +1,9 @@
-name: Deploy to Cloud Run (Test)
+name: Deploy to Cloud Run [PRODUCTION]
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+    branches:
+      - prod
 
 env:
   PROJECT_ID: "${{ secrets.GCP_PROJECT_ID }}"
@@ -20,25 +23,25 @@ jobs:
         id: auth
         uses: "google-github-actions/auth@v1"
         with:
-          workload_identity_provider: "${{ secrets.WIF_PROVIDER }}" # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
-          service_account: "${{ secrets.WIF_SERVICE_ACCOUNT }}" # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+          workload_identity_provider: "${{ secrets.WIF_PROVIDER }}"
+          service_account: "${{ secrets.WIF_SERVICE_ACCOUNT }}"
 
       - name: Login Docker
         run: gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-west2-docker.pkg.dev
 
       - name: Build Docker Image
-        run: docker build -t us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-test --build-arg API_BASE_URL=${{secrets.API_BASE_URL}} .
+        run: docker build -t us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-prod --build-arg API_BASE_URL=${{secrets.API_BASE_URL}} .
 
       - name: Push Image to Artifact Registry
-        run: docker push us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-test
+        run: docker push us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-prod
 
       - name: Deploy to Cloud Run
         id: deploy
-        uses: google-github-actions/deploy-cloudrun@v0
+        uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: compath
           region: us-west2
-          image: us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-test
+          image: us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-prod
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
