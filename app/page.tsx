@@ -17,7 +17,7 @@ export default function Home() {
         <p className="text-[#71717A]">แนะนำอาชีพเหมาะสมกับคุณจากข้อมูลในเรซูเม</p>
       </section>
 
-      <section className="mt-4 border-2 rounded-lg border-dashed min-h-96 flex flex-col justify-center">
+      <section className="border-2 border-dashed border-primary rounded-2xl min-h-96 flex flex-col justify-center mt-4">
         <img
           src="resume.svg"
           alt="resume icon"
