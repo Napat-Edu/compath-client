@@ -25,10 +25,10 @@ export default function Home() {
           width="32px"
           className="ml-auto mr-auto" />
         <div className="my-4">
-          <p className="text-center font-semibold text-xl">ยังไม่มีข้อมูลเรซูเม</p>
-          <p className="text-center text-[#71717A]">เรายังไม่มีข้อมูลเรซูเมของคุณ กดปุ่มด้านล่างเพื่อกรอกข้อมูล</p>
+          <p className="text-center font-semibold text-xl">เริ่มทำนายอาชีพของคุณ</p>
+          <p className="text-center text-[#71717A]">ให้ข้อมูลกับเราเพื่อทำนายอาชีพที่เหมาะสมกับคุณ</p>
         </div>
-        <Button className="ml-auto mr-auto" onClick={shootAPI}>ไปกรอกข้อมูล</Button>
+        <Button className="ml-auto mr-auto" onClick={shootAPI}>ไปทำนายอาชีพ</Button>
       </section>
 
     </section>
