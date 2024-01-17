@@ -79,7 +79,7 @@ export function Sidebar() {
                         </div>
                     </section>
 
-                    <section className="px-6 py-4 flex flex-col gap-4">
+                    <section className="px-6 py-4 flex flex-col gap-2">
                         <Button variant="outline" className="border-primary text-primary hover:text-primary">Login</Button>
                         <Button>Sign Up</Button>
                     </section>
