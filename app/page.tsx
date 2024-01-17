@@ -13,7 +13,7 @@ export default function Home() {
     <section className="w-full px-6">
 
       <section className="border-b-2 border-[#E4E4E7] pt-6 pb-4 flex flex-col gap-1">
-        <h1 className="font-bold text-4xl">Career Prediction</h1>
+        <h1 className="text-primary font-bold text-4xl">Career Prediction</h1>
         <p className="text-[#71717A]">แนะนำอาชีพเหมาะสมกับคุณจากข้อมูลในเรซูเม</p>
       </section>
 

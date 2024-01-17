@@ -1,6 +1,6 @@
 export default function CareerNodeTree() {
     return (
-        <div className="ml-56">
+        <div className="w-full px-6">
             Node Tree Page
         </div>
     );
