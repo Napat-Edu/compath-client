@@ -28,7 +28,16 @@ export default function Home() {
           <p className="text-center font-semibold text-xl">เริ่มทำนายอาชีพของคุณ</p>
           <p className="text-center text-[#71717A]">ให้ข้อมูลกับเราเพื่อทำนายอาชีพที่เหมาะสมกับคุณ</p>
         </div>
-        <Button className="ml-auto mr-auto" onClick={shootAPI}>ไปทำนายอาชีพ</Button>
+        <Button className="ml-auto mr-auto py-4 px-2" onClick={shootAPI}>
+          <img
+            src="sparkles.svg"
+            alt="sparkles icon"
+            height="16px"
+            width="16px"
+            className="mr-1"
+          />
+          ไปทำนายอาชีพ
+        </Button>
       </section>
 
     </section>
