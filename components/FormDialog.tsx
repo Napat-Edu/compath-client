@@ -26,7 +26,7 @@ export function FormDialog() {
                     ไปทำนายอาชีพ
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="w-4/5">
                 <DialogHeader>
                     <DialogTitle>
                         <div className="flex flex-row gap-2 items-center">
