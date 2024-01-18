@@ -15,9 +15,8 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { toast } from "@/components/ui/use-toast"
 import { DialogFooter } from "./ui/dialog"
-import { CheckboxWithText } from "./Checkbox"
+import { Checkbox } from "./ui/checkbox"
 
 const FormSchema = z.object({
     educational: z.string().min(1, {
@@ -28,7 +27,12 @@ const FormSchema = z.object({
     }),
     experience: z.string().min(1, {
         message: "โปรดใส่ข้อมูลก่อน"
-    })
+    }),
+    agreement: z.boolean().refine((value) => {
+        return value == true;
+    }, {
+        message: "โปรดยินยอมก่อน"
+    }).default(false)
 })
 
 export function InputForm() {
@@ -38,19 +42,13 @@ export function InputForm() {
         defaultValues: {
             educational: "",
             skill: "",
-            experience: ""
+            experience: "",
+            agreement: false
         },
     })
 
     function onSubmit(data: z.infer<typeof FormSchema>) {
-        toast({
-            title: "You submitted the following values:",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
-        })
+        console.log(data);
     }
 
     return (
@@ -82,7 +80,7 @@ export function InputForm() {
                                 <Input placeholder="Ex." {...field} />
                             </FormControl>
                             <FormDescription>
-                                กรอกทักษะที่ีคุณถนัดทั้งในด้าน soft skill และ hard skill
+                                กรอกทักษะที่คุณถนัดทั้งในด้าน soft skill และ hard skill
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -106,7 +104,28 @@ export function InputForm() {
                 />
                 <DialogFooter className="flex flex-row lg:justify-between">
                     <div className="flex flex-row">
-                        <CheckboxWithText></CheckboxWithText>
+                        <FormField
+                            name="agreement"
+                            render={({ field }) => (
+                                <div className="items-top flex space-x-2">
+                                    <Checkbox id="terms1"
+                                        checked={field.value}
+                                        onCheckedChange={field.onChange} />
+                                    <div className="grid gap-1.5 leading-none">
+                                        <label
+                                            htmlFor="terms1"
+                                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                        >
+                                            ยอมรับข้อตกลงและเงื่อนไขการใช้งาน
+                                        </label>
+                                        <p className="text-sm text-muted-foreground">
+                                            คุณจะยอมรับการเก็บข้อมูลเรซูเมของคุณ
+                                        </p>
+                                        <FormMessage />
+                                    </div>
+                                </div>
+                            )}
+                        />
                     </div>
                     <Button type="submit">เริ่มทำนาย</Button>
                 </DialogFooter>
