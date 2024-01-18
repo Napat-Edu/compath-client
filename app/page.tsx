@@ -1,13 +1,6 @@
-'use client'
-import { Button } from "@/components/ui/button";
+import { FormDialog } from "@/components/FormDialog";
 
 export default function Home() {
-
-  const shootAPI = async () => {
-    const result = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}`);
-    const message = await result.json();
-    console.log(message + " test!");
-  };
 
   return (
     <section className="w-full px-6">
@@ -28,16 +21,7 @@ export default function Home() {
           <p className="text-center font-semibold text-xl">เริ่มทำนายอาชีพของคุณ</p>
           <p className="text-center text-[#71717A]">ให้ข้อมูลกับเราเพื่อทำนายอาชีพที่เหมาะสมกับคุณ</p>
         </div>
-        <Button className="ml-auto mr-auto py-4 px-2" onClick={shootAPI}>
-          <img
-            src="sparkles.svg"
-            alt="sparkles icon"
-            height="16px"
-            width="16px"
-            className="mr-1"
-          />
-          ไปทำนายอาชีพ
-        </Button>
+        <FormDialog></FormDialog>
       </section>
 
     </section>
