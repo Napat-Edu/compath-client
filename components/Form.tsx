@@ -127,7 +127,7 @@ export function InputForm() {
                             )}
                         />
                     </div>
-                    <Button type="submit">เริ่มทำนาย</Button>
+                    <Button type="submit">เริ่มทำนาย<img src="arrow-right.svg" alt="arrow-right" width="16px" height="16px" /></Button>
                 </DialogFooter>
             </form>
         </Form>
