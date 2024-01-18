@@ -19,17 +19,16 @@ import { toast } from "@/components/ui/use-toast"
 import { DialogFooter } from "./ui/dialog"
 import { CheckboxWithText } from "./Checkbox"
 
-interface IInputList {
-    name: string;
-    title: string;
-    placeholder: string;
-    description: string;
-}
-
 const FormSchema = z.object({
-    educational: z.string(),
-    skill: z.string(),
-    experience: z.string()
+    educational: z.string().min(1, {
+        message: "โปรดใส่ข้อมูลก่อน"
+    }),
+    skill: z.string().min(1, {
+        message: "โปรดใส่ข้อมูลก่อน"
+    }),
+    experience: z.string().min(1, {
+        message: "โปรดใส่ข้อมูลก่อน"
+    })
 })
 
 export function InputForm() {
