@@ -115,9 +115,9 @@ export function InputForm() {
                                         >
                                             ยอมรับข้อตกลงและเงื่อนไขการใช้งาน
                                         </label>
-                                        <p className="text-sm text-muted-foreground">
+                                        <div className="text-sm text-muted-foreground">
                                             <FormMessage children="คุณจะยอมรับการเก็บข้อมูลเรซูเมของคุณ" />
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             )}
