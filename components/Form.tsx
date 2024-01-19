@@ -35,7 +35,11 @@ const FormSchema = z.object({
     }).default(false)
 })
 
-export function InputForm() {
+interface IInputForm {
+    getCareerPrediction: any;
+}
+
+export function InputForm(props: IInputForm) {
 
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
@@ -47,8 +51,8 @@ export function InputForm() {
         },
     })
 
-    function onSubmit(data: z.infer<typeof FormSchema>) {
-        console.log(data);
+    async function onSubmit(data: z.infer<typeof FormSchema>) {
+        props.getCareerPrediction(data);
     }
 
     return (
