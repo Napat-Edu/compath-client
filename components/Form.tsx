@@ -20,18 +20,18 @@ import { Checkbox } from "./ui/checkbox"
 
 const FormSchema = z.object({
     educational: z.string().min(1, {
-        message: "โปรดใส่ข้อมูลก่อน"
+        message: "โปรดกรอกประวัติการศึกษาของคุณและกิจกรรมที่ทำในมหาวิทยาลัย"
     }),
     skill: z.string().min(1, {
-        message: "โปรดใส่ข้อมูลก่อน"
+        message: "โปรดกรอกทักษะที่คุณถนัดทั้งในด้าน soft skill และ hard skill"
     }),
     experience: z.string().min(1, {
-        message: "โปรดใส่ข้อมูลก่อน"
+        message: "โปรดกรอกประสบการณ์ทำงานหรือหน้าที่ที่เคยทำกับโปรเจ็คในมหาวิทยาลัย"
     }),
     agreement: z.boolean().refine((value) => {
         return value == true;
     }, {
-        message: "โปรดยินยอมก่อน"
+        message: "โปรดยอมรับการเก็บข้อมูลเรซูเมของคุณ"
     }).default(false)
 })
 
@@ -61,12 +61,11 @@ export function InputForm() {
                         <FormItem>
                             <FormLabel className="text-primary text-lg font-semibold">การศึกษา</FormLabel>
                             <FormControl>
-                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Computer Engineering, KMUTT" {...field} />
+                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Computer Engineering, KMUTT" {...field} />
                             </FormControl>
                             <FormDescription>
-                                กรอกประวัติการศึกษาของคุณและกิจกรรมที่ทำในมหาวิทยาลัย
+                                <FormMessage children="กรอกประวัติการศึกษาของคุณและกิจกรรมที่ทำในมหาวิทยาลัย" />
                             </FormDescription>
-                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -77,12 +76,11 @@ export function InputForm() {
                         <FormItem>
                             <FormLabel className="text-primary text-lg font-semibold">ทักษะ</FormLabel>
                             <FormControl>
-                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Javascript, Typescript, Python, ..." {...field} />
+                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Javascript, Typescript, Python, ..." {...field} />
                             </FormControl>
                             <FormDescription>
-                                กรอกทักษะที่คุณถนัดทั้งในด้าน soft skill และ hard skill
+                                <FormMessage children="กรอกทักษะที่คุณถนัดทั้งในด้าน soft skill และ hard skill" />
                             </FormDescription>
-                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -93,12 +91,11 @@ export function InputForm() {
                         <FormItem>
                             <FormLabel className="text-primary text-lg font-semibold">ประสบการณ์</FormLabel>
                             <FormControl>
-                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="To do list, with React" {...field} />
+                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. To do list with React" {...field} />
                             </FormControl>
                             <FormDescription>
-                                กรอกประสบการณ์ทำงานหรือหน้าที่ที่เคยทำกับโปรเจ็คในมหาวิทยาลัย
+                                <FormMessage children="กรอกประสบการณ์ทำงานหรือหน้าที่ที่เคยทำกับโปรเจ็คในมหาวิทยาลัย" />
                             </FormDescription>
-                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -119,9 +116,8 @@ export function InputForm() {
                                             ยอมรับข้อตกลงและเงื่อนไขการใช้งาน
                                         </label>
                                         <p className="text-sm text-muted-foreground">
-                                            คุณจะยอมรับการเก็บข้อมูลเรซูเมของคุณ
+                                            <FormMessage children="คุณจะยอมรับการเก็บข้อมูลเรซูเมของคุณ" />
                                         </p>
-                                        <FormMessage />
                                     </div>
                                 </div>
                             )}
