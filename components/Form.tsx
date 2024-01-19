@@ -61,7 +61,7 @@ export function InputForm() {
                         <FormItem>
                             <FormLabel className="text-primary text-lg font-semibold">การศึกษา</FormLabel>
                             <FormControl>
-                                <Input placeholder="Ex." {...field} />
+                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Computer Engineering, KMUTT" {...field} />
                             </FormControl>
                             <FormDescription>
                                 กรอกประวัติการศึกษาของคุณและกิจกรรมที่ทำในมหาวิทยาลัย
@@ -77,7 +77,7 @@ export function InputForm() {
                         <FormItem>
                             <FormLabel className="text-primary text-lg font-semibold">ทักษะ</FormLabel>
                             <FormControl>
-                                <Input placeholder="Ex." {...field} />
+                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Javascript, Typescript, Python, ..." {...field} />
                             </FormControl>
                             <FormDescription>
                                 กรอกทักษะที่คุณถนัดทั้งในด้าน soft skill และ hard skill
@@ -93,7 +93,7 @@ export function InputForm() {
                         <FormItem>
                             <FormLabel className="text-primary text-lg font-semibold">ประสบการณ์</FormLabel>
                             <FormControl>
-                                <Input placeholder="Ex." {...field} />
+                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="To do list, with React" {...field} />
                             </FormControl>
                             <FormDescription>
                                 กรอกประสบการณ์ทำงานหรือหน้าที่ที่เคยทำกับโปรเจ็คในมหาวิทยาลัย
