@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/dialog"
 import { InputForm } from "./Form";
 import { useState } from "react";
-import ResultDialog from "./ResultDialog";
 
 export function FormDialog() {
     const [isPredicting, setPredicting] = useState(false);
