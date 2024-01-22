@@ -11,28 +11,46 @@ import {
 import { InputForm } from "./InputForm";
 import { useState } from "react";
 import CareerResult from "./CareerResult";
+import { ICareerPredictionResult, IUserResume } from "@/interfaces/career-prediction-interface";
 
 export function FormDialog() {
     const [isPredicting, setPredicting] = useState(false);
+    const [isPredictionLoading, setIsPredictionLoading] = useState(false);
+    const [predictionResult, setPredictionResult] = useState<ICareerPredictionResult>();
 
-    const getCareerPrediction = async (userResume: any) => {
+    const getCareerPrediction = async (userResume: IUserResume) => {
         setPredicting(true);
-        console.log(userResume);
-        const response = await fetch(`
-        ${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_CAREER_ENDPOINT}
-        `);
-        const careerResult = await response.json();
-        console.log(careerResult);
+        setIsPredictionLoading(true);
+
+        const userResumeRecord: Record<string, any> = userResume;
+        const predictionParams = new URLSearchParams(userResumeRecord);
+
+        setPredictionResult(
+            await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_CAREER_ENDPOINT}?${predictionParams}`, {
+                method: "GET",
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then((res) => res.json())
+                .then((data: ICareerPredictionResult) => {
+                    setPredictionResult(data);
+                    setIsPredictionLoading(false);
+                    return data;
+                })
+        );
     };
 
     const togglePredictionState = () => {
         setPredicting(!isPredicting);
     }
 
+    const handleOpenForm = () => {
+        setPredicting(false);
+    };
+
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="ml-auto mr-auto py-4 px-2">
+                <Button className="ml-auto mr-auto py-4 px-2" onClick={handleOpenForm}>
                     <img
                         src="sparkles.svg"
                         alt="sparkles icon"
@@ -53,11 +71,11 @@ export function FormDialog() {
                                 height="24px"
                                 width="24px"
                             />
-                            <label>{!isPredicting ? "กรอกข้อมูลของคุณเพื่อทำนายอาชีพ" : "ผลการทำนายอาชีพ"}</label>
+                            <label>{!isPredicting ? "กรอกข้อมูลของคุณเพื่อทำนายอาชีพ" : "ผลการทำนายสายอาชีพ"}</label>
                         </div>
                     </DialogTitle>
                     <DialogDescription>
-                        {!isPredicting ? "โปรดกรอกข้อมูลให้ระบบเพื่อนำไปทำนายอาชีพที่เหมาะสมกับคุณ" : "อาชีพที่เหมาะสมกับคุณคือ"}
+                        {!isPredicting ? "โปรดกรอกข้อมูลให้ระบบเพื่อนำไปทำนายอาชีพที่เหมาะสมกับคุณ" : "สายอาชีพที่เหมาะสมกับคุณคือ"}
                     </DialogDescription>
                 </DialogHeader>
 
@@ -65,6 +83,8 @@ export function FormDialog() {
                     !isPredicting ?
                         <InputForm getCareerPrediction={getCareerPrediction}></InputForm> :
                         <CareerResult
+                            predictionResult={predictionResult}
+                            isPredictionLoading={isPredictionLoading}
                             togglePredictionState={togglePredictionState}
                         />
                 }
