@@ -12,6 +12,7 @@ import { InputForm } from "./InputForm";
 import { useState } from "react";
 import CareerResult from "./CareerResult";
 import { ICareerPredictionResult, IUserResume } from "@/interfaces/career-prediction-interface";
+import Image from "next/image";
 
 export function FormDialog() {
     const [isPredicting, setPredicting] = useState(false);
@@ -51,11 +52,11 @@ export function FormDialog() {
         <Dialog>
             <DialogTrigger asChild>
                 <Button className="ml-auto mr-auto py-4 px-2" onClick={handleOpenForm}>
-                    <img
+                    <Image
                         src="sparkles.svg"
                         alt="sparkles icon"
-                        height="16px"
-                        width="16px"
+                        height={16}
+                        width={16}
                         className="mr-1"
                     />
                     ไปทำนายอาชีพ
@@ -65,11 +66,11 @@ export function FormDialog() {
                 <DialogHeader>
                     <DialogTitle>
                         <div className="flex flex-row gap-2 items-center">
-                            <img
+                            <Image
                                 src={!isPredicting ? "resume.svg" : "wand.svg"}
                                 alt={!isPredicting ? "resume icon" : "wand icon"}
-                                height="24px"
-                                width="24px"
+                                height={24}
+                                width={24}
                             />
                             <label>{!isPredicting ? "กรอกข้อมูลของคุณเพื่อทำนายอาชีพ" : "ผลการทำนายสายอาชีพ"}</label>
                         </div>

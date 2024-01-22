@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { DialogFooter } from "./ui/dialog"
 import { Checkbox } from "./ui/checkbox"
+import Image from "next/image"
 
 const FormSchema = z.object({
     educational: z.string().min(1, {
@@ -127,7 +128,7 @@ export function InputForm(props: IInputForm) {
                             )}
                         />
                     </div>
-                    <Button type="submit">เริ่มทำนาย<img className="ml-2" src="arrow-right.svg" alt="arrow-right" width="16px" height="16px" /></Button>
+                    <Button type="submit">เริ่มทำนาย<Image className="ml-2" src="arrow-right.svg" alt="arrow-right" width={16} height={16} /></Button>
                 </DialogFooter>
             </form>
         </Form>

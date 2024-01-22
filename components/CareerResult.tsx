@@ -1,6 +1,7 @@
 import { MouseEventHandler } from "react";
 import { Button } from "./ui/button";
 import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
+import Image from "next/image";
 
 interface ICareerResult {
     isPredictionLoading: boolean;
@@ -80,14 +81,14 @@ export default function CareerResult(props: ICareerResult) {
                     </div>
                     <div className="flex flex-row items-center gap-2 px-2">
                         <Button className="px-4 py-2 h-full border-2 border-primary">
-                            <img className="mr-2" src="resume-white.svg" alt="resume-icon" width="16px" height="16px" />
+                            <Image className="mr-2" src="resume-white.svg" alt="resume-icon" width={16} height={16} />
                             ดูเพิ่มเติม
                         </Button>
                         <Button className="p-3 rounded-md h-full" variant="outline">
-                            <img src="save-button.svg" alt="save button" width="16px" height="16px" />
+                            <Image src="save-button.svg" alt="save button" width={16} height={16} />
                         </Button>
                         <Button className="p-3 rounded-md h-full" onClick={props.togglePredictionState} variant="outline">
-                            <img src="edit-button.svg" alt="edit button" width="16px" height="16px" />
+                            <Image src="edit-button.svg" alt="edit button" width={16} height={16} />
                         </Button>
                     </div>
                 </div>

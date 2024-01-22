@@ -2,6 +2,7 @@
 import Link from "next/link"
 import { Button } from "./ui/button"
 import { useState } from "react";
+import Image from "next/image";
 
 interface ISidebarTab {
     label: string;
@@ -45,11 +46,11 @@ export function Sidebar() {
 
                     <section className="px-3 py-2">
                         <div className="flex flex-row mb-2 px-4 gap-1">
-                            <img
+                            <Image
                                 src="compass.svg"
                                 alt="compass icon"
-                                height="36px"
-                                width="36px" />
+                                height={36}
+                                width={36} />
                             <h2 className="text-primary text-2xl font-semibold tracking-tight mt-auto mb-auto">
                                 Compath
                             </h2>
@@ -65,11 +66,11 @@ export function Sidebar() {
                                                 className={`flex flex-row gap-2 w-full justify-start border-2 ${activeTab == idx ? 'border-primary' : 'border-transparent'}`}
                                                 onClick={() => { handleTabClicked(idx) }}
                                             >
-                                                <img
+                                                <Image
                                                     src={tab.icon.path}
                                                     alt={tab.icon.name + "-icon"}
-                                                    height="20px"
-                                                    width="20px" />
+                                                    height={20}
+                                                    width={20} />
                                                 {tab.label}
                                             </Button>
                                         </Link>
