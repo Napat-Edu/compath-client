@@ -69,7 +69,9 @@ export function InputForm(props: IInputForm) {
                                 <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Computer Engineering, KMUTT" {...field} />
                             </FormControl>
                             <FormDescription>
-                                <FormMessage children="กรอกประวัติการศึกษาของคุณและกิจกรรมที่ทำในมหาวิทยาลัย" />
+                                <FormMessage>
+                                    กรอกประวัติการศึกษาของคุณและกิจกรรมที่ทำในมหาวิทยาลัย
+                                </FormMessage>
                             </FormDescription>
                         </FormItem>
                     )}
@@ -84,7 +86,9 @@ export function InputForm(props: IInputForm) {
                                 <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Javascript, Typescript, Python, ..." {...field} />
                             </FormControl>
                             <FormDescription>
-                                <FormMessage children="กรอกทักษะที่คุณถนัดทั้งในด้าน soft skill และ hard skill" />
+                                <FormMessage>
+                                    กรอกทักษะที่คุณถนัดทั้งในด้าน soft skill และ hard skill
+                                </FormMessage>
                             </FormDescription>
                         </FormItem>
                     )}
@@ -99,7 +103,9 @@ export function InputForm(props: IInputForm) {
                                 <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. To do list with React" {...field} />
                             </FormControl>
                             <FormDescription>
-                                <FormMessage children="กรอกประสบการณ์ทำงานหรือหน้าที่ที่เคยทำกับโปรเจ็คในมหาวิทยาลัย" />
+                                <FormMessage>
+                                    กรอกประสบการณ์ทำงานหรือหน้าที่ที่เคยทำกับโปรเจ็คในมหาวิทยาลัย
+                                </FormMessage>
                             </FormDescription>
                         </FormItem>
                     )}
@@ -121,7 +127,9 @@ export function InputForm(props: IInputForm) {
                                             ยอมรับข้อตกลงและเงื่อนไขการใช้งาน
                                         </label>
                                         <div className="text-sm text-muted-foreground">
-                                            <FormMessage children="คุณจะยอมรับการเก็บข้อมูลเรซูเมของคุณ" />
+                                            <FormMessage>
+                                                คุณจะยอมรับการเก็บข้อมูลเรซูเมของคุณ
+                                            </FormMessage>
                                         </div>
                                     </div>
                                 </div>
