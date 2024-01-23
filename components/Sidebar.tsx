@@ -47,13 +47,11 @@ export function Sidebar() {
                     <section className="px-3 py-2">
                         <div className="flex flex-row mb-2 px-4 gap-1">
                             <Image
-                                src="compass.svg"
-                                alt="compass icon"
-                                height={36}
-                                width={36} />
-                            <h2 className="text-primary text-2xl font-semibold tracking-tight mt-auto mb-auto">
-                                Compath
-                            </h2>
+                                src="compath-logo.svg"
+                                alt="compath-logo icon"
+                                width={172}
+                                height={41}
+                            />
                         </div>
                         <h3 className="pt-4 pb-2 pl-4 font-semibold">Feature</h3>
                         <div className="space-y-1">
