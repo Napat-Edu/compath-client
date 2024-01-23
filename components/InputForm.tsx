@@ -38,6 +38,8 @@ const FormSchema = z.object({
 
 interface IInputForm {
     getCareerPrediction: any;
+    currentUserInput: any;
+    updateCurrentUserInput: any;
 }
 
 export function InputForm(props: IInputForm) {
@@ -45,14 +47,15 @@ export function InputForm(props: IInputForm) {
     const form = useForm<z.infer<typeof FormSchema>>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            educational: "",
-            skill: "",
-            experience: "",
-            agreement: false
+            educational: props.currentUserInput.educational == undefined ? "" : props.currentUserInput.educational,
+            skill: props.currentUserInput.skill == undefined ? "" : props.currentUserInput.skill,
+            experience: props.currentUserInput.experience == undefined ? "" : props.currentUserInput.experience,
+            agreement: props.currentUserInput.agreement == undefined ? false : props.currentUserInput.agreement,
         },
     })
 
     async function onSubmit(data: z.infer<typeof FormSchema>) {
+        props.updateCurrentUserInput(data);
         props.getCareerPrediction(data);
     }
 

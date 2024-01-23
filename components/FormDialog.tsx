@@ -19,6 +19,26 @@ export function FormDialog() {
     const [isPredictionLoading, setIsPredictionLoading] = useState(false);
     const [predictionResult, setPredictionResult] = useState<ICareerPredictionResult>();
 
+    const [currentUserInput, setCurrentUserInput] = useState({
+        skill: undefined,
+        educational: undefined,
+        experience: undefined,
+        agreement: undefined
+    });
+
+    const updateCurrentUserInput = (input: any) => {
+        setCurrentUserInput(input);
+    };
+
+    const resetCurrentUserInput = () => {
+        setCurrentUserInput({
+            skill: undefined,
+            educational: undefined,
+            experience: undefined,
+            agreement: undefined
+        });
+    };
+
     const getCareerPrediction = async (userResume: IUserResume) => {
         setPredicting(true);
         setIsPredictionLoading(true);
@@ -45,6 +65,7 @@ export function FormDialog() {
     }
 
     const handleOpenForm = () => {
+        resetCurrentUserInput();
         setPredicting(false);
     };
 
@@ -56,7 +77,7 @@ export function FormDialog() {
                         src="sparkles.svg"
                         alt="sparkles icon"
                         height={16}
-                        width={16}
+                        width={17}
                         className="mr-1"
                     />
                     ไปทำนายอาชีพ
@@ -82,7 +103,7 @@ export function FormDialog() {
 
                 {
                     !isPredicting ?
-                        <InputForm getCareerPrediction={getCareerPrediction}></InputForm> :
+                        <InputForm getCareerPrediction={getCareerPrediction} currentUserInput={currentUserInput} updateCurrentUserInput={updateCurrentUserInput}></InputForm> :
                         <CareerResult
                             predictionResult={predictionResult}
                             isPredictionLoading={isPredictionLoading}
