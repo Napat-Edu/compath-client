@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input"
 import { DialogFooter } from "./ui/dialog"
 import { Checkbox } from "./ui/checkbox"
 import Image from "next/image"
+import { Textarea } from "./ui/textarea"
 
 const FormSchema = z.object({
     educational: z.string().min(1, {
@@ -69,7 +70,7 @@ export function InputForm(props: IInputForm) {
                         <FormItem>
                             <FormLabel className="text-primary text-lg font-semibold">การศึกษา</FormLabel>
                             <FormControl>
-                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Computer Engineering, KMUTT" {...field} />
+                                <Textarea className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Computer Engineering, KMUTT" {...field} />
                             </FormControl>
                             <FormDescription>
                                 <FormMessage>
@@ -86,7 +87,7 @@ export function InputForm(props: IInputForm) {
                         <FormItem>
                             <FormLabel className="text-primary text-lg font-semibold">ทักษะ</FormLabel>
                             <FormControl>
-                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Javascript, Typescript, Python, ..." {...field} />
+                                <Textarea className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Javascript, Typescript, Python, ..." {...field} />
                             </FormControl>
                             <FormDescription>
                                 <FormMessage>
@@ -103,7 +104,7 @@ export function InputForm(props: IInputForm) {
                         <FormItem>
                             <FormLabel className="text-primary text-lg font-semibold">ประสบการณ์</FormLabel>
                             <FormControl>
-                                <Input className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. To do list with React" {...field} />
+                                <Textarea className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. To do list with React" {...field} />
                             </FormControl>
                             <FormDescription>
                                 <FormMessage>
