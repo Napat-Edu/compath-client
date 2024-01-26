@@ -2,8 +2,7 @@ import { MouseEventHandler } from "react";
 import { Button } from "./ui/button";
 import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
 import Image from "next/image";
-import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
-import { RocketIcon } from "@radix-ui/react-icons";
+import { Alert, AlertDescription } from "./ui/alert"
 
 interface ICareerResult {
     isPredictionLoading: boolean;
@@ -12,6 +11,12 @@ interface ICareerResult {
 }
 
 export default function CareerResult(props: ICareerResult) {
+    const toSalaryNumber = (salary: number): string => {
+        const salaryString = salary.toString();
+        const replacedSalary = salaryString.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return replacedSalary;
+    };
+
     return (
         <>
             <div className="border-gray-200 border-[1px] rounded-lg">
@@ -41,7 +46,7 @@ export default function CareerResult(props: ICareerResult) {
 
                     <div>
                         <div className="p-3">
-                            <h3 className="font-medium text-primary text-sm">อาชีพที่เกี่ยวข้อง</h3>
+                            <h3 className="font-medium text-primary text-sm">ตัวอย่างอาชีพที่เกี่ยวข้อง</h3>
                             <div className={`flex flex-row flex-wrap self-stretch items-start content-start gap-1 ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
 
                                 {
@@ -49,7 +54,7 @@ export default function CareerResult(props: ICareerResult) {
                                         null :
                                         <>
                                             {
-                                                props.predictionResult?.relatedCareers.map((relatedCareer, idx) => {
+                                                props.predictionResult?.relatedCareers.slice(0,3).map((relatedCareer, idx) => {
                                                     return (
                                                         <div className="border-[#E2E8F0] border-2 rounded-full font-medium w-fit h-fit text-sm px-3 py-1" key={'related-career-' + idx}>
                                                             {relatedCareer}
@@ -68,7 +73,7 @@ export default function CareerResult(props: ICareerResult) {
                                 {
                                     props.isPredictionLoading ?
                                         null :
-                                        '~ ' + props.predictionResult?.baseSalary + ' บาท'
+                                        `${toSalaryNumber(props.predictionResult!.baseSalary.min_salary)} - ${toSalaryNumber(props.predictionResult!.baseSalary.max_salary)} บาท`
                                 }
                             </p>
                         </div>
