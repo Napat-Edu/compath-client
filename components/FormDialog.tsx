@@ -43,13 +43,13 @@ export function FormDialog() {
         setPredicting(true);
         setIsPredictionLoading(true);
 
-        const userResumeRecord: Record<string, any> = userResume;
-        const predictionParams = new URLSearchParams(userResumeRecord);
-
         setPredictionResult(
-            await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_CAREER_ENDPOINT}?${predictionParams}`, {
-                method: "GET",
-                headers: { 'Content-Type': 'application/json' }
+            await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_CAREER_ENDPOINT}`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    resume_input: userResume
+                })
             })
                 .then((res) => res.json())
                 .then((data: ICareerPredictionResult) => {
