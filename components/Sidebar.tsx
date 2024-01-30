@@ -62,7 +62,7 @@ export function Sidebar() {
                             />
                         </div>
                         <h3 className="pt-4 pb-2 pl-4 font-semibold">Feature</h3>
-                        <div className="space-y-1">
+                        <div className="flex flex-col gap-1">
                             {
                                 sideBarTabs.map((tab, idx) => {
                                     return (
