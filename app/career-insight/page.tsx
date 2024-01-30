@@ -1,7 +1,7 @@
-export default function CareerPathPage() {
+export default function CareerInsightPage() {
     return (
         <div className="w-full px-6">
-            Node Tree Page
+            Career Insight
         </div>
     );
 };
