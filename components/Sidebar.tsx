@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link"
 import { Button } from "./ui/button"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 interface ISidebarTab {
@@ -14,7 +14,17 @@ interface ISidebarTab {
 }
 
 export function Sidebar() {
-    const [activeTab, setActiveTab] = useState(0);
+    useEffect(() => {
+        let focusTab: number = Number(sessionStorage.getItem("focusTab"));
+        if (!focusTab) {
+            focusTab = sideBarTabs.findIndex((tab) => {
+                return tab.navigateLink == window.location.pathname;
+            });
+        }
+        setActiveTab(focusTab);
+    }, []);
+
+    const [activeTab, setActiveTab] = useState<number>();
 
     const sideBarTabs: ISidebarTab[] = [
         {
@@ -44,6 +54,7 @@ export function Sidebar() {
     ];
 
     const handleTabClicked = (index: number) => {
+        sessionStorage.setItem("focusTab", index.toString());
         setActiveTab(index);
     };
 
