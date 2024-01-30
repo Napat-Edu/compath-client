@@ -26,6 +26,14 @@ export function Sidebar() {
             navigateLink: '/'
         },
         {
+            label: 'Career Insight',
+            icon: {
+                path: 'inspect.svg',
+                name: 'inspect'
+            },
+            navigateLink: '/career-insight'
+        },
+        {
             label: 'Career Path',
             icon: {
                 path: 'grid.svg',
