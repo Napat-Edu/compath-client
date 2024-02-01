@@ -18,3 +18,7 @@ export interface IUserResume {
   experience: string;
   agreement: boolean;
 }
+
+export interface IPredictionHistory {
+  result: string;
+}

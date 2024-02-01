@@ -1,4 +1,6 @@
 import { FormDialog } from "@/components/FormDialog";
+import HistoryCard from "@/components/HistoryCard";
+import Image from "next/image";
 
 export default function Home() {
 
@@ -11,17 +13,21 @@ export default function Home() {
       </section>
 
       <section className="border-2 border-dashed border-primary rounded-2xl min-h-96 flex flex-col justify-center mt-4">
-        <img
+        <Image
           src="resume.svg"
           alt="resume icon"
-          height="32px"
-          width="32px"
-          className="ml-auto mr-auto" />
+          height={0}
+          width={0}
+          className="mx-auto h-[32px] w-auto" />
         <div className="my-4">
           <p className="text-center font-semibold text-xl">เริ่มทำนายอาชีพของคุณ</p>
           <p className="text-center text-[#71717A]">ให้ข้อมูลกับเราเพื่อทำนายอาชีพที่เหมาะสมกับคุณ</p>
         </div>
         <FormDialog></FormDialog>
+      </section>
+
+      <section>
+        <HistoryCard></HistoryCard>
       </section>
 
     </section>

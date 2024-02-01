@@ -90,8 +90,9 @@ export function FormDialog() {
                             <Image
                                 src={!isPredicting ? "resume.svg" : "wand.svg"}
                                 alt={!isPredicting ? "resume icon" : "wand icon"}
-                                height={24}
-                                width={24}
+                                height={0}
+                                width={0}
+                                className="w-[24px] h-auto"
                             />
                             <label>{!isPredicting ? "กรอกข้อมูลของคุณเพื่อทำนายอาชีพ" : "ผลการทำนายสายอาชีพ"}</label>
                         </div>

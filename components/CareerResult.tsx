@@ -3,6 +3,8 @@ import { Button } from "./ui/button";
 import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
 import Image from "next/image";
 import { Alert, AlertDescription } from "./ui/alert"
+import { DialogClose } from "./ui/dialog";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 interface ICareerResult {
     isPredictionLoading: boolean;
@@ -11,10 +13,18 @@ interface ICareerResult {
 }
 
 export default function CareerResult(props: ICareerResult) {
+    const localStorage = useLocalStorage();
+
     const toSalaryNumber = (salary: number): string => {
         const salaryString = salary.toString();
         const replacedSalary = salaryString.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         return replacedSalary;
+    };
+
+    const handleSaveClick = () => {
+        localStorage.addPredictionHistory({
+            result: props.predictionResult!.career ?? "Unknown"
+        });
     };
 
     return (
@@ -54,7 +64,7 @@ export default function CareerResult(props: ICareerResult) {
                                         null :
                                         <>
                                             {
-                                                props.predictionResult?.relatedCareers.slice(0,3).map((relatedCareer, idx) => {
+                                                props.predictionResult?.relatedCareers.slice(0, 3).map((relatedCareer, idx) => {
                                                     return (
                                                         <div className="border-[#E2E8F0] border-2 rounded-full font-medium w-fit h-fit text-sm px-3 py-1" key={'related-career-' + idx}>
                                                             {relatedCareer}
@@ -92,9 +102,11 @@ export default function CareerResult(props: ICareerResult) {
                                 <Image className="mr-2" src="resume-white.svg" alt="resume-icon" width={16} height={16} />
                                 ดูเพิ่มเติม
                             </Button>
-                            <Button className="p-3 rounded-md h-full" variant="outline">
-                                <Image src="save-button.svg" alt="save button" width={16} height={16} />
-                            </Button>
+                            <DialogClose asChild>
+                                <Button className="p-3 rounded-md h-full" variant="outline" onClick={handleSaveClick}>
+                                    <Image src="save-button.svg" alt="save button" width={16} height={16} />
+                                </Button>
+                            </DialogClose>
                             <Button className="p-3 rounded-md h-full" onClick={props.togglePredictionState} variant="outline">
                                 <Image src="edit-button.svg" alt="edit button" width={16} height={16} />
                             </Button>
