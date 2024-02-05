@@ -113,7 +113,7 @@ export function InputForm(props: IInputForm) {
                         </FormItem>
                     )}
                 />
-                <DialogFooter className="flex flex-row lg:justify-between">
+                <DialogFooter className="flex flex-row lg:justify-between pt-4">
                     <div className="flex flex-row">
                         <FormField
                             name="agreement"
