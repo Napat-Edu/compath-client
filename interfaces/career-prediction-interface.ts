@@ -5,6 +5,7 @@ export interface ICareerPredictionResult {
   baseSalary: ISalary;
   careermatesCount: number;
   icon: string | TrustedHTML;
+  objectId?: any;
 }
 
 export interface ISalary {
@@ -21,4 +22,5 @@ export interface IUserResume {
 
 export interface IPredictionHistory {
   result: string;
+  objectId?: any;
 }

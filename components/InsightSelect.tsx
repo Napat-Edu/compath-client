@@ -13,8 +13,12 @@ import useLocalStorage from "./hooks/useLocalStorage";
 export function InsightSelect() {
     const localStorage = useLocalStorage();
 
+    const handleHistoryChange = (id: string) => {
+        console.log(id);
+    };
+
     return (
-        <Select>
+        <Select onValueChange={(id) => { handleHistoryChange(id) }}>
             <SelectTrigger className="w-52">
                 <SelectValue placeholder="เลือกการ์ดทำนาย" />
             </SelectTrigger>
@@ -24,7 +28,7 @@ export function InsightSelect() {
                     {
                         localStorage.predictionHistory.map((history, idx) => {
                             return (
-                                <SelectItem value={history.result + idx} key={"history-" + history.result + idx}>{history.result}</SelectItem>
+                                <SelectItem value={history.objectId} key={"history-" + history.result + idx}>{history.result}</SelectItem>
                             );
                         })
                     }
