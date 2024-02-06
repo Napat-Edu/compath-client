@@ -1,4 +1,6 @@
+import InsightBox from "@/components/InsightBox";
 import { InsightSelect } from "@/components/InsightSelect";
+import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
 export default function CareerInsightPage() {
@@ -12,20 +14,17 @@ export default function CareerInsightPage() {
                 <InsightSelect></InsightSelect>
             </section>
 
-            <h3 className="font-semibold text-lg">ข้อมูลทั่วไป</h3>
-            <div className="flex flex-row gap-4 min-w-full">
-                <div className="border-[1px] rounded-2xl p-6 flex flex-col basis-1/3">
-                    <div className="flex flex-row justify-between">
-                        <h4>อาชีพ</h4>
-                        <Image src="/grid.svg" alt="career-icon" width={24} height={24} />
-                    </div>
-                    <h5>ตัวอย่างอาชีพที่อยู่ในสายอาชีพนี้</h5>
-                    <div>
-                        <div className="border-[#E2E8F0] border-2 rounded-full font-medium w-fit h-fit text-sm px-2 py-[2px]">
-                            xxx
-                        </div>
-                    </div>
-                </div>
+            <h3 className="font-semibold text-lg flex flex-row gap-[6px] mb-4"><Image src="/box.svg" alt="box-icon" width={0} height={0} className="w-auto h-6" /> ข้อมูลทั่วไป</h3>
+            <div className="flex flex-row gap-4 min-w-full mb-6">
+                <InsightBox title="อาชีพ" subtitle="ตัวอย่างอาชีพที่อยู่ในสายอาชีพนี้" icon="/group.svg" className="basis-1/3">
+                    <Badge variant="outline">xxxxxx</Badge>
+                </InsightBox>
+                <InsightBox title="เงินเดือน" subtitle="ช่วงเงินเดือนของสายอาชีพนี้" icon="/hand-coin.svg" className="basis-1/3">
+                    <p className="font-semibold text-lg">35,000 - 50,000 ต่อเดือน</p>
+                </InsightBox>
+                <InsightBox title="ผู้ร่วมทาง" subtitle="จำนวนคนที่ทำนายได้สายอาชีพนี้" icon="/users.svg" className="basis-1/3">
+                    <p className="font-semibold text-lg">20 คน</p>
+                </InsightBox>
             </div>
             <h3 className="font-semibold text-lg">ทักษะ</h3>
         </section>
