@@ -9,12 +9,15 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import useLocalStorage from "./hooks/useLocalStorage";
+import useSelectInsight from "./hooks/useSelectInsight";
 
 export function InsightSelect() {
     const localStorage = useLocalStorage();
+    const selectInsight = useSelectInsight();
 
     const handleHistoryChange = (id: string) => {
-        // console.log(id);
+        const currentSelectCareer = localStorage.findPredictionHistory(id);
+        selectInsight.upDateSelectedInsight(currentSelectCareer);
     };
 
     const displayDate = (dateString: string) => {

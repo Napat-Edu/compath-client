@@ -4,13 +4,15 @@ import InsightBox from "./InsightBox";
 import { Badge } from "./ui/badge";
 import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
 import { toSalaryNumber } from "./utils/utils";
+import useSelectInsight from "./hooks/useSelectInsight";
 
 export default function CareerInfoSection() {
     const [isLoading, setIsloading] = useState(true);
     const [careerPathInfo, setCareerPathInfo] = useState<ICareerPredictionResult>();
+    const { selectedInsight } = useSelectInsight();
 
-    const getCareerInfo = async () => {
-        await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_CAREER_ENDPOINT}?careerPath=Developer`, {
+    const getCareerInfo = async (career: string) => {
+        await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_CAREER_ENDPOINT}?careerPath=${career}`, {
             method: "GET",
             headers: { 'Content-Type': 'application/json' }
         }).then((response) => {
@@ -22,8 +24,11 @@ export default function CareerInfoSection() {
     };
 
     useEffect(() => {
-        getCareerInfo();
-    }, []);
+        if (selectedInsight !== '') {
+            setIsloading(true);
+            getCareerInfo(selectedInsight);
+        }
+    }, [selectedInsight]);
 
     return (
         <div className="flex flex-row gap-4 min-w-full mb-6">
