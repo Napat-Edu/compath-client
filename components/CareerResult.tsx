@@ -6,6 +6,7 @@ import { Alert, AlertDescription } from "./ui/alert"
 import { DialogClose } from "./ui/dialog";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { Badge } from "./ui/badge";
+import { toSalaryNumber } from "./utils/utils";
 
 interface ICareerResult {
     isPredictionLoading: boolean;
@@ -15,12 +16,6 @@ interface ICareerResult {
 
 export default function CareerResult(props: ICareerResult) {
     const localStorage = useLocalStorage();
-
-    const toSalaryNumber = (salary: number): string => {
-        const salaryString = salary.toString();
-        const replacedSalary = salaryString.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        return replacedSalary;
-    };
 
     const handleSaveClick = () => {
         localStorage.addPredictionHistory({
@@ -68,61 +63,61 @@ export default function CareerResult(props: ICareerResult) {
                                             {
                                                 props.predictionResult?.relatedCareers.slice(0, 3).map((relatedCareer, idx) => {
                                                     return (
-                                                        <Badge variant="outline" key = { 'related-career-' + idx } >
-                                                        { relatedCareer }
+                                                        <Badge variant="outline" key={'related-career-' + idx} >
+                                                            {relatedCareer}
                                                         </Badge>
-                                );
+                                                    );
                                                 })
                                             }
-                            </>
+                                        </>
                                 }
 
+                            </div>
+                        </div>
+                        <div className="p-3 font-medium text-sm ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}">
+                            <h3 className="font-medium text-primary text-sm">ฐานเงินเดือน</h3>
+                            <p className={`font-semibold text-lg ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
+                                {
+                                    props.isPredictionLoading ?
+                                        null :
+                                        `${toSalaryNumber(props.predictionResult!.baseSalary.min_salary)} - ${toSalaryNumber(props.predictionResult!.baseSalary.max_salary)} บาท`
+                                }
+                            </p>
+                        </div>
+                        <div className="p-3 font-medium text-sm">
+                            <h3 className="font-medium text-primary text-sm">มีคนทำนายได้สายอาชีพนี้</h3>
+                            <p className={`font-semibold text-lg ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
+                                {
+                                    props.isPredictionLoading ?
+                                        null :
+                                        props.predictionResult?.careermatesCount + ' คน'
+                                }
+                            </p>
+                        </div>
+                        <div className="flex flex-row items-center gap-2 px-2">
+                            <Button className="px-4 py-2 h-full border-2 border-primary">
+                                <Image className="mr-2" src="resume-white.svg" alt="resume-icon" width={16} height={16} />
+                                ดูเพิ่มเติม
+                            </Button>
+                            <DialogClose asChild>
+                                <Button className="p-3 rounded-md h-full" variant="outline" onClick={handleSaveClick}>
+                                    <Image src="save-button.svg" alt="save button" width={16} height={16} />
+                                </Button>
+                            </DialogClose>
+                            <Button className="p-3 rounded-md h-full" onClick={props.togglePredictionState} variant="outline">
+                                <Image src="edit-button.svg" alt="edit button" width={16} height={16} />
+                            </Button>
                         </div>
                     </div>
-                    <div className="p-3 font-medium text-sm ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}">
-                        <h3 className="font-medium text-primary text-sm">ฐานเงินเดือน</h3>
-                        <p className={`font-semibold text-lg ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
-                            {
-                                props.isPredictionLoading ?
-                                    null :
-                                    `${toSalaryNumber(props.predictionResult!.baseSalary.min_salary)} - ${toSalaryNumber(props.predictionResult!.baseSalary.max_salary)} บาท`
-                            }
-                        </p>
-                    </div>
-                    <div className="p-3 font-medium text-sm">
-                        <h3 className="font-medium text-primary text-sm">มีคนทำนายได้สายอาชีพนี้</h3>
-                        <p className={`font-semibold text-lg ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
-                            {
-                                props.isPredictionLoading ?
-                                    null :
-                                    props.predictionResult?.careermatesCount + ' คน'
-                            }
-                        </p>
-                    </div>
-                    <div className="flex flex-row items-center gap-2 px-2">
-                        <Button className="px-4 py-2 h-full border-2 border-primary">
-                            <Image className="mr-2" src="resume-white.svg" alt="resume-icon" width={16} height={16} />
-                            ดูเพิ่มเติม
-                        </Button>
-                        <DialogClose asChild>
-                            <Button className="p-3 rounded-md h-full" variant="outline" onClick={handleSaveClick}>
-                                <Image src="save-button.svg" alt="save button" width={16} height={16} />
-                            </Button>
-                        </DialogClose>
-                        <Button className="p-3 rounded-md h-full" onClick={props.togglePredictionState} variant="outline">
-                            <Image src="edit-button.svg" alt="edit button" width={16} height={16} />
-                        </Button>
-                    </div>
-            </div>
 
-        </ul >
+                </ul >
             </div >
-        <Alert className="flex flex-row gap-3 p-4 items-start">
-            <img src="lightbulb-icon.svg" alt="lightbulb-icon" width={16} height={16} />
-            <AlertDescription>
-                สายอาชีพที่ทำนายเป็นเพียงการนำข้อมูลที่ผู้ใช้กรอกมาหาสายอาชีพที่เหมาะสม ยังสายมีอาชีพอื่น ๆ ที่คุณสามารถเป็นได้ตามความต้องการ
-            </AlertDescription>
-        </Alert>
+            <Alert className="flex flex-row gap-3 p-4 items-start">
+                <img src="lightbulb-icon.svg" alt="lightbulb-icon" width={16} height={16} />
+                <AlertDescription>
+                    สายอาชีพที่ทำนายเป็นเพียงการนำข้อมูลที่ผู้ใช้กรอกมาหาสายอาชีพที่เหมาะสม ยังสายมีอาชีพอื่น ๆ ที่คุณสามารถเป็นได้ตามความต้องการ
+                </AlertDescription>
+            </Alert>
         </>
     );
 }

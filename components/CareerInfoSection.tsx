@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import InsightBox from "./InsightBox";
 import { Badge } from "./ui/badge";
 import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
+import { toSalaryNumber } from "./utils/utils";
 
 export default function CareerInfoSection() {
     const [isLoading, setIsloading] = useState(true);
@@ -27,16 +28,18 @@ export default function CareerInfoSection() {
     return (
         <div className="flex flex-row gap-4 min-w-full mb-6">
             <InsightBox title="อาชีพ" subtitle="ตัวอย่างอาชีพที่อยู่ในสายอาชีพนี้" icon="/group.svg" className="basis-1/3">
-                {
-                    careerPathInfo?.relatedCareers.map((career, idx) => {
-                        return (
-                            <Badge key={career + "-" + idx} variant="outline">{career}</Badge>
-                        );
-                    })
-                }
+                <div className="flex flex-row flex-wrap gap-1">
+                    {
+                        careerPathInfo?.relatedCareers.map((career, idx) => {
+                            return (
+                                <Badge key={career + "-" + idx} variant="outline">{career}</Badge>
+                            );
+                        })
+                    }
+                </div>
             </InsightBox>
             <InsightBox title="เงินเดือน" subtitle="ช่วงเงินเดือนของสายอาชีพนี้" icon="/hand-coin.svg" className="basis-1/3">
-                <p className="font-semibold text-lg">{careerPathInfo?.baseSalary.min_salary} - {careerPathInfo?.baseSalary.max_salary} ต่อเดือน</p>
+                <p className="font-semibold text-lg">{toSalaryNumber(careerPathInfo!.baseSalary.min_salary)} - {toSalaryNumber(careerPathInfo!.baseSalary.max_salary)} ต่อเดือน</p>
             </InsightBox>
             <InsightBox title="ผู้ร่วมทาง" subtitle="จำนวนคนที่ทำนายได้สายอาชีพนี้" icon="/users.svg" className="basis-1/3">
                 <p className="font-semibold text-lg">{careerPathInfo?.careermatesCount} คน</p>
