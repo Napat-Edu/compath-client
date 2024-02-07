@@ -24,6 +24,20 @@ export default function CareerResult(props: ICareerResult) {
         });
     };
 
+    const samplingRelatedCareers = (relatedCareers: string[]) => {
+        if (relatedCareers!.length) {
+            return relatedCareers.slice(0, relatedCareers.length >= 3 ? 3 : relatedCareers.length).map((relatedCareer, idx) => {
+                return (
+                    <Badge variant="outline" key={'related-career-' + idx} >
+                        {relatedCareer}
+                    </Badge>
+                );
+            })
+        } else {
+            return null;
+        }
+    };
+
     return (
         <>
             <div className="border-gray-200 border-[1px] rounded-lg">
@@ -61,13 +75,7 @@ export default function CareerResult(props: ICareerResult) {
                                         null :
                                         <>
                                             {
-                                                props.predictionResult?.relatedCareers.slice(0, 3).map((relatedCareer, idx) => {
-                                                    return (
-                                                        <Badge variant="outline" key={'related-career-' + idx} >
-                                                            {relatedCareer}
-                                                        </Badge>
-                                                    );
-                                                })
+                                                samplingRelatedCareers(props.predictionResult!.relatedCareers)
                                             }
                                         </>
                                 }

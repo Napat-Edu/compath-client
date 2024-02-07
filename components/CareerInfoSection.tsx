@@ -17,7 +17,7 @@ export default function CareerInfoSection() {
             return response.json();
         }).then((careerInfo: ICareerPredictionResult) => {
             setCareerPathInfo(careerInfo);
-            setIsloading(true);
+            setIsloading(false);
         });
     };
 
@@ -39,7 +39,9 @@ export default function CareerInfoSection() {
                 </div>
             </InsightBox>
             <InsightBox title="เงินเดือน" subtitle="ช่วงเงินเดือนของสายอาชีพนี้" icon="/hand-coin.svg" className="basis-1/3">
-                <p className="font-semibold text-lg">{toSalaryNumber(careerPathInfo!.baseSalary.min_salary)} - {toSalaryNumber(careerPathInfo!.baseSalary.max_salary)} ต่อเดือน</p>
+                {
+                    !isLoading && <p className="font-semibold text-lg">{toSalaryNumber(careerPathInfo?.baseSalary.min_salary ?? 0)} - {toSalaryNumber(careerPathInfo!.baseSalary.max_salary ?? 0)} ต่อเดือน</p>
+                }
             </InsightBox>
             <InsightBox title="ผู้ร่วมทาง" subtitle="จำนวนคนที่ทำนายได้สายอาชีพนี้" icon="/users.svg" className="basis-1/3">
                 <p className="font-semibold text-lg">{careerPathInfo?.careermatesCount} คน</p>
