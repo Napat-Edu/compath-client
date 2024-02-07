@@ -14,7 +14,12 @@ export function InsightSelect() {
     const localStorage = useLocalStorage();
 
     const handleHistoryChange = (id: string) => {
-        console.log(id);
+        // console.log(id);
+    };
+
+    const displayDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toDateString();
     };
 
     return (
@@ -28,7 +33,9 @@ export function InsightSelect() {
                     {
                         localStorage.predictionHistory.map((history, idx) => {
                             return (
-                                <SelectItem value={history.objectId} key={"history-" + history.result + idx}>{history.result}</SelectItem>
+                                <SelectItem value={history.objectId} key={"history-" + history.result + idx}>
+                                    {history.result} - {displayDate(history.submitDate)}
+                                </SelectItem>
                             );
                         })
                     }

@@ -53,8 +53,6 @@ export function FormDialog() {
             })
                 .then((res) => res.json())
                 .then((data: ICareerPredictionResult) => {
-                    console.log(data);
-                    
                     setPredictionResult(data);
                     setIsPredictionLoading(false);
                     return data;
