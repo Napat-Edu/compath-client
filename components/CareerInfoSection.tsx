@@ -11,8 +11,9 @@ export default function CareerInfoSection() {
     const [careerPathInfo, setCareerPathInfo] = useState<ICareerPredictionResult>();
     const { selectedInsight } = useSelectInsight();
 
-    const getCareerInfo = async (career: string) => {
-        await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_CAREER_ENDPOINT}?careerPath=${career}`, {
+    const getCareerInfo = async (careerPath: string) => {
+        const params = new URLSearchParams({ careerPath }).toString();
+        await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_CAREER_ENDPOINT}?${params}`, {
             method: "GET",
             headers: { 'Content-Type': 'application/json' }
         }).then((response) => {
