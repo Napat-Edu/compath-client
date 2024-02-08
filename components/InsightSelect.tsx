@@ -10,14 +10,16 @@ import {
 } from "@/components/ui/select"
 import useLocalStorage from "./hooks/useLocalStorage";
 import useSelectInsight from "./hooks/useSelectInsight";
+import { useEffect, useState } from "react";
 
 export function InsightSelect() {
     const localStorage = useLocalStorage();
     const selectInsight = useSelectInsight();
+    const [currentSelectCareer, setCurrentSelectCareer] = useState<string>();
 
     const handleHistoryChange = (id: string) => {
-        const currentSelectCareer = localStorage.findPredictionHistory(id);
-        selectInsight.upDateSelectedInsight(currentSelectCareer);
+        setCurrentSelectCareer(id);
+        selectInsight.upDateSelectedInsight(localStorage.findPredictionHistory(id));
     };
 
     const displayDate = (dateString: string) => {
@@ -25,8 +27,17 @@ export function InsightSelect() {
         return date.toDateString();
     };
 
+    useEffect(() => {
+        if (localStorage.isStorageReady) {
+            const latestHistory = localStorage.getLatestHistory();
+            setCurrentSelectCareer(latestHistory.objectId);
+            selectInsight.upDateSelectedInsight(latestHistory.result);
+        }
+    }, [localStorage.isStorageReady]);
+
     return (
-        <Select onValueChange={(id) => { handleHistoryChange(id) }}>
+        localStorage.isStorageReady &&
+        <Select onValueChange={(id) => { handleHistoryChange(id) }} value={currentSelectCareer}>
             <SelectTrigger className="w-52">
                 <SelectValue placeholder="เลือกการ์ดทำนาย" />
             </SelectTrigger>

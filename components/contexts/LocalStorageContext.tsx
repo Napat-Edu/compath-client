@@ -5,7 +5,9 @@ import { createContext, useEffect, useState } from "react";
 type localStorageContent = {
     predictionHistory: IPredictionHistory[],
     addPredictionHistory: (newPredictHistory: IPredictionHistory) => void,
-    findPredictionHistory: (id: string) => string
+    findPredictionHistory: (id: string) => string,
+    isStorageReady: boolean,
+    getLatestHistory: () => IPredictionHistory
 };
 
 export const LocalStorageContext = createContext<localStorageContent>({
@@ -15,20 +17,27 @@ export const LocalStorageContext = createContext<localStorageContent>({
     },
     findPredictionHistory: function (id: string): string {
         throw new Error("Function not implemented.");
+    },
+    isStorageReady: false,
+    getLatestHistory: function (): IPredictionHistory {
+        throw new Error("Function not implemented.");
     }
 });
 
 export const LocalStorageProvider = ({ children }: any) => {
     const [predictionHistory, setPredictionHistory] = useState<IPredictionHistory[]>([]);
+    const [isStorageReady, setIsStorageReady] = useState(false);
 
     useEffect(() => {
         const oldHistory = localStorage.getItem("predictionHistory");
-        setPredictionHistory(oldHistory ? JSON.parse(oldHistory) : []);
+        const sortedHistory = sortHistoryByDate(oldHistory ? JSON.parse(oldHistory) : []);
+        setPredictionHistory(sortedHistory);
+        setIsStorageReady(true);
     }, []);
 
     const addPredictionHistory = (newPredictHistory: IPredictionHistory) => {
         predictionHistory.push(newPredictHistory);
-        setPredictionHistory([...predictionHistory]);
+        setPredictionHistory(sortHistoryByDate([...predictionHistory]));
         localStorage.setItem("predictionHistory", JSON.stringify(predictionHistory));
     };
 
@@ -39,7 +48,27 @@ export const LocalStorageProvider = ({ children }: any) => {
         return history!.result ?? '';
     };
 
+    const sortHistoryByDate = (oldHistory: IPredictionHistory[]) => {
+        return oldHistory.sort(
+            (b, a) => Number(new Date(a.submitDate)) - Number(new Date(b.submitDate)),
+        );
+    };
+
+    const getLatestHistory = () => {
+        const latestHistory = predictionHistory.reduce((acc: IPredictionHistory, current: IPredictionHistory) => {
+            const currentDate = new Date(current.submitDate);
+            const accDate = acc ? new Date(acc.submitDate) : null;
+
+            if (!accDate || currentDate > accDate) {
+                return current;
+            } else {
+                return acc;
+            }
+        });
+        return latestHistory;
+    };
+
     return (
-        <LocalStorageContext.Provider value={{ predictionHistory, addPredictionHistory, findPredictionHistory }}>{children}</LocalStorageContext.Provider>
+        <LocalStorageContext.Provider value={{ predictionHistory, addPredictionHistory, findPredictionHistory, isStorageReady, getLatestHistory }}>{children}</LocalStorageContext.Provider>
     );
 };
