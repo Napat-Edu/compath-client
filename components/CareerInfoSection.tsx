@@ -25,7 +25,7 @@ export default function CareerInfoSection() {
     };
 
     useEffect(() => {
-        if (selectedInsight !== '') {
+        if (selectedInsight !== '' && selectedInsight) {
             setIsloading(true);
             getCareerInfo(selectedInsight);
         }

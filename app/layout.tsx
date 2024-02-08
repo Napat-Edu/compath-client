@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { IBM_Plex_Sans_Thai, Inter } from 'next/font/google'
+import { IBM_Plex_Sans_Thai } from 'next/font/google'
 import './globals.css'
 import { Sidebar } from '@/components/Sidebar'
 import { LocalStorageProvider } from '@/components/contexts/LocalStorageContext';
