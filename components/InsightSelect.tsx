@@ -28,7 +28,7 @@ export function InsightSelect() {
     };
 
     useEffect(() => {
-        if (localStorage.isStorageReady) {
+        if (localStorage.isStorageReady && localStorage.predictionHistory.length) {
             const latestHistory = localStorage.getLatestHistory();
             setCurrentSelectCareer(latestHistory.objectId);
             selectInsight.upDateSelectedInsight(latestHistory.result);

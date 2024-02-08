@@ -7,7 +7,7 @@ type localStorageContent = {
     addPredictionHistory: (newPredictHistory: IPredictionHistory) => void,
     findPredictionHistory: (id: string) => string,
     isStorageReady: boolean,
-    getLatestHistory: () => IPredictionHistory | never[]
+    getLatestHistory: () => IPredictionHistory
 };
 
 export const LocalStorageContext = createContext<localStorageContent>({
@@ -55,21 +55,17 @@ export const LocalStorageProvider = ({ children }: any) => {
     };
 
     const getLatestHistory = () => {
-        if (predictionHistory.length) {
-            const latestHistory = predictionHistory.reduce((acc: IPredictionHistory, current: IPredictionHistory) => {
-                const currentDate = new Date(current.submitDate);
-                const accDate = acc ? new Date(acc.submitDate) : null;
+        const latestHistory = predictionHistory.reduce((acc: IPredictionHistory, current: IPredictionHistory) => {
+            const currentDate = new Date(current.submitDate);
+            const accDate = acc ? new Date(acc.submitDate) : null;
 
-                if (!accDate || currentDate > accDate) {
-                    return current;
-                } else {
-                    return acc;
-                }
-            });
-            return latestHistory;
-        } else {
-            return [];
-        }
+            if (!accDate || currentDate > accDate) {
+                return current;
+            } else {
+                return acc;
+            }
+        });
+        return latestHistory;
     };
 
     return (
