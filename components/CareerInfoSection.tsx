@@ -38,7 +38,7 @@ export default function CareerInfoSection() {
                     {
                         careerPathInfo?.relatedCareers.map((career, idx) => {
                             return (
-                                <Badge key={career + "-" + idx} variant="outline">{career}</Badge>
+                                <Badge key={career + "-" + idx} variant="outline">{career.career}</Badge>
                             );
                         })
                     }
