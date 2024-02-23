@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
 import { Button } from "./ui/button";
-import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
+import { ICareer, ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
 import Image from "next/image";
 import { Alert, AlertDescription } from "./ui/alert"
 import { DialogClose } from "./ui/dialog";
@@ -25,12 +25,12 @@ export default function CareerResult(props: ICareerResult) {
         });
     };
 
-    const samplingRelatedCareers = (relatedCareers: string[]) => {
+    const samplingRelatedCareers = (relatedCareers: ICareer[]) => {
         if (relatedCareers!.length) {
             return relatedCareers.slice(0, relatedCareers.length >= 3 ? 3 : relatedCareers.length).map((relatedCareer, idx) => {
                 return (
                     <Badge variant="outline" key={'related-career-' + idx} >
-                        {relatedCareer}
+                        {relatedCareer.career}
                     </Badge>
                 );
             })

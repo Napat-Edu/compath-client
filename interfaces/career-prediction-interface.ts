@@ -1,12 +1,17 @@
 export interface ICareerPredictionResult {
   career: string;
   description: string;
-  relatedCareers: string[];
+  relatedCareers: ICareer[];
   baseSalary: ISalary;
   careermatesCount: number;
   icon: string | TrustedHTML;
   inputDate: Date;
   objectId?: any;
+}
+
+export interface ICareer {
+  career: string;
+  skillDomains: string[];
 }
 
 export interface ISalary {
