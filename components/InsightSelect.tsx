@@ -30,8 +30,8 @@ export function InsightSelect() {
     useEffect(() => {
         if (localStorage.isStorageReady && localStorage.predictionHistory.length) {
             const latestHistory = localStorage.getLatestHistory();
-            setCurrentSelectCareer(latestHistory.objectId);
-            selectInsight.upDateSelectedInsight(latestHistory.result);
+            setCurrentSelectCareer(latestHistory.object_id);
+            selectInsight.upDateSelectedInsight(latestHistory.career_path, latestHistory.object_id);
         }
     }, [localStorage.isStorageReady]);
 
@@ -47,8 +47,8 @@ export function InsightSelect() {
                     {
                         localStorage.predictionHistory.map((history, idx) => {
                             return (
-                                <SelectItem value={history.objectId} key={"history-" + history.result + idx}>
-                                    {history.result} - {displayDate(history.submitDate)}
+                                <SelectItem value={history.object_id} key={"history-" + history.result + idx}>
+                                    {history.result} - {displayDate(history.submit_date)}
                                 </SelectItem>
                             );
                         })

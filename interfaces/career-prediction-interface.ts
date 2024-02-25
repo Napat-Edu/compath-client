@@ -1,17 +1,17 @@
 export interface ICareerPredictionResult {
-  career: string;
-  description: string;
-  relatedCareers: ICareer[];
-  baseSalary: ISalary;
-  careermatesCount: number;
-  icon: string | TrustedHTML;
-  inputDate: Date;
-  objectId?: any;
+  career_path_name: string;
+  career_path_description: string;
+  related_careers: ICareer[];
+  base_salary: ISalary;
+  careermate_count: number;
+  icon_svg: string | TrustedHTML;
+  input_date: Date;
+  object_id?: any;
 }
 
 export interface ICareer {
   career: string;
-  skillDomains: string[];
+  skill_domains: string[];
 }
 
 export interface ISalary {
@@ -28,6 +28,6 @@ export interface IUserResume {
 
 export interface IPredictionHistory {
   result: string;
-  submitDate: string;
-  objectId?: any;
+  submit_date: string;
+  object_id?: any;
 }

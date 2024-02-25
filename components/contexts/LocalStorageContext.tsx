@@ -1,13 +1,14 @@
 'use client'
+import { IFocusCareerInsight } from "@/interfaces/career-insight-interface";
 import { IPredictionHistory } from "@/interfaces/career-prediction-interface";
 import { createContext, useEffect, useState } from "react";
 
 type localStorageContent = {
     predictionHistory: IPredictionHistory[],
     addPredictionHistory: (newPredictHistory: IPredictionHistory) => void,
-    findPredictionHistory: (id: string) => string,
+    findPredictionHistory: (id: string) => any,
     isStorageReady: boolean,
-    getLatestHistory: () => IPredictionHistory
+    getLatestHistory: () => any
 };
 
 export const LocalStorageContext = createContext<localStorageContent>({
@@ -15,11 +16,11 @@ export const LocalStorageContext = createContext<localStorageContent>({
     addPredictionHistory: function (newPredictHistory: IPredictionHistory): void {
         throw new Error("Function not implemented.");
     },
-    findPredictionHistory: function (id: string): string {
+    isStorageReady: false,
+    findPredictionHistory: function (id: string): any {
         throw new Error("Function not implemented.");
     },
-    isStorageReady: false,
-    getLatestHistory: function (): IPredictionHistory {
+    getLatestHistory: function () {
         throw new Error("Function not implemented.");
     }
 });
@@ -41,23 +42,27 @@ export const LocalStorageProvider = ({ children }: any) => {
         localStorage.setItem("predictionHistory", JSON.stringify(predictionHistory));
     };
 
-    const findPredictionHistory = (id: string): string => {
-        const history = predictionHistory.find((history) => {
-            return history.objectId == id;
+    const findPredictionHistory = (id: string) => {
+        const historyResult = predictionHistory.find((history) => {
+            if (history.object_id == id) {
+                return history;
+            } else {
+                return null;
+            }
         });
-        return history!.result ?? '';
+        return historyResult!.result ?? { career_path: '', object_id: '' };
     };
 
     const sortHistoryByDate = (oldHistory: IPredictionHistory[]) => {
         return oldHistory.sort(
-            (b, a) => Number(new Date(a.submitDate)) - Number(new Date(b.submitDate)),
+            (b, a) => Number(new Date(a.submit_date)) - Number(new Date(b.submit_date)),
         );
     };
 
     const getLatestHistory = () => {
         const latestHistory = predictionHistory.reduce((acc: IPredictionHistory, current: IPredictionHistory) => {
-            const currentDate = new Date(current.submitDate);
-            const accDate = acc ? new Date(acc.submitDate) : null;
+            const currentDate = new Date(current.submit_date);
+            const accDate = acc ? new Date(acc.submit_date) : null;
 
             if (!accDate || currentDate > accDate) {
                 return current;
@@ -65,7 +70,7 @@ export const LocalStorageProvider = ({ children }: any) => {
                 return acc;
             }
         });
-        return latestHistory;
+        return { career_path: latestHistory.result, object_id: latestHistory.object_id };
     };
 
     return (

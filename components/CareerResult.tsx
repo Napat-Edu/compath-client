@@ -19,9 +19,9 @@ export default function CareerResult(props: ICareerResult) {
 
     const handleSaveClick = () => {
         localStorage.addPredictionHistory({
-            result: props.predictionResult!.career ?? "Unknown",
-            submitDate: props.predictionResult!.inputDate.toString(),
-            objectId: props.predictionResult?.objectId
+            result: props.predictionResult!.career_path_name ?? "Unknown",
+            submit_date: props.predictionResult!.input_date.toString(),
+            object_id: props.predictionResult?.object_id
         });
     };
 
@@ -52,16 +52,16 @@ export default function CareerResult(props: ICareerResult) {
                                 props.isPredictionLoading ?
                                     null :
                                     <object
-                                        dangerouslySetInnerHTML={{ __html: props.predictionResult!.icon }}
+                                        dangerouslySetInnerHTML={{ __html: props.predictionResult!.icon_svg }}
                                         width="24px"
                                         height="24px"
                                     />
                             }
                             <div className="mb-2 mt-4 text-lg font-medium">
-                                {props.isPredictionLoading ? null : props.predictionResult?.career}
+                                {props.isPredictionLoading ? null : props.predictionResult?.career_path_name}
                             </div>
                             <p className="text-sm leading-tight text-muted-foreground">
-                                {props.isPredictionLoading ? null : props.predictionResult?.description}
+                                {props.isPredictionLoading ? null : props.predictionResult?.career_path_description}
                             </p>
                         </div>
                     </li>
@@ -76,7 +76,7 @@ export default function CareerResult(props: ICareerResult) {
                                         null :
                                         <>
                                             {
-                                                samplingRelatedCareers(props.predictionResult!.relatedCareers)
+                                                samplingRelatedCareers(props.predictionResult!.related_careers)
                                             }
                                         </>
                                 }
@@ -89,7 +89,7 @@ export default function CareerResult(props: ICareerResult) {
                                 {
                                     props.isPredictionLoading ?
                                         null :
-                                        `${toSalaryNumber(props.predictionResult!.baseSalary.min_salary)} - ${toSalaryNumber(props.predictionResult!.baseSalary.max_salary)} บาท`
+                                        `${toSalaryNumber(props.predictionResult!.base_salary.min_salary)} - ${toSalaryNumber(props.predictionResult!.base_salary.max_salary)} บาท`
                                 }
                             </p>
                         </div>
@@ -99,7 +99,7 @@ export default function CareerResult(props: ICareerResult) {
                                 {
                                     props.isPredictionLoading ?
                                         null :
-                                        props.predictionResult?.careermatesCount + ' คน'
+                                        props.predictionResult?.careermate_count + ' คน'
                                 }
                             </p>
                         </div>
