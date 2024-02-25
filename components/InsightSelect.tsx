@@ -86,7 +86,7 @@ export function InsightSelect() {
                                     <p className="basis-3/6 text-left">
                                         <Image
                                             src={`/career-icon/${history.result}.svg`}
-                                            alt="resume icon"
+                                            alt={`${history.result} icon`}
                                             height={0}                                               
                                             width={0}
                                             className="mr-2 h-4 w-auto float-left" />
@@ -102,8 +102,8 @@ export function InsightSelect() {
                         <Link href='/'>
                             <SelectLabel className="flex flex-row">
                                 <Image
-                                src="resume.svg"
-                                alt="resume icon"
+                                src="more-predict.svg"
+                                alt="more career prediction icon"
                                 height={0}
                                 width={0}
                                 className="mr-2 h-4 w-auto float-left" />
