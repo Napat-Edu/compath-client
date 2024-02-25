@@ -8,11 +8,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { Separator } from "@/components/ui/separator"
 
 import useLocalStorage from "./hooks/useLocalStorage";
 import useSelectInsight from "./hooks/useSelectInsight";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export function InsightSelect() {
     const localStorage = useLocalStorage();
@@ -96,6 +98,18 @@ export function InsightSelect() {
                                 </SelectItem>
                             );
                         })}
+                        <Separator className="my-1"/>
+                        <Link href='/'>
+                            <SelectLabel className="flex flex-row">
+                                <Image
+                                src="resume.svg"
+                                alt="resume icon"
+                                height={0}
+                                width={0}
+                                className="mr-2 h-4 w-auto float-left" />
+                                เพิ่มการ์ดทำนายใหม่
+                            </SelectLabel>
+                        </Link>
                 </SelectGroup>
             </SelectContent>
         </Select>
