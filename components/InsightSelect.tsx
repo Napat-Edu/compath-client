@@ -60,58 +60,62 @@ export function InsightSelect() {
 
     return (
         localStorage.isStorageReady &&
-        <Select onValueChange={(id) => { handleHistoryChange(id) }} value={currentSelectCareer}>
-            <Image
-                src="resume.svg"
-                alt="resume icon"
-                height={0}
-                width={0}
-                className="mx-auto h-6 w-auto m-1" />
-            <h3 className="text-center font-semibold">การ์ดสายทำนาย</h3>
-            <SelectTrigger className="w-[492px] py-2">
-                <SelectValue placeholder="เลือกการ์ดทำนาย" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectGroup>
-                    <SelectLabel className="flex flex-row">
-                        <p className="basis-[35%] text-left">สายอาชีพ</p>
-                        <p className="basis-[24%] text-left">เวลาที่ทำนาย</p>
-                        <p className="text-left">วันที่ทำนาย</p>
-                    </SelectLabel>
-                    {
-                        localStorage.predictionHistory.map((history, idx) => {
-                            return (
-                                <SelectItem value={history.object_id} key={"history-" + history.result + idx}>
-                                    <div className="flex flex-row justify-evenly gap-2 w-96">
-                                        <p className="basis-3/6 text-left">
-                                            <Image
-                                                src={`/career-icon/${history.result}.svg`}
-                                                alt={`${history.result} icon`}
-                                                height={0}
-                                                width={0}
-                                                className="mr-2 h-4 w-auto float-left" />
-                                            {history.result}
-                                        </p>
-                                        <p className="basis-2/6">{displayTime(history.submit_date)}</p>
-                                        <p className="basis-2/6">{displayDate(history.submit_date)}</p>
-                                    </div>
-                                </SelectItem>
-                            );
-                        })}
-                    <Separator className="my-1" />
-                    <Link href='/'>
-                        <SelectLabel className="flex flex-row">
-                            <Image
-                                src="more-predict.svg"
-                                alt="more career prediction icon"
-                                height={0}
-                                width={0}
-                                className="mr-2 h-4 w-auto float-left" />
-                            เพิ่มการ์ดทำนายใหม่
+        <div className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-row gap-4 p-6 leading-9 justify-between">
+            <Select onValueChange={(id) => { handleHistoryChange(id) }} value={currentSelectCareer}>
+                <Image
+                    src="resume.svg"
+                    alt="resume icon"
+                    height={0}
+                    width={0}
+                    className="mx-auto h-6 w-auto m-1" />
+                <h3 className="text-center font-semibold">การ์ดสายทำนาย</h3>
+                <SelectTrigger className="w-[492px] py-2 flex flex-row justify-between">
+                    <div className="w-full">
+                        <SelectValue className="w-full" placeholder="เลือกการ์ดทำนาย" />
+                    </div>
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectGroup>
+                        <SelectLabel className="flex flex-row w-full pr-8">
+                            <p className="basis-2/6 text-left">สายอาชีพ</p>
+                            <p className="basis-2/6 text-left">เวลาที่ทำนาย</p>
+                            <p className="basis-2/6 text-left">วันที่ทำนาย</p>
                         </SelectLabel>
-                    </Link>
-                </SelectGroup>
-            </SelectContent>
-        </Select>
+                        {
+                            localStorage.predictionHistory.map((history, idx) => {
+                                return (
+                                    <SelectItem value={history.object_id} key={"history-" + history.result + idx}>
+                                        <div className="flex flex-row">
+                                            <p className="basis-2/6 text-left truncate">
+                                                <Image
+                                                    src={`/career-icon/${history.result}.svg`}
+                                                    alt={`${history.result} icon`}
+                                                    height={0}
+                                                    width={0}
+                                                    className="mr-2 h-4 w-auto float-left" />
+                                                {history.result}
+                                            </p>
+                                            <p className="basis-2/6">{displayTime(history.submit_date)}</p>
+                                            <p className="basis-2/6">{displayDate(history.submit_date)}</p>
+                                        </div>
+                                    </SelectItem>
+                                );
+                            })}
+                        <Separator className="my-1" />
+                        <Link href='/'>
+                            <SelectLabel className="flex flex-row">
+                                <Image
+                                    src="more-predict.svg"
+                                    alt="more career prediction icon"
+                                    height={0}
+                                    width={0}
+                                    className="mr-2 h-4 w-auto float-left" />
+                                เพิ่มการ์ดทำนายใหม่
+                            </SelectLabel>
+                        </Link>
+                    </SelectGroup>
+                </SelectContent>
+            </Select>
+        </div>
     )
 }
