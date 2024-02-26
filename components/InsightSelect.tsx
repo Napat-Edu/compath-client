@@ -69,7 +69,7 @@ export function InsightSelect() {
                     width={0}
                     className="mx-auto h-6 w-auto m-1" />
                 <h3 className="text-center font-semibold">การ์ดสายทำนาย</h3>
-                <SelectTrigger className="w-[492px] py-2 flex flex-row justify-between">
+                <SelectTrigger className="w-[492px] py-2 flex flex-row">
                     <div className="w-full">
                         <SelectValue className="w-full" placeholder="เลือกการ์ดทำนาย" />
                     </div>
@@ -95,8 +95,8 @@ export function InsightSelect() {
                                                     className="mr-2 h-4 w-auto float-left" />
                                                 {history.result}
                                             </p>
-                                            <p className="basis-2/6">{displayTime(history.submit_date)}</p>
-                                            <p className="basis-2/6">{displayDate(history.submit_date)}</p>
+                                            <p className="basis-2/6 text-left">{displayTime(history.submit_date)}</p>
+                                            <p className="basis-2/6 text-left">{displayDate(history.submit_date)}</p>
                                         </div>
                                     </SelectItem>
                                 );
