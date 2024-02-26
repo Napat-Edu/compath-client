@@ -16,14 +16,18 @@ export default function CareerInsightPage() {
                         <h1 className="text-primary font-bold text-4xl">Career Insight</h1>
                         <p className="text-[#71717A]">แสดงผลข้อมูลเชิงลึกของอาชีพที่คุณทำนายได้</p>
                     </div>
-                    <InsightSelect></InsightSelect>
+                    <div className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-row gap-4 p-6 leading-9 justify-between">
+                        <InsightSelect></InsightSelect>
+                    </div>
                 </section>
 
                 {
                     localStorage.isStorageReady && localStorage.predictionHistory.length ?
                         <>
-                            <h3 className="font-semibold text-lg flex flex-row gap-[6px] mb-4"><Image src="/box.svg" alt="box-icon" width={0} height={0} className="w-auto h-6" /> ข้อมูลทั่วไป</h3>
-                            <CareerInfoSection />
+                            <div className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-col gap-4 p-6">
+                                <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Image src="/box.svg" alt="box-icon" width={0} height={0} className="w-auto h-6" /> ข้อมูลทั่วไป</h3>
+                                <CareerInfoSection />
+                            </div>
 
                             <h3 className="font-semibold text-lg">ทักษะ</h3>
                         </> :

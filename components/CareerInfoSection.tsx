@@ -32,7 +32,7 @@ export default function CareerInfoSection() {
     }, [selectedInsight.career_path]);
 
     return (
-        <div className="flex flex-row gap-4 min-w-full mb-6">
+        <div className="flex flex-row gap-4 min-w-full">
             <InsightBox title="อาชีพ" subtitle="ตัวอย่างอาชีพที่อยู่ในสายอาชีพนี้" icon="/group.svg" className="basis-1/3">
                 <div className="flex flex-row flex-wrap gap-1">
                     {
