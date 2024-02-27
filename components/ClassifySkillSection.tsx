@@ -1,16 +1,49 @@
-import { ICareer, ICareerPredictionResult, ISkillDomain } from "@/interfaces/career-prediction-interface";
+import { ICareer, ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
 import InsightBox from "./InsightBox";
 import { Badge } from "./ui/badge";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
+import { Doughnut } from 'react-chartjs-2';
+import { ArcElement, Chart, Legend, Tooltip } from "chart.js";
 
 interface IClassifySkillSection {
     careerPathInfo: ICareerPredictionResult;
     isLoading: boolean;
 }
 
+Chart.register(ArcElement, Tooltip, Legend);
+
 export default function ClassifySkillSection(props: IClassifySkillSection) {
+    const data = {
+        labels: ['ควรเรียนรู้', 'อื่น ๆ', 'เหมาะสม'],
+        datasets: [
+            {
+                data: [5, 10, 5],
+                backgroundColor: [
+                    '#EDF8EF',
+                    '#EFEFEF',
+                    '#4EBC62',
+                ],
+                borderColor: [
+                    '#FFFFFF',
+                ],
+                borderWidth: 2,
+            },
+        ],
+    };
+
+    const options = {
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                enabled: false
+            },
+            maintainAspectRatio: false
+        },
+    };
 
     const mapExistingSkill = (related_careers: ICareer[]) => {
         const domains = related_careers[0].skill_domains;
@@ -67,7 +100,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
 
     return (
         <div className="flex flex-row gap-4">
-            <div className="flex flex-col gap-4 basis-1/2">
+            <div className="flex flex-col gap-4 basis-1/2 h-full">
                 <InsightBox
                     title={"ทักษะที่เหมาะสม"}
                     subtitle={"ทักษะที่มักจะมีอยู่ในเรซูเมในสายอาชีพนี้ ที่คุณมีอยู่แล้ว"}
@@ -107,8 +140,13 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                 className="basis-1/2"
             >
                 <div className="flex flex-col h-full">
-                    <div className="border-[1px] rounded-[8px] p-5 h-full">
-                        {/* Chartjs here */}
+                    <div className="flex flex-row justify-center items-center gap-6 border-[1px] rounded-[8px] p-5 h-full">
+                        <Doughnut className="max-h-full max-w-full" data={data} options={options}></Doughnut>
+                        <div className="flex flex-col gap-5">
+                            <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#4EBC62] mr-1" />เหมาะสม : 0</Badge>
+                            <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EDF8EF] mr-1" />ควรเรียนรู้ : 0</Badge>
+                            <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EFEFEF] mr-1" />อื่น ๆ : 0</Badge>
+                        </div>
                     </div>
                     <div className="flex flex-row p-5 border-[1px] rounded-[8px] gap-3 items-center w-full justify-between mt-4">
                         <div className="flex flex-col">
