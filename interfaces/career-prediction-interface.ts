@@ -11,7 +11,24 @@ export interface ICareerPredictionResult {
 
 export interface ICareer {
   career: string;
-  skill_domains: string[];
+  skill_domains: ISkillDomain[];
+  alt_skills: IAltSkill[];
+}
+
+export interface IAltSkill {
+  name: string[];
+}
+
+export interface ISkillDomain {
+  id: string;
+  name: string;
+  skill_list: ISkillInfo[];
+  is_in_resume: boolean;
+}
+
+export interface ISkillInfo {
+  isExisInResume: boolean;
+  name: string[];
 }
 
 export interface ISalary {

@@ -1,12 +1,30 @@
 'use client'
 import CareerInfoSection from "@/components/CareerInfoSection";
+import ClassifySkillSection from "@/components/ClassifySkillSection";
 import { InsightSelect } from "@/components/InsightSelect";
 import { SelectInsightProvider } from "@/components/contexts/SelectInsightContext";
 import useLocalStorage from "@/components/hooks/useLocalStorage"
+import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function CareerInsightPage() {
     const localStorage = useLocalStorage();
+    const [isLoading, setIsloading] = useState(true);
+    const [careerPathInfo, setCareerPathInfo] = useState<ICareerPredictionResult>();
+
+    const getCareerInfo = async (careerPath: string, objectId: string) => {
+        const params = new URLSearchParams({ career_path: careerPath, object_id: objectId }).toString();
+        await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_INSIGHT_ENDPOINT}?${params}`, {
+            method: "GET",
+            headers: { 'Content-Type': 'application/json' }
+        }).then((response) => {
+            return response.json();
+        }).then((careerInfo: ICareerPredictionResult) => {
+            setCareerPathInfo(careerInfo);
+            setIsloading(false);
+        });
+    };
 
     return (
         <section className="w-full px-6">
@@ -22,12 +40,15 @@ export default function CareerInsightPage() {
                 {
                     localStorage.isStorageReady && localStorage.predictionHistory.length ?
                         <>
-                            <div className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-col gap-4 p-6">
+                            <section className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-col gap-4 p-6">
                                 <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Image src="/box.svg" alt="box-icon" width={0} height={0} className="w-auto h-6" /> ข้อมูลทั่วไป</h3>
-                                <CareerInfoSection />
-                            </div>
+                                <CareerInfoSection getCareerInfo={getCareerInfo} careerPathInfo={careerPathInfo!} isLoading={isLoading} setIsloading={setIsloading} />
+                            </section>
 
-                            <h3 className="font-semibold text-lg">ทักษะ</h3>
+                            <section className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-col gap-4 p-6 mt-6">
+                                <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Image src="/boxes.svg" alt="boxes-icon" width={0} height={0} className="w-auto h-6" />ทักษะ</h3>
+                                <ClassifySkillSection careerPathInfo={careerPathInfo!} isLoading={isLoading} />
+                            </section>
                         </> :
                         <>
                             <h3 className="font-bold text-2xl text-center">ยังไม่มีข้อมูล โปรดลองทำนายก่อน</h3>
