@@ -1,6 +1,8 @@
 import { ICareer, ICareerPredictionResult, ISkillDomain } from "@/interfaces/career-prediction-interface";
 import InsightBox from "./InsightBox";
 import { Badge } from "./ui/badge";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import React from "react";
 
 interface IClassifySkillSection {
     careerPathInfo: ICareerPredictionResult;
@@ -37,11 +39,28 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         });
         const filteredDomain = nonExistingSkillDomain.filter((domain) => domain.skill_list.length > 0);
         return (
-            <>
+            <React.Fragment key={`${related_careers[0]}-learning-domain`}>
                 {filteredDomain.map((domain, idx) => {
-                    return <Badge className="border-primary" key={`non-exist-domain-${idx}`} variant={'outline'}>{domain.name}</Badge>;
+                    return (
+                        <HoverCard key={`non-exist-domain-${idx}`}>
+                            <HoverCardTrigger>
+                                <Badge className="border-primary" variant={'outline'} key={`badge-${idx}`}>
+                                    {domain.name}
+                                </Badge>
+                            </HoverCardTrigger>
+                            <HoverCardContent>
+                                <div className="flex flex-row flex-wrap justify-center gap-1">
+                                    {domain.skill_list.map((skill, skillIdx) => (
+                                        <Badge key={`non-exist-domain-${idx}-skill-${skillIdx}`} variant={'outline'}>
+                                            {skill.name[0]}
+                                        </Badge>
+                                    ))}
+                                </div>
+                            </HoverCardContent>
+                        </HoverCard>
+                    );
                 })}
-            </>
+            </React.Fragment>
         );
     };
 
