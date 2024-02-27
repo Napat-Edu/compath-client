@@ -16,7 +16,7 @@ export default function InsightBox(props: IInsightBox) {
                 <Image src={props.icon} alt={`${props.icon}-icon`} width={24} height={24} />
             </div>
             <h5 className="text-gray-500">{props.subtitle}</h5>
-            <div className="mt-4">
+            <div className="mt-4 h-full">
                 {props.children}
             </div>
         </div>

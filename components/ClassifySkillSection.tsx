@@ -3,6 +3,7 @@ import InsightBox from "./InsightBox";
 import { Badge } from "./ui/badge";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import React from "react";
+import { Button } from "./ui/button";
 
 interface IClassifySkillSection {
     careerPathInfo: ICareerPredictionResult;
@@ -104,7 +105,20 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                 subtitle={"โปรดกรอกข้อมูลให้ระบบเพื่อนำไปทำนายสายอาชีพที่เหมาะสมกับคุณ"}
                 icon={"/area-chart.svg"}
                 className="basis-1/2"
-            ></InsightBox>
+            >
+                <div className="flex flex-col h-full">
+                    <div className="border-[1px] rounded-[8px] p-5 h-full">
+                        {/* Chartjs here */}
+                    </div>
+                    <div className="flex flex-row p-5 border-[1px] rounded-[8px] gap-3 items-center w-full justify-between mt-4">
+                        <div className="flex flex-col">
+                            <h5 className="font-medium text-base">อาชีพและทักษะที่เกี่ยวข้อง</h5>
+                            <p className="font-normal text-sm text-gray-500">คุณสามารถดูอาชีพและทักษะที่เกี่ยวข้องอื่น ๆ ได้</p>
+                        </div>
+                        <Button>ไปดู</Button>
+                    </div>
+                </div>
+            </InsightBox>
         </div>
     );
 }
