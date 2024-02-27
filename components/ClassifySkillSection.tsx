@@ -42,7 +42,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
             <React.Fragment key={`${related_careers[0]}-learning-domain`}>
                 {filteredDomain.map((domain, idx) => {
                     return (
-                        <HoverCard key={`non-exist-domain-${idx}`}>
+                        <HoverCard key={`non-exist-domain-${idx}`} openDelay={0} closeDelay={0}>
                             <HoverCardTrigger>
                                 <Badge className="border-primary" variant={'outline'} key={`badge-${idx}`}>
                                     {domain.name}
