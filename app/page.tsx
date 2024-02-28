@@ -5,7 +5,7 @@ import Image from "next/image";
 export default function Home() {
 
   return (
-    <section className="w-full px-6">
+    <section className="w-5/6 px-6">
 
       <section className="border-b-2 border-[#E4E4E7] pt-6 pb-4 flex flex-col gap-1">
         <h1 className="text-primary font-bold text-4xl">Career Prediction</h1>
@@ -26,8 +26,8 @@ export default function Home() {
         <FormDialog></FormDialog>
       </section>
 
-      <section>
-        <HistoryCard></HistoryCard>
+      <section className="min-h-96 flex flex-col mt-8 mb-8">
+          <HistoryCard></HistoryCard>
       </section>
 
     </section>
