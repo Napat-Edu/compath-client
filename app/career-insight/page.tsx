@@ -45,7 +45,7 @@ export default function CareerInsightPage() {
                                 <CareerInfoSection getCareerInfo={getCareerInfo} careerPathInfo={careerPathInfo!} isLoading={isLoading} setIsloading={setIsloading} />
                             </section>
 
-                            <section className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-col gap-4 p-6 mt-6">
+                            <section className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-col gap-4 p-6 mt-6 mb-6">
                                 <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Image src="/boxes.svg" alt="boxes-icon" width={0} height={0} className="w-auto h-6" />ทักษะ</h3>
                                 <ClassifySkillSection careerPathInfo={careerPathInfo!} isLoading={isLoading} />
                             </section>

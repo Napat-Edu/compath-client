@@ -145,7 +145,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
             {
                 props.careerPathInfo.related_careers.map((career, tabCareerIdx) => {
                     return (
-                        <TabsContent value={`${career.career}`} key={`tab-content-${career.career}`}>
+                        <TabsContent value={`${career.career}`} key={`tab-content-${career.career}`} className="mt-4">
                             <div className="flex flex-row gap-4">
                                 <div className="flex flex-col gap-4 basis-1/2 h-full">
                                     <InsightBox
