@@ -26,7 +26,7 @@ export default function CareerInfoSection(props: ICareerInfoSection) {
     return (
         <div className="flex flex-row gap-4 min-w-full">
             <InsightBox title="อาชีพ" subtitle="ตัวอย่างอาชีพที่อยู่ในสายอาชีพนี้" icon="/group.svg" className="basis-1/3">
-                <div className="flex flex-row flex-wrap gap-1">
+                <div className={`flex flex-row flex-wrap gap-1 ${props.isLoading ? 'bg-slate-100 rounded-lg h-6 animate-pulse bg-gradient-to-b' : null}`}>
                     {
                         !props.isLoading && props.careerPathInfo.related_careers.map((career, idx) => {
                             return (
@@ -37,14 +37,18 @@ export default function CareerInfoSection(props: ICareerInfoSection) {
                 </div>
             </InsightBox>
             <InsightBox title="เงินเดือน" subtitle="ช่วงเงินเดือนของสายอาชีพนี้" icon="/hand-coin.svg" className="basis-1/3">
-                {
-                    !props.isLoading && <p className="font-semibold text-lg">{toSalaryNumber(props.careerPathInfo.base_salary.min_salary ?? 0)} - {toSalaryNumber(props.careerPathInfo.base_salary.max_salary ?? 0)} ต่อเดือน</p>
-                }
+                <div className={`${props.isLoading ? 'bg-slate-100 rounded-lg h-6 animate-pulse bg-gradient-to-b' : null}`}>
+                    {
+                        !props.isLoading && <p className={`font-semibold text-lg`}>{toSalaryNumber(props.careerPathInfo.base_salary.min_salary ?? 0)} - {toSalaryNumber(props.careerPathInfo.base_salary.max_salary ?? 0)} ต่อเดือน</p>
+                    }
+                </div>
             </InsightBox>
             <InsightBox title="ผู้ร่วมทาง" subtitle="จำนวนคนที่ทำนายได้สายอาชีพนี้" icon="/users.svg" className="basis-1/3">
-                {
-                    !props.isLoading && <p className="font-semibold text-lg">{props.careerPathInfo.careermate_count} คน</p>
-                }
+                <div className={`${props.isLoading ? 'bg-slate-100 rounded-lg h-6 animate-pulse bg-gradient-to-b' : null}`}>
+                    {
+                        !props.isLoading && <p className={`font-semibold text-lg`}>{props.careerPathInfo.careermate_count} คน</p>
+                    }
+                </div>
             </InsightBox>
         </div>
     );
