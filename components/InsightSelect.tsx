@@ -9,7 +9,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
-
+import { displayDate, displayTime } from "./utils/utils";
 import useLocalStorage from "./hooks/useLocalStorage";
 import useSelectInsight from "./hooks/useSelectInsight";
 import { useEffect, useState } from "react";
@@ -23,32 +23,9 @@ export function InsightSelect() {
 
     const handleHistoryChange = (id: string) => {
         setCurrentSelectCareer(id);
-        selectInsight.upDateSelectedInsight(localStorage.findPredictionHistory(id));
+        const foundedHistory = localStorage.findPredictionHistory(id);
+        selectInsight.upDateSelectedInsight(foundedHistory.career_path, foundedHistory.object_id);
     };
-
-    const displayDate = (dateString: string) => {
-        const date = new Date(dateString);
-        return date.toDateString();
-    };
-
-    const displayTime = (dateString: string) => {
-        const date = new Date(dateString);
-        let ampm = 'AM'
-        let hours = date.getHours();
-        const minutes = date.getMinutes();
-
-        if (hours == 12) {
-            ampm = 'PM'
-        } else if (hours == 0) {
-            hours = 12
-        } else if (hours > 12) {
-            hours -= 12
-            ampm = 'PM'
-        }
-
-        const time = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
-        return time;
-    }
 
     useEffect(() => {
         if (localStorage.isStorageReady && localStorage.predictionHistory.length) {

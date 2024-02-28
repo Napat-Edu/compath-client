@@ -50,7 +50,11 @@ export const LocalStorageProvider = ({ children }: any) => {
                 return null;
             }
         });
-        return historyResult!.result ?? { career_path: '', object_id: '' };
+        const foundedHistory = {
+            career_path: historyResult?.result ?? "",
+            object_id: historyResult?.object_id ?? ""
+        };
+        return foundedHistory;
     };
 
     const sortHistoryByDate = (oldHistory: IPredictionHistory[]) => {
