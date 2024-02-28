@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Doughnut } from 'react-chartjs-2';
 import { ArcElement, Chart, Legend, Tooltip } from "chart.js";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 interface IClassifySkillSection {
     careerPathInfo: ICareerPredictionResult;
@@ -51,8 +52,8 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         },
     };
 
-    const findExistingSkill = (related_careers: ICareer[]) => {
-        const domains = related_careers[0].skill_domains;
+    const findExistingSkill = (related_careers: ICareer[], tabCareerIdx: number) => {
+        const domains = related_careers[tabCareerIdx].skill_domains;
         let existSkills: string[] = [];
         domains.forEach((domain) => {
             domain.skill_list.forEach((skill) => {
@@ -64,8 +65,8 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         return existSkills;
     };
 
-    const findNonExistingDomain = (related_careers: ICareer[]) => {
-        const domains = related_careers[0].skill_domains;
+    const findNonExistingDomain = (related_careers: ICareer[], tabCareerIdx: number) => {
+        const domains = related_careers[tabCareerIdx].skill_domains;
         const nonExistingSkillDomain = domains.map((domain) => {
             const isSkillInDomainExist = domain.skill_list.some((skill) => skill.isExisInResume);
             const newSkillList = isSkillInDomainExist ? [] : domain.skill_list.filter((skill) => !skill.isExisInResume);
@@ -75,8 +76,8 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         return filteredDomain;
     };
 
-    const mapExistingSkill = (related_careers: ICareer[]) => {
-        const existSkills = findExistingSkill(related_careers);
+    const mapExistingSkill = (related_careers: ICareer[], tabCareerIdx: number) => {
+        const existSkills = findExistingSkill(related_careers, tabCareerIdx);
         return (
             <>
                 {existSkills.map((existSkill, idx) => {
@@ -86,10 +87,10 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         );
     };
 
-    const mapNonExistingDomain = (related_careers: ICareer[]) => {
-        const filteredDomain = findNonExistingDomain(related_careers);
+    const mapNonExistingDomain = (related_careers: ICareer[], tabCareerIdx: number) => {
+        const filteredDomain = findNonExistingDomain(related_careers, tabCareerIdx);
         return (
-            <React.Fragment key={`${related_careers[0]}-learning-domain`}>
+            <React.Fragment key={`${related_careers[tabCareerIdx]}-learning-domain`}>
                 {filteredDomain.map((domain, idx) => {
                     return (
                         <HoverCard key={`non-exist-domain-${idx}`} openDelay={0} closeDelay={0}>
@@ -114,80 +115,102 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         );
     };
 
+    const handleCareerChange = (careerIndex: number) => {
+        const existSkills = findExistingSkill(props.careerPathInfo.related_careers, careerIndex);
+        const nonExistSkill = findNonExistingDomain(props.careerPathInfo.related_careers, careerIndex);
+        setSkillTypeCount({
+            existSkill: existSkills.length,
+            nonExistSkill: nonExistSkill.length,
+            altSkill: props.careerPathInfo.related_careers[careerIndex].alt_skills.length
+        });
+    };
+
     useEffect(() => {
         if (!props.isLoading) {
-            const existSkills = findExistingSkill(props.careerPathInfo.related_careers);
-            const nonExistSkill = findNonExistingDomain(props.careerPathInfo.related_careers);
-            setSkillTypeCount({
-                existSkill: existSkills.length,
-                nonExistSkill: nonExistSkill.length,
-                altSkill: props.careerPathInfo.related_careers[0].alt_skills.length
-            });
+            handleCareerChange(0);
         }
         return;
     }, [props.isLoading]);
 
     return (
-        <div className="flex flex-row gap-4">
-            <div className="flex flex-col gap-4 basis-1/2 h-full">
-                <InsightBox
-                    title={"ทักษะที่เหมาะสม"}
-                    subtitle={"ทักษะที่มักจะมีอยู่ในเรซูเมในสายอาชีพนี้ ที่คุณมีอยู่แล้ว"}
-                    icon={"/circle-check.svg"}
-                >
-                    <div className="flex flex-row flex-wrap gap-1">
-                        {!props.isLoading && mapExistingSkill(props.careerPathInfo.related_careers)}
-                    </div>
-                </InsightBox>
-                <InsightBox
-                    title={"ทักษะที่ควรเรียนรู้"}
-                    subtitle={"ทักษะที่มักจะมีอยู่ในเรซูเมในสายอาชีพนี้  ที่คุณควรเรียนรู้เพิ่มเติม"}
-                    icon={"/circle-plus.svg"}
-                >
-                    <div className="flex flex-row flex-wrap gap-1">
-                        {!props.isLoading && mapNonExistingDomain(props.careerPathInfo.related_careers)}
-                    </div>
-                </InsightBox>
-                <InsightBox
-                    title={"ทักษะอื่น ๆ"}
-                    subtitle={"ทักษะที่ไม่เกี่ยวข้องกับสายอาชีพนี้มากนัก แต่ที่คุณยังสามารถพัฒนาต่อไปได้"}
-                    icon={"/circle-dot.svg"}
-                >
-                    <div className="flex flex-row flex-wrap gap-1">
-                        {
-                            !props.isLoading && props.careerPathInfo.related_careers[0].alt_skills.map((domain, idx) => {
-                                return <Badge key={`skill-${idx}`} variant={'outline'}>{domain.name[0]}</Badge>;
-                            })
-                        }
-                    </div>
-                </InsightBox>
-            </div>
-            <InsightBox
-                title={"กราฟทักษะ"}
-                subtitle={"โปรดกรอกข้อมูลให้ระบบเพื่อนำไปทำนายสายอาชีพที่เหมาะสมกับคุณ"}
-                icon={"/area-chart.svg"}
-                className="basis-1/2"
-            >
-                <div className="flex flex-col h-full">
-                    <div className="flex flex-row justify-center items-center gap-6 border-[1px] rounded-[8px] p-5 h-full">
-                        <div className="flex flex-row justify-center align-middle items-center h-full">
-                            {!props.isLoading && <Doughnut className="max-h-full max-w-full" data={data} options={options}></Doughnut>}
-                        </div>
-                        <div className="flex flex-col gap-5">
-                            <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#4EBC62] mr-1" />เหมาะสม : {skillTypeCount.existSkill}</Badge>
-                            <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EDF8EF] mr-1" />ควรเรียนรู้ : {skillTypeCount.nonExistSkill}</Badge>
-                            <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EFEFEF] mr-1" />อื่น ๆ : {skillTypeCount.altSkill}</Badge>
-                        </div>
-                    </div>
-                    <div className="flex flex-row p-5 border-[1px] rounded-[8px] gap-3 items-center w-full justify-between mt-4">
-                        <div className="flex flex-col">
-                            <h5 className="font-medium text-base">อาชีพและทักษะที่เกี่ยวข้อง</h5>
-                            <p className="font-normal text-sm text-gray-500">คุณสามารถดูอาชีพและทักษะที่เกี่ยวข้องอื่น ๆ ได้</p>
-                        </div>
-                        <Button>ไปดู</Button>
-                    </div>
-                </div>
-            </InsightBox>
-        </div>
+        !props.isLoading &&
+        <Tabs defaultValue={`${props.careerPathInfo.related_careers[0].career}`} className="w-full">
+            <TabsList>
+                {
+                    props.careerPathInfo.related_careers.map((career, careerIndex) => {
+                        return <TabsTrigger value={`${career.career}`} key={`tab-list-${career.career}`} onClick={() => { handleCareerChange(careerIndex) }}>{career.career}</TabsTrigger>;
+                    })
+                }
+            </TabsList>
+            {
+                props.careerPathInfo.related_careers.map((career, tabCareerIdx) => {
+                    return (
+                        <TabsContent value={`${career.career}`} key={`tab-content-${career.career}`}>
+                            <div className="flex flex-row gap-4">
+                                <div className="flex flex-col gap-4 basis-1/2 h-full">
+                                    <InsightBox
+                                        title={"ทักษะที่เหมาะสม"}
+                                        subtitle={"ทักษะที่มักจะมีอยู่ในเรซูเมในสายอาชีพนี้ ที่คุณมีอยู่แล้ว"}
+                                        icon={"/circle-check.svg"}
+                                    >
+                                        <div className="flex flex-row flex-wrap gap-1">
+                                            {!props.isLoading && mapExistingSkill(props.careerPathInfo.related_careers, tabCareerIdx)}
+                                        </div>
+                                    </InsightBox>
+                                    <InsightBox
+                                        title={"ทักษะที่ควรเรียนรู้"}
+                                        subtitle={"ทักษะที่มักจะมีอยู่ในเรซูเมในสายอาชีพนี้  ที่คุณควรเรียนรู้เพิ่มเติม"}
+                                        icon={"/circle-plus.svg"}
+                                    >
+                                        <div className="flex flex-row flex-wrap gap-1">
+                                            {!props.isLoading && mapNonExistingDomain(props.careerPathInfo.related_careers, tabCareerIdx)}
+                                        </div>
+                                    </InsightBox>
+                                    <InsightBox
+                                        title={"ทักษะอื่น ๆ"}
+                                        subtitle={"ทักษะที่ไม่เกี่ยวข้องกับสายอาชีพนี้มากนัก แต่ที่คุณยังสามารถพัฒนาต่อไปได้"}
+                                        icon={"/circle-dot.svg"}
+                                    >
+                                        <div className="flex flex-row flex-wrap gap-1">
+                                            {
+                                                !props.isLoading && props.careerPathInfo.related_careers[tabCareerIdx].alt_skills.map((domain, idx) => {
+                                                    return <Badge key={`skill-${idx}`} variant={'outline'}>{domain.name[0]}</Badge>;
+                                                })
+                                            }
+                                        </div>
+                                    </InsightBox>
+                                </div>
+                                <InsightBox
+                                    title={"กราฟทักษะ"}
+                                    subtitle={"โปรดกรอกข้อมูลให้ระบบเพื่อนำไปทำนายสายอาชีพที่เหมาะสมกับคุณ"}
+                                    icon={"/area-chart.svg"}
+                                    className="basis-1/2"
+                                >
+                                    <div className="flex flex-col h-full">
+                                        <div className="flex flex-row justify-center items-center gap-6 border-[1px] rounded-[8px] p-5 h-full">
+                                            <div className="flex flex-row justify-center align-middle items-center h-full">
+                                                {!props.isLoading && <Doughnut className="max-h-full max-w-full" data={data} options={options}></Doughnut>}
+                                            </div>
+                                            <div className="flex flex-col gap-5">
+                                                <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#4EBC62] mr-1" />เหมาะสม : {skillTypeCount.existSkill}</Badge>
+                                                <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EDF8EF] mr-1" />ควรเรียนรู้ : {skillTypeCount.nonExistSkill}</Badge>
+                                                <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EFEFEF] mr-1" />อื่น ๆ : {skillTypeCount.altSkill}</Badge>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-row p-5 border-[1px] rounded-[8px] gap-3 items-center w-full justify-between mt-4">
+                                            <div className="flex flex-col">
+                                                <h5 className="font-medium text-base">อาชีพและทักษะที่เกี่ยวข้อง</h5>
+                                                <p className="font-normal text-sm text-gray-500">คุณสามารถดูอาชีพและทักษะที่เกี่ยวข้องอื่น ๆ ได้</p>
+                                            </div>
+                                            <Button>ไปดู</Button>
+                                        </div>
+                                    </div>
+                                </InsightBox>
+                            </div>
+                        </TabsContent>
+                    );
+                })
+            }
+        </Tabs>
     );
 }
