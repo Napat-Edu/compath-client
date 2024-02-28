@@ -29,7 +29,7 @@ export default function HistoryCard() {
                 <h3 className="font-semibold text-lg">การ์ดที่ทำนายไว้</h3>
             </section>
             <ScrollArea>
-                <div className="flex flex-row gap-4 my-4 justify-evenly">
+                <div className="flex flex-row gap-4 my-4">
                     {
                         localStorage.predictionHistory.map((history, idx) => {
                             return (
@@ -79,7 +79,7 @@ export default function HistoryCard() {
                     }
                 </div>
 
-                <ScrollBar orientation="horizontal"/>
+                <ScrollBar orientation="horizontal" />
             </ScrollArea>
         </section>
     );

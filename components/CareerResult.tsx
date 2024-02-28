@@ -83,7 +83,7 @@ export default function CareerResult(props: ICareerResult) {
 
                             </div>
                         </div>
-                        <div className={`p-3 font-medium text-sm ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
+                        <div className="p-3 font-medium text-sm">
                             <h3 className="font-medium text-primary text-sm">ฐานเงินเดือน</h3>
                             <p className={`font-semibold text-lg ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
                                 {
