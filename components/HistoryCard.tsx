@@ -7,8 +7,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link";
@@ -17,7 +15,12 @@ import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 export default function HistoryCard() {
     const localStorage = useLocalStorage();
 
+    if (!localStorage.isStorageReady) {
+        return null;
+    }
+
     return (
+        localStorage.predictionHistory.length > 0 &&
         <section className="w-full">
             <section className="w-full flex mb-4">
                 <Image

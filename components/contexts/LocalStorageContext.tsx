@@ -1,5 +1,4 @@
 'use client'
-import { IFocusCareerInsight } from "@/interfaces/career-insight-interface";
 import { IPredictionHistory } from "@/interfaces/career-prediction-interface";
 import { createContext, useEffect, useState } from "react";
 

@@ -76,9 +76,9 @@ export function FormDialog() {
                     <Image
                         src="sparkles.svg"
                         alt="sparkles icon"
-                        height={16}
-                        width={17}
-                        className="mr-1"
+                        height={0}
+                        width={0}
+                        className="w-[17px] h-auto mr-1"
                     />
                     ไปทำนายอาชีพ
                 </Button>

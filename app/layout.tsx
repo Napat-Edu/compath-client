@@ -22,10 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={IBM_PLEX_SANS_THAI.className}>
-        <div className='flex flex-row min-h-screen'>
+        <main className='flex flex-row min-h-screen'>
           <Sidebar></Sidebar>
           <LocalStorageProvider>{children}</LocalStorageProvider>
-        </div>
+        </main>
       </body>
     </html>
   )

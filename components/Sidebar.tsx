@@ -59,7 +59,7 @@ export function Sidebar() {
     };
 
     return (
-        <div className="min-w-52 max-w-72 w-1/6 border-r-2">
+        <nav className="min-w-52 border-r-2">
             <div className="space-y-4 py-4 sticky top-0 h-screen">
                 <div className="flex flex-col justify-between h-full">
 
@@ -68,8 +68,10 @@ export function Sidebar() {
                             <Image
                                 src="compath-logo.svg"
                                 alt="compath-logo icon"
-                                width={172}
-                                height={41}
+                                width={0}
+                                height={0}
+                                className="w-[172px] h-auto"
+                                priority
                             />
                         </div>
                         <h3 className="pt-4 pb-2 pl-4 font-semibold">Feature</h3>
@@ -104,6 +106,6 @@ export function Sidebar() {
 
                 </div>
             </div>
-        </div>
+        </nav>
     )
 }
