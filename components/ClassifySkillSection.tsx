@@ -151,7 +151,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                         <InsightBox
                                             title={"ทักษะที่เหมาะสม"}
                                             subtitle={"ทักษะที่มักจะมีอยู่ในเรซูเมในสายอาชีพนี้ ที่คุณมีอยู่แล้ว"}
-                                            icon={"/circle-check.svg"}
+                                            name={"CheckCircle"}
                                         >
                                             <div className="flex flex-row flex-wrap gap-1">
                                                 {!props.isLoading && mapExistingSkill(props.careerPathInfo.related_careers, tabCareerIdx)}
@@ -160,7 +160,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                         <InsightBox
                                             title={"ทักษะที่ควรเรียนรู้"}
                                             subtitle={"ทักษะที่มักจะมีอยู่ในเรซูเมในสายอาชีพนี้  ที่คุณควรเรียนรู้เพิ่มเติม"}
-                                            icon={"/circle-plus.svg"}
+                                            name={"PlusCircle"}
                                         >
                                             <div className="flex flex-row flex-wrap gap-1">
                                                 {!props.isLoading && mapNonExistingDomain(props.careerPathInfo.related_careers, tabCareerIdx)}
@@ -169,7 +169,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                         <InsightBox
                                             title={"ทักษะอื่น ๆ"}
                                             subtitle={"ทักษะที่ไม่เกี่ยวข้องกับสายอาชีพนี้มากนัก แต่ที่คุณยังสามารถพัฒนาต่อไปได้"}
-                                            icon={"/circle-dot.svg"}
+                                            name={"CircleDot"}
                                         >
                                             <div className="flex flex-row flex-wrap gap-1">
                                                 {
@@ -183,7 +183,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                     <InsightBox
                                         title={"กราฟทักษะ"}
                                         subtitle={"โปรดกรอกข้อมูลให้ระบบเพื่อนำไปทำนายสายอาชีพที่เหมาะสมกับคุณ"}
-                                        icon={"/area-chart.svg"}
+                                        name={"AreaChart"}
                                         className="basis-1/2"
                                     >
                                         <div className="flex flex-col h-full">

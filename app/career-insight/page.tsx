@@ -1,11 +1,11 @@
 'use client'
 import CareerInfoSection from "@/components/CareerInfoSection";
 import ClassifySkillSection from "@/components/ClassifySkillSection";
+import Icon from "@/components/Icon";
 import { InsightSelect } from "@/components/InsightSelect";
 import { SelectInsightProvider } from "@/components/contexts/SelectInsightContext";
 import useLocalStorage from "@/components/hooks/useLocalStorage"
 import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
-import Image from "next/image";
 import { useState } from "react";
 
 export default function CareerInsightPage() {
@@ -41,12 +41,12 @@ export default function CareerInsightPage() {
                     localStorage.isStorageReady && localStorage.predictionHistory.length ?
                         <>
                             <section className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-col gap-4 p-6">
-                                <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Image src="/box.svg" alt="box-icon" width={0} height={0} className="w-auto h-6" /> ข้อมูลทั่วไป</h3>
+                                <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Icon name={"Boxes"} /> ข้อมูลทั่วไป</h3>
                                 <CareerInfoSection getCareerInfo={getCareerInfo} careerPathInfo={careerPathInfo!} isLoading={isLoading} setIsloading={setIsloading} />
                             </section>
 
                             <section className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-col gap-4 p-6 mt-6 mb-6">
-                                <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Image src="/boxes.svg" alt="boxes-icon" width={0} height={0} className="w-auto h-6" />ทักษะ</h3>
+                                <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Icon name={"Box"} />ทักษะ</h3>
                                 <ClassifySkillSection careerPathInfo={careerPathInfo!} isLoading={isLoading} />
                             </section>
                         </> :

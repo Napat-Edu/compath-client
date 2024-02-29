@@ -15,6 +15,7 @@ import useSelectInsight from "./hooks/useSelectInsight";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Icon from "./Icon";
 
 export function InsightSelect() {
     const localStorage = useLocalStorage();
@@ -39,12 +40,7 @@ export function InsightSelect() {
         localStorage.isStorageReady &&
         <div className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-row gap-4 p-6 leading-9 justify-between">
             <Select onValueChange={(id) => { handleHistoryChange(id) }} value={currentSelectCareer}>
-                <Image
-                    src="resume.svg"
-                    alt="resume icon"
-                    height={0}
-                    width={0}
-                    className="mx-auto h-6 w-auto m-1" />
+                <Icon name={"Newspaper"} />
                 <h3 className="text-center font-semibold">การ์ดสายทำนาย</h3>
                 <SelectTrigger className="w-[492px] py-2 flex flex-row">
                     <div className="w-full">
@@ -80,13 +76,8 @@ export function InsightSelect() {
                             })}
                         <Separator className="my-1" />
                         <Link href='/'>
-                            <SelectLabel className="flex flex-row">
-                                <Image
-                                    src="more-predict.svg"
-                                    alt="more career prediction icon"
-                                    height={0}
-                                    width={0}
-                                    className="mr-2 h-4 w-auto float-left" />
+                            <SelectLabel className="flex flex-row gap-1 items-center">
+                                <Icon name={"PlusSquare"} />
                                 เพิ่มการ์ดทำนายใหม่
                             </SelectLabel>
                         </Link>

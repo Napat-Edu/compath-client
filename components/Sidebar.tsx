@@ -3,12 +3,13 @@ import Link from "next/link"
 import { Button } from "./ui/button"
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Icon from "./Icon";
+import { icons } from "lucide-react";
 
 interface ISidebarTab {
     label: string;
     icon: {
-        path: string;
-        name: string;
+        name: keyof typeof icons;
     }
     navigateLink: string;
 }
@@ -30,24 +31,21 @@ export function Sidebar() {
         {
             label: 'Career Prediction',
             icon: {
-                path: 'paperclip.svg',
-                name: 'paperclip'
+                name: 'Wand2'
             },
             navigateLink: '/'
         },
         {
             label: 'Career Insight',
             icon: {
-                path: 'inspect.svg',
-                name: 'inspect'
+                name: 'MousePointerSquare'
             },
             navigateLink: '/career-insight'
         },
         {
             label: 'Career Path',
             icon: {
-                path: 'grid.svg',
-                name: 'grid'
+                name: 'LayoutGrid'
             },
             navigateLink: '/career-path'
         }
@@ -85,11 +83,7 @@ export function Sidebar() {
                                                 className={`flex flex-row gap-2 w-full justify-start border-2 ${activeTab == idx ? 'border-primary' : 'border-transparent'}`}
                                                 onClick={() => { handleTabClicked(idx) }}
                                             >
-                                                <Image
-                                                    src={tab.icon.path}
-                                                    alt={tab.icon.name + "-icon"}
-                                                    height={20}
-                                                    width={20} />
+                                                <Icon name={tab.icon.name} />
                                                 {tab.label}
                                             </Button>
                                         </Link>

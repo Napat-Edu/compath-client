@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
+import Icon from "./Icon";
 
 export default function HistoryCard() {
     const localStorage = useLocalStorage();
@@ -23,12 +24,7 @@ export default function HistoryCard() {
         localStorage.predictionHistory.length > 0 &&
         <section className="w-full">
             <section className="w-full flex mb-4">
-                <Image
-                    src='bookmark.svg'
-                    alt='history-card icon'
-                    height={0}
-                    width={0}
-                    className="mr-2 h-6 w-auto " />
+                <Icon name={"BookMarked"} />
                 <h3 className="font-semibold text-lg">การ์ดที่ทำนายไว้</h3>
             </section>
             <ScrollArea>
