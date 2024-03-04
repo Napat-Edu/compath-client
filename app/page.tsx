@@ -5,7 +5,7 @@ import Icon from "@/components/Icon";
 export default function Home() {
 
   return (
-    <main className="w-5/6 px-6">
+    <main className="grow px-6 overflow-x-hidden">
 
       <section className="flex flex-col border-b-2 border-subgray pt-6 pb-4 gap-1">
         <h1 className="text-primary font-bold text-4xl">Career Prediction</h1>
