@@ -1,9 +1,9 @@
 'use client'
 import { useEffect } from "react";
-import InsightBox from "./InsightBox";
-import { Badge } from "./ui/badge";
-import { toSalaryNumber } from "../utils/utils";
-import useSelectInsight from "../hooks/useSelectInsight";
+import InsightBox from "../InsightBox";
+import { Badge } from "../ui/badge";
+import { toSalaryNumber } from "../../utils/utils";
+import useSelectInsight from "../../hooks/useSelectInsight";
 import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
 
 interface ICareerInfoSection {

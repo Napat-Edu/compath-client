@@ -1,12 +1,12 @@
 import { ICareer, ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
-import InsightBox from "./InsightBox";
-import { Badge } from "./ui/badge";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import InsightBox from "../InsightBox";
+import { Badge } from "../ui/badge";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";
 import React, { useEffect, useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { Doughnut } from 'react-chartjs-2';
 import { ArcElement, Chart, Legend, Tooltip } from "chart.js";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
 interface IClassifySkillSection {
     careerPathInfo: ICareerPredictionResult;
