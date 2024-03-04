@@ -24,7 +24,11 @@ export default function RootLayout({
       <body className={IBM_PLEX_SANS_THAI.className}>
         <main className='flex flex-row min-h-screen'>
           <Sidebar></Sidebar>
-          <LocalStorageProvider>{children}</LocalStorageProvider>
+          <LocalStorageProvider>
+            <main className='grow overflow-x-hidden px-6'>
+              {children}
+            </main>
+          </LocalStorageProvider>
         </main>
       </body>
     </html>

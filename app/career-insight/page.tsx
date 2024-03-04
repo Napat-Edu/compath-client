@@ -27,7 +27,7 @@ export default function CareerInsightPage() {
     };
 
     return (
-        <section className="w-5/6 px-6">
+        <>
             <SelectInsightProvider>
                 <section className="border-b-2 border-[#E4E4E7] pt-6 pb-4 flex flex-row justify-between items-end mb-5">
                     <div className="flex flex-col gap-1">
@@ -56,6 +56,6 @@ export default function CareerInsightPage() {
                 }
 
             </SelectInsightProvider>
-        </section>
+        </>
     );
 };
