@@ -1,6 +1,6 @@
 'use client'
-import CareerInfoSection from "@/components/CareerInfoSection";
-import ClassifySkillSection from "@/components/ClassifySkillSection";
+import CareerInfoSection from "@/components/containers/CareerInfoSection";
+import ClassifySkillSection from "@/components/containers/ClassifySkillSection";
 import Icon from "@/components/Icon";
 import { InsightSelect } from "@/components/InsightSelect";
 import { SelectInsightProvider } from "@/contexts/SelectInsightContext";

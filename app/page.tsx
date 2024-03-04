@@ -13,9 +13,7 @@ export default function Home() {
       </section>
 
       <section className="flex flex-col justify-center border-2 border-primary border-dashed rounded-2xl min-h-96 mt-4">
-        <div className="mx-auto">
-          <Icon name={"Newspaper"} />
-        </div>
+        <Icon className="mx-auto" name={"Newspaper"} size={32} />
         <div className="my-4">
           <p className="text-center font-semibold text-xl">เริ่มทำนายอาชีพของคุณ</p>
           <p className="text-center text-subtext">ให้ข้อมูลกับเราเพื่อทำนายอาชีพที่เหมาะสมกับคุณ</p>
@@ -24,6 +22,10 @@ export default function Home() {
       </section>
 
       <section className="min-h-96 flex flex-col mt-8">
+        <div className="flex flex-row mb-4 gap-[6px]">
+          <Icon name={"BookMarked"} />
+          <h3 className="font-semibold text-lg">การ์ดที่ทำนายไว้</h3>
+        </div>
         <HistoryCard></HistoryCard>
       </section>
 

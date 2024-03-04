@@ -73,7 +73,7 @@ export function FormDialog() {
         <Dialog>
             <DialogTrigger asChild>
                 <Button className="ml-auto mr-auto py-4 px-2" onClick={handleOpenForm}>
-                    <Icon name={"Sparkles"} color="white" />
+                    <Icon name={"Sparkles"} color="white" size={16} className="mr-[6px]" />
                     ไปทำนายอาชีพ
                 </Button>
             </DialogTrigger>

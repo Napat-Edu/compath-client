@@ -83,7 +83,7 @@ export function Sidebar() {
                                                 className={`flex flex-row gap-2 w-full justify-start border-2 ${activeTab == idx ? 'border-primary' : 'border-transparent'}`}
                                                 onClick={() => { handleTabClicked(idx) }}
                                             >
-                                                <Icon name={tab.icon.name} />
+                                                <Icon name={tab.icon.name} size={20} />
                                                 {tab.label}
                                             </Button>
                                         </Link>

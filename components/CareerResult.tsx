@@ -105,16 +105,16 @@ export default function CareerResult(props: ICareerResult) {
                         </div>
                         <div className="flex flex-row items-center gap-2 px-2">
                             <Button className="px-4 py-2 h-full border-2 border-primary">
-                                <Icon name={"Newspaper"} color="white" />
+                                <Icon name={"Newspaper"} color="white" size={16} className="mr-[6px]" />
                                 ดูเพิ่มเติม
                             </Button>
                             <DialogClose asChild>
                                 <Button className="p-3 rounded-md h-full" variant="outline" onClick={handleSaveClick}>
-                                    <Icon name={"Save"} color="black" />
+                                    <Icon name={"Save"} color="black" size={16} />
                                 </Button>
                             </DialogClose>
                             <Button className="p-3 rounded-md h-full" onClick={props.togglePredictionState} variant="outline">
-                                <Icon name={"SquarePen"} color="black" />
+                                <Icon name={"SquarePen"} color="black" size={16} />
                             </Button>
                         </div>
                     </div>
@@ -122,7 +122,7 @@ export default function CareerResult(props: ICareerResult) {
                 </ul >
             </div >
             <Alert className="flex flex-row gap-3 p-4 items-start">
-                <Icon name={"Lightbulb"} color="black" />
+                <Icon name={"Lightbulb"} color="black" size={16} />
                 <AlertDescription>
                     สายอาชีพที่ทำนายเป็นเพียงการนำข้อมูลที่ผู้ใช้กรอกมาหาสายอาชีพที่เหมาะสม ยังสายมีอาชีพอื่น ๆ ที่คุณสามารถเป็นได้ตามความต้องการ
                 </AlertDescription>
