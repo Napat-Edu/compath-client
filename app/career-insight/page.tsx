@@ -3,8 +3,8 @@ import CareerInfoSection from "@/components/CareerInfoSection";
 import ClassifySkillSection from "@/components/ClassifySkillSection";
 import Icon from "@/components/Icon";
 import { InsightSelect } from "@/components/InsightSelect";
-import { SelectInsightProvider } from "@/components/contexts/SelectInsightContext";
-import useLocalStorage from "@/components/hooks/useLocalStorage"
+import { SelectInsightProvider } from "@/contexts/SelectInsightContext";
+import useLocalStorage from "@/hooks/useLocalStorage"
 import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
 import { useState } from "react";
 

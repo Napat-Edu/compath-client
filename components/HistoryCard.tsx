@@ -1,6 +1,6 @@
 'use client'
-import useLocalStorage from "./hooks/useLocalStorage";
-import { displayDate, displayTime, mapCareerIcon } from "./utils/utils";
+import useLocalStorage from "../hooks/useLocalStorage";
+import { displayDate, displayTime, mapCareerIcon } from "../utils/utils";
 
 import {
     DropdownMenu,

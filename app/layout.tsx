@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { IBM_Plex_Sans_Thai } from 'next/font/google'
 import './globals.css'
 import { Sidebar } from '@/components/Sidebar'
-import { LocalStorageProvider } from '@/components/contexts/LocalStorageContext';
+import { LocalStorageProvider } from '@/contexts/LocalStorageContext';
 
 const IBM_PLEX_SANS_THAI = IBM_Plex_Sans_Thai({
   subsets: ['thai'],

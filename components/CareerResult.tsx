@@ -3,9 +3,9 @@ import { Button } from "./ui/button";
 import { ICareer, ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
 import { Alert, AlertDescription } from "./ui/alert"
 import { DialogClose } from "./ui/dialog";
-import useLocalStorage from "./hooks/useLocalStorage";
+import useLocalStorage from "../hooks/useLocalStorage";
 import { Badge } from "./ui/badge";
-import { toSalaryNumber } from "./utils/utils";
+import { toSalaryNumber } from "../utils/utils";
 import Icon from "./Icon";
 
 interface ICareerResult {
