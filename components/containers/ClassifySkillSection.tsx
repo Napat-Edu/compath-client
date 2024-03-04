@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { Doughnut } from 'react-chartjs-2';
 import { ArcElement, Chart, Legend, Tooltip } from "chart.js";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
+import Icon from "../Icon";
 
 interface IClassifySkillSection {
     careerPathInfo: ICareerPredictionResult;
@@ -78,41 +79,75 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
 
     const mapExistingSkill = (related_careers: ICareer[], tabCareerIdx: number) => {
         const existSkills = findExistingSkill(related_careers, tabCareerIdx);
-        return (
-            <>
-                {existSkills.map((existSkill, idx) => {
-                    return <Badge key={`exist-skill-${idx}`} variant={'outline'}>{existSkill}</Badge>;
-                })}
-            </>
-        );
+        if (existSkills.length > 0) {
+            return (
+                <>
+                    {existSkills.map((existSkill, idx) => {
+                        return <Badge key={`exist-skill-${idx}`} variant={'outline'}>{existSkill}</Badge>;
+                    })}
+                </>
+            );
+        } else {
+            return (
+                <div className="flex flex-row gap-1 items-center">
+                    <p className="font-medium text-xs">ไม่พบทักษะ</p>
+                    <Icon name={"HelpCircle"} color={"#71717A"} size={10} />
+                </div>
+            );
+        }
     };
 
     const mapNonExistingDomain = (related_careers: ICareer[], tabCareerIdx: number) => {
         const filteredDomain = findNonExistingDomain(related_careers, tabCareerIdx);
-        return (
-            <React.Fragment key={`${related_careers[tabCareerIdx]}-learning-domain`}>
-                {filteredDomain.map((domain, idx) => {
-                    return (
-                        <HoverCard key={`non-exist-domain-${idx}`} openDelay={0} closeDelay={0}>
-                            <HoverCardTrigger>
-                                <Badge className="border-primary" variant={'outline'} key={`badge-${idx}`}>
-                                    {domain.name}
-                                </Badge>
-                            </HoverCardTrigger>
-                            <HoverCardContent>
-                                <div className="flex flex-row flex-wrap justify-center gap-1">
-                                    {domain.skill_list.map((skill, skillIdx) => (
-                                        <Badge key={`non-exist-domain-${idx}-skill-${skillIdx}`} variant={'outline'}>
-                                            {skill.name[0]}
-                                        </Badge>
-                                    ))}
-                                </div>
-                            </HoverCardContent>
-                        </HoverCard>
-                    );
-                })}
-            </React.Fragment>
-        );
+        if (filteredDomain.length > 0) {
+            return (
+                <React.Fragment key={`${related_careers[tabCareerIdx]}-learning-domain`}>
+                    {filteredDomain.map((domain, idx) => {
+                        return (
+                            <HoverCard key={`non-exist-domain-${idx}`} openDelay={0} closeDelay={0}>
+                                <HoverCardTrigger>
+                                    <Badge className="border-primary" variant={'outline'} key={`badge-${idx}`}>
+                                        {domain.name}
+                                    </Badge>
+                                </HoverCardTrigger>
+                                <HoverCardContent>
+                                    <div className="flex flex-row flex-wrap justify-center gap-1">
+                                        {domain.skill_list.map((skill, skillIdx) => (
+                                            <Badge key={`non-exist-domain-${idx}-skill-${skillIdx}`} variant={'outline'}>
+                                                {skill.name[0]}
+                                            </Badge>
+                                        ))}
+                                    </div>
+                                </HoverCardContent>
+                            </HoverCard>
+                        );
+                    })}
+                </React.Fragment>
+            );
+        } else {
+            return (
+                <div className="flex flex-row gap-1 items-center">
+                    <p className="font-medium text-xs">ไม่พบทักษะ</p>
+                    <Icon name={"HelpCircle"} color={"#71717A"} size={10} />
+                </div>
+            );
+        }
+    };
+
+    const mapAlternateSkill = (careerPathInfo: ICareerPredictionResult, tabCareerIdx: number) => {
+        const career = careerPathInfo.related_careers[tabCareerIdx];
+        if (career.alt_skills.length > 0) {
+            return careerPathInfo.related_careers[tabCareerIdx].alt_skills.map((domain, idx) => {
+                return <Badge key={`skill-${idx}`} variant={'outline'}>{domain.name[0]}</Badge>;
+            })
+        } else {
+            return (
+                <div className="flex flex-row gap-1 items-center">
+                    <p className="font-medium text-xs">ไม่พบทักษะ</p>
+                    <Icon name={"HelpCircle"} color={"#71717A"} size={10} />
+                </div>
+            );
+        }
     };
 
     const handleCareerChange = (careerIndex: number) => {
@@ -129,7 +164,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         if (!props.isLoading) {
             handleCareerChange(0);
         }
-        return;
+        return () => { };
     }, [props.isLoading]);
 
     return (
@@ -173,9 +208,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                         >
                                             <div className="flex flex-row flex-wrap gap-1">
                                                 {
-                                                    !props.isLoading && props.careerPathInfo.related_careers[tabCareerIdx].alt_skills.map((domain, idx) => {
-                                                        return <Badge key={`skill-${idx}`} variant={'outline'}>{domain.name[0]}</Badge>;
-                                                    })
+                                                    !props.isLoading && mapAlternateSkill(props.careerPathInfo, tabCareerIdx)
                                                 }
                                             </div>
                                         </InsightBox>

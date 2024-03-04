@@ -38,9 +38,9 @@ export function InsightSelect() {
 
     return (
         localStorage.isStorageReady &&
-        <div className="border-[#E4E4E7] border-[1px] rounded-3xl flex flex-row gap-4 p-6 leading-9 justify-between">
+        <div className="border-maingray border-[1px] rounded-3xl flex flex-row gap-4 p-6 leading-9 justify-between">
             <Select onValueChange={(id) => { handleHistoryChange(id) }} value={currentSelectCareer}>
-                <Icon name={"Newspaper"} />
+                <Icon name={"Newspaper"} className="my-auto" />
                 <h3 className="text-center font-semibold">การ์ดสายทำนาย</h3>
                 <SelectTrigger className="w-[492px] py-2 flex flex-row">
                     <div className="w-full">

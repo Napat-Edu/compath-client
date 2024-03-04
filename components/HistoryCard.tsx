@@ -41,7 +41,7 @@ export default function HistoryCard() {
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent className="rounded-lg">
                                                     <DropdownMenuItem>Edit</DropdownMenuItem>
-                                                    <DropdownMenuItem onClick={() => { handleDeleteCard(history.object_id) }}>Delete</DropdownMenuItem>
+                                                    <DropdownMenuItem className="text-red-500" onClick={() => { handleDeleteCard(history.object_id) }}>Delete</DropdownMenuItem>
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
                                         </div>
