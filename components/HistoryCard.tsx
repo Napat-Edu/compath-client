@@ -1,7 +1,6 @@
 'use client'
 import useLocalStorage from "./hooks/useLocalStorage";
-import Image from "next/image";
-import { displayDate, displayTime } from "./utils/utils";
+import { displayDate, displayTime, mapCareerIcon } from "./utils/utils";
 
 import {
     DropdownMenu,
@@ -36,20 +35,10 @@ export default function HistoryCard() {
                                     <div className="border-gray-200 border-[1px] rounded-lg p-4 flex flex-col min-w-[296px] shadow-[0_2px_4px_0px_rgba(0,0,0,0.09)] hover:bg-gray-50 transition delay-75">
                                         <div className='flex gap-4 h-full w-full select-none flex-col rounded-md bg-gradient-to-b  from-white to-primary p-6 no-underline outline-none focus:shadow-md'>
                                             <div className="flex flex-row justify-between">
-                                                <Image
-                                                    src={`/career-icon/${history.result}.svg`}
-                                                    alt={`${history.result} icon`}
-                                                    height={0}
-                                                    width={0}
-                                                    className=" h-6 w-auto" />
+                                                <Icon name={mapCareerIcon(history.result)} color="black" />
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger className="border-[#E4E4E7] border-[1px] rounded-lg p-2 relative -right-2 -top-2 bg-white hover:bg-gray-100">
-                                                        <Image
-                                                            src='more-horizontal.svg'
-                                                            alt='more shortcut detail icon'
-                                                            height={0}
-                                                            width={0}
-                                                            className=" h-4 w-auto" />
+                                                        <Icon name={"MoreHorizontal"} color="black" />
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent className="rounded-lg">
                                                         <DropdownMenuItem>Edit</DropdownMenuItem>

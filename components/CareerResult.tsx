@@ -1,12 +1,12 @@
 import { MouseEventHandler } from "react";
 import { Button } from "./ui/button";
 import { ICareer, ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
-import Image from "next/image";
 import { Alert, AlertDescription } from "./ui/alert"
 import { DialogClose } from "./ui/dialog";
 import useLocalStorage from "./hooks/useLocalStorage";
 import { Badge } from "./ui/badge";
 import { toSalaryNumber } from "./utils/utils";
+import Icon from "./Icon";
 
 interface ICareerResult {
     isPredictionLoading: boolean;
@@ -105,16 +105,16 @@ export default function CareerResult(props: ICareerResult) {
                         </div>
                         <div className="flex flex-row items-center gap-2 px-2">
                             <Button className="px-4 py-2 h-full border-2 border-primary">
-                                <Image className="mr-2" src="resume-white.svg" alt="resume-icon" width={16} height={16} />
+                                <Icon name={"Newspaper"} color="white" />
                                 ดูเพิ่มเติม
                             </Button>
                             <DialogClose asChild>
                                 <Button className="p-3 rounded-md h-full" variant="outline" onClick={handleSaveClick}>
-                                    <Image src="save-button.svg" alt="save button" width={16} height={16} />
+                                    <Icon name={"Save"} color="black" />
                                 </Button>
                             </DialogClose>
                             <Button className="p-3 rounded-md h-full" onClick={props.togglePredictionState} variant="outline">
-                                <Image src="edit-button.svg" alt="edit button" width={16} height={16} />
+                                <Icon name={"SquarePen"} color="black" />
                             </Button>
                         </div>
                     </div>
@@ -122,7 +122,7 @@ export default function CareerResult(props: ICareerResult) {
                 </ul >
             </div >
             <Alert className="flex flex-row gap-3 p-4 items-start">
-                <Image src="lightbulb-icon.svg" alt="lightbulb-icon" width={16} height={16} />
+                <Icon name={"Lightbulb"} color="black" />
                 <AlertDescription>
                     สายอาชีพที่ทำนายเป็นเพียงการนำข้อมูลที่ผู้ใช้กรอกมาหาสายอาชีพที่เหมาะสม ยังสายมีอาชีพอื่น ๆ ที่คุณสามารถเป็นได้ตามความต้องการ
                 </AlertDescription>

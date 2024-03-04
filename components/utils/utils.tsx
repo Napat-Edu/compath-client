@@ -1,3 +1,5 @@
+import { icons } from "lucide-react";
+
 export const toSalaryNumber = (salary: number): string => {
     const salaryString = salary.toString();
     const replacedSalary = salaryString.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -26,4 +28,32 @@ export const displayTime = (dateString: string) => {
 
     const time = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
     return time;
-}
+};
+
+export const mapCareerIcon = (career: string) => {
+    let icon: keyof typeof icons;
+    switch (career) {
+        case 'Developer':
+            icon = "Code2";
+            break;
+        case 'Designer':
+            icon = "PenTool";
+            break;
+        case 'Data & AI':
+            icon = "PieChart";
+            break;
+        case 'Security':
+            icon = "ShieldCheck";
+            break;
+        case 'Cloud Management':
+            icon = "Cloud";
+            break;
+        case 'QA & Tester':
+            icon = "FileSearch";
+            break;
+        default:
+            icon = "Code2";
+            break;
+    }
+    return icon;
+};

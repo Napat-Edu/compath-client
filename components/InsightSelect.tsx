@@ -13,9 +13,9 @@ import { displayDate, displayTime } from "./utils/utils";
 import useLocalStorage from "./hooks/useLocalStorage";
 import useSelectInsight from "./hooks/useSelectInsight";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import Icon from "./Icon";
+import { mapCareerIcon } from "./utils/utils";
 
 export function InsightSelect() {
     const localStorage = useLocalStorage();
@@ -50,26 +50,21 @@ export function InsightSelect() {
                 <SelectContent>
                     <SelectGroup>
                         <SelectLabel className="flex flex-row w-full pr-8">
-                            <p className="basis-2/6 text-left">สายอาชีพ</p>
-                            <p className="basis-2/6 text-left">เวลาที่ทำนาย</p>
-                            <p className="basis-2/6 text-left">วันที่ทำนาย</p>
+                            <p className="basis-2/5 text-left">สายอาชีพ</p>
+                            <p className="basis-1/5 text-left">เวลาที่ทำนาย</p>
+                            <p className="basis-2/5 text-left">วันที่ทำนาย</p>
                         </SelectLabel>
                         {
                             localStorage.predictionHistory.map((history, idx) => {
                                 return (
                                     <SelectItem value={history.object_id} key={"history-" + history.result + idx}>
-                                        <div className="flex flex-row">
-                                            <p className="basis-2/6 text-left truncate">
-                                                <Image
-                                                    src={`/career-icon/${history.result}.svg`}
-                                                    alt={`${history.result} icon`}
-                                                    height={0}
-                                                    width={0}
-                                                    className="mr-2 h-4 w-auto float-left" />
+                                        <div className="flex flex-row items-center">
+                                            <p className="flex flex-row items-center gap-1 basis-2/5 text-left truncate">
+                                                <Icon name={mapCareerIcon(history.result)} color="black" />
                                                 {history.result}
                                             </p>
-                                            <p className="basis-2/6 text-left">{displayTime(history.submit_date)}</p>
-                                            <p className="basis-2/6 text-left">{displayDate(history.submit_date)}</p>
+                                            <p className="basis-1/5 text-left">{displayTime(history.submit_date)}</p>
+                                            <p className="basis-2/5 text-left">{displayDate(history.submit_date)}</p>
                                         </div>
                                     </SelectItem>
                                 );
