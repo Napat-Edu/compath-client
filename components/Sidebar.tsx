@@ -57,7 +57,7 @@ export function Sidebar() {
     };
 
     return (
-        <nav className="min-w-52 border-r-2">
+        <nav className="min-w-52 max-w-64 border-r-2">
             <div className="space-y-4 py-4 sticky top-0 h-screen">
                 <div className="flex flex-col justify-between h-full">
 
