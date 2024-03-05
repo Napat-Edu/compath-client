@@ -1,4 +1,4 @@
-import { FormDialog } from "@/components/FormDialog";
+import { FormDialog } from "@/components/predict-dialog/FormDialog";
 import HistoryCard from "@/components/HistoryCard";
 import Icon from "@/components/Icon";
 

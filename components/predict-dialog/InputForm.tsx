@@ -14,10 +14,10 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import { DialogFooter } from "./ui/dialog"
-import { Checkbox } from "./ui/checkbox"
-import { Textarea } from "./ui/textarea"
-import Icon from "./Icon"
+import { DialogFooter } from "../ui/dialog"
+import { Checkbox } from "../ui/checkbox"
+import { Textarea } from "../ui/textarea"
+import Icon from "../Icon"
 
 const FormSchema = z.object({
     educational: z.string().min(1, {

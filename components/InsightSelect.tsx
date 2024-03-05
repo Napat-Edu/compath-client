@@ -13,14 +13,16 @@ import { displayDate, displayTime } from "../utils/utils";
 import useLocalStorage from "../hooks/useLocalStorage";
 import useSelectInsight from "../hooks/useSelectInsight";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Icon from "./Icon";
 import { mapCareerIcon } from "../utils/utils";
+import { useRouter } from "next/navigation";
 
 export function InsightSelect() {
     const localStorage = useLocalStorage();
     const selectInsight = useSelectInsight();
     const [currentSelectCareer, setCurrentSelectCareer] = useState<string>();
+
+    const router = useRouter()
 
     const handleHistoryChange = (id: string) => {
         setCurrentSelectCareer(id);
@@ -59,8 +61,8 @@ export function InsightSelect() {
                                 return (
                                     <SelectItem value={history.object_id} key={"history-" + history.result + idx}>
                                         <div className="flex flex-row items-center">
-                                            <p className="flex flex-row items-center gap-1 basis-2/5 text-left truncate">
-                                                <Icon name={mapCareerIcon(history.result)} color="black" strokeWidth={1} />
+                                            <p className="flex flex-row items-center gap-2 basis-2/5 text-left truncate">
+                                                <Icon name={mapCareerIcon(history.result)} color="black" strokeWidth={1} size={16} />
                                                 {history.result}
                                             </p>
                                             <p className="basis-1/5 text-left">{displayTime(history.submit_date)}</p>
@@ -70,12 +72,12 @@ export function InsightSelect() {
                                 );
                             })}
                         <Separator className="my-1" />
-                        <Link href='/'>
-                            <SelectLabel className="flex flex-row gap-1 items-center">
-                                <Icon name={"PlusSquare"} />
+                        <button onClick={() => { sessionStorage.setItem("focusTab", "0"); router.push('/'); }}>
+                            <SelectLabel className="flex flex-row gap-2 items-center">
+                                <Icon name={"PlusSquare"} size={16} />
                                 เพิ่มการ์ดทำนายใหม่
                             </SelectLabel>
-                        </Link>
+                        </button>
                     </SelectGroup>
                 </SelectContent>
             </Select>

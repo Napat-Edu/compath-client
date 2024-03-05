@@ -1,5 +1,6 @@
 'use client'
-import { IPredictionHistory } from "@/interfaces/career-prediction-interface";
+import { IFocusCareerInsight } from "@/interfaces/career-insight.interface";
+import { IPredictionHistory } from "@/interfaces/storage.interface";
 import { createContext, useEffect, useState } from "react";
 
 type localStorageContent = {
@@ -7,7 +8,7 @@ type localStorageContent = {
     addPredictionHistory: (newPredictHistory: IPredictionHistory) => void,
     findPredictionHistory: (id: string) => any,
     isStorageReady: boolean,
-    getLatestHistory: () => any,
+    getLatestHistory: () => IFocusCareerInsight,
     deleteHistory: (object_id: string) => void,
 };
 

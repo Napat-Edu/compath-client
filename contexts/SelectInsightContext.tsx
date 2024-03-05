@@ -1,5 +1,5 @@
 'use client'
-import { IFocusCareerInsight } from "@/interfaces/career-insight-interface";
+import { IFocusCareerInsight } from "@/interfaces/career-insight.interface";
 import { createContext, useState } from "react";
 
 type selectedInsightContent = {

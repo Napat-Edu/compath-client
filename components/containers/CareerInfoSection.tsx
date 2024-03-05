@@ -4,7 +4,7 @@ import InsightBox from "../InsightBox";
 import { Badge } from "../ui/badge";
 import { toSalaryNumber } from "../../utils/utils";
 import useSelectInsight from "../../hooks/useSelectInsight";
-import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
+import { ICareerPredictionResult } from "@/interfaces/career-prediction.interface";
 
 interface ICareerInfoSection {
     setIsloading(arg0: boolean): unknown;
@@ -17,7 +17,12 @@ export default function CareerInfoSection(props: ICareerInfoSection) {
     const { selectedInsight } = useSelectInsight();
 
     useEffect(() => {
-        if (selectedInsight.career_path !== '' && selectedInsight.object_id !== '' && selectedInsight.career_path && selectedInsight.object_id) {
+        if (
+            selectedInsight.career_path !== '' &&
+            selectedInsight.object_id !== '' &&
+            selectedInsight.career_path &&
+            selectedInsight.object_id
+        ) {
             props.setIsloading(true);
             props.getCareerInfo(selectedInsight.career_path, selectedInsight.object_id);
         }

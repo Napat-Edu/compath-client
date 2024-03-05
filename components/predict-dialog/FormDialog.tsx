@@ -11,8 +11,8 @@ import {
 import { InputForm } from "./InputForm";
 import { useState } from "react";
 import CareerResult from "./CareerResult";
-import { ICareerPredictionResult, IUserResume } from "@/interfaces/career-prediction-interface";
-import Icon from "./Icon";
+import { ICareerPredictionResult, IUserResume } from "@/interfaces/career-prediction.interface";
+import Icon from "../Icon";
 
 export function FormDialog() {
     const [isPredicting, setPredicting] = useState(false);

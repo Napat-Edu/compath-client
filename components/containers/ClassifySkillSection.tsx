@@ -1,4 +1,5 @@
-import { ICareer, ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
+'use client'
+import { ICareer, ICareerPredictionResult } from "@/interfaces/career-prediction.interface";
 import InsightBox from "../InsightBox";
 import { Badge } from "../ui/badge";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "../ui/hover-card";

@@ -15,16 +15,6 @@ interface ISidebarTab {
 }
 
 export function Sidebar() {
-    useEffect(() => {
-        let focusTab: number = Number(sessionStorage.getItem("focusTab"));
-        if (!focusTab) {
-            focusTab = sideBarTabs.findIndex((tab) => {
-                return tab.navigateLink == window.location.pathname;
-            });
-        }
-        setActiveTab(focusTab);
-    }, []);
-
     const [activeTab, setActiveTab] = useState<number>();
 
     const sideBarTabs: ISidebarTab[] = [
@@ -55,6 +45,16 @@ export function Sidebar() {
         sessionStorage.setItem("focusTab", index.toString());
         setActiveTab(index);
     };
+
+    useEffect(() => {
+        let focusTab: number = Number(sessionStorage.getItem("focusTab"));
+        if (!focusTab) {
+            focusTab = sideBarTabs.findIndex((tab) => {
+                return tab.navigateLink == window.location.pathname;
+            });
+        }
+        setActiveTab(focusTab);
+    }, []);
 
     return (
         <nav className="min-w-56 max-w-56 border-r-2">
