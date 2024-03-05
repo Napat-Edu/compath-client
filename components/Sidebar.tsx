@@ -1,60 +1,16 @@
 'use client'
 import Link from "next/link"
 import { Button } from "./ui/button"
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Icon from "./Icon";
-import { icons } from "lucide-react";
-
-interface ISidebarTab {
-    label: string;
-    icon: {
-        name: keyof typeof icons;
-    }
-    navigateLink: string;
-}
+import useSidebar from "@/hooks/useSidebar";
 
 export function Sidebar() {
-    const [activeTab, setActiveTab] = useState<number>();
-
-    const sideBarTabs: ISidebarTab[] = [
-        {
-            label: 'Career Prediction',
-            icon: {
-                name: 'Wand2'
-            },
-            navigateLink: '/'
-        },
-        {
-            label: 'Career Insight',
-            icon: {
-                name: 'MousePointerSquare'
-            },
-            navigateLink: '/career-insight'
-        },
-        {
-            label: 'Career Path',
-            icon: {
-                name: 'LayoutGrid'
-            },
-            navigateLink: '/career-path'
-        }
-    ];
+    const sidebar = useSidebar();
 
     const handleTabClicked = (index: number) => {
-        sessionStorage.setItem("focusTab", index.toString());
-        setActiveTab(index);
+        sidebar.setActiveTab(index);
     };
-
-    useEffect(() => {
-        let focusTab: number = Number(sessionStorage.getItem("focusTab"));
-        if (!focusTab) {
-            focusTab = sideBarTabs.findIndex((tab) => {
-                return tab.navigateLink == window.location.pathname;
-            });
-        }
-        setActiveTab(focusTab);
-    }, []);
 
     return (
         <nav className="min-w-56 max-w-56 border-r-2">
@@ -75,12 +31,12 @@ export function Sidebar() {
                         <h3 className="pt-4 pb-2 pl-4 font-semibold">Feature</h3>
                         <div className="flex flex-col gap-1">
                             {
-                                sideBarTabs.map((tab, idx) => {
+                                sidebar.sideBarTabs.map((tab, idx) => {
                                     return (
                                         <Link href={tab.navigateLink} key={'sidebar-tab-' + idx}>
                                             <Button
-                                                variant={activeTab == idx ? 'outline' : 'ghost'}
-                                                className={`flex flex-row gap-2 w-full justify-start border-2 ${activeTab == idx ? 'border-primary' : 'border-transparent'}`}
+                                                variant={sidebar.activeTab == idx ? 'outline' : 'ghost'}
+                                                className={`flex flex-row gap-2 w-full justify-start border-2 ${sidebar.activeTab == idx ? 'border-primary' : 'border-transparent'}`}
                                                 onClick={() => { handleTabClicked(idx) }}
                                             >
                                                 <Icon name={tab.icon.name} size={20} />

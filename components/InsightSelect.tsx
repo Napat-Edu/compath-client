@@ -15,19 +15,23 @@ import useSelectInsight from "../hooks/useSelectInsight";
 import { useEffect, useState } from "react";
 import Icon from "./Icon";
 import { mapCareerIcon } from "../utils/utils";
-import { useRouter } from "next/navigation";
+import useSidebar from "@/hooks/useSidebar";
+import Link from "next/link";
 
 export function InsightSelect() {
     const localStorage = useLocalStorage();
     const selectInsight = useSelectInsight();
+    const sidebar = useSidebar();
     const [currentSelectCareer, setCurrentSelectCareer] = useState<string>();
-
-    const router = useRouter()
 
     const handleHistoryChange = (id: string) => {
         setCurrentSelectCareer(id);
         const foundedHistory = localStorage.findPredictionHistory(id);
         selectInsight.upDateSelectedInsight(foundedHistory.career_path, foundedHistory.object_id);
+    };
+
+    const handleSelectClick = () => {
+        sidebar.setActiveTab(0);
     };
 
     useEffect(() => {
@@ -72,12 +76,12 @@ export function InsightSelect() {
                                 );
                             })}
                         <Separator className="my-1" />
-                        <button onClick={() => { sessionStorage.setItem("focusTab", "0"); router.push('/'); }}>
+                        <Link href="/" onClick={handleSelectClick}>
                             <SelectLabel className="flex flex-row gap-2 items-center">
                                 <Icon name={"PlusSquare"} size={16} />
                                 เพิ่มการ์ดทำนายใหม่
                             </SelectLabel>
-                        </button>
+                        </Link>
                     </SelectGroup>
                 </SelectContent>
             </Select>
