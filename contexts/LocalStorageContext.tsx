@@ -55,7 +55,7 @@ export const LocalStorageProvider = ({ children }: any) => {
             }
         });
         const foundedHistory = {
-            career_path: historyResult?.result ?? "",
+            career_path: historyResult?.career_path ?? "",
             object_id: historyResult?.object_id ?? ""
         };
         return foundedHistory;
@@ -78,7 +78,7 @@ export const LocalStorageProvider = ({ children }: any) => {
                 return acc;
             }
         });
-        return { career_path: latestHistory.result, object_id: latestHistory.object_id };
+        return { career_path: latestHistory.career_path, object_id: latestHistory.object_id };
     };
 
     const deleteHistory = (object_id: string) => {

@@ -30,7 +30,7 @@ export default function HistoryCard() {
 
     const handleCardClick = (history: IPredictionHistory) => {
         sidebar.setActiveTab(1);
-        selectInsight.upDateSelectedInsight(history.result, history.object_id);
+        selectInsight.upDateSelectedInsight(history.career_path, history.object_id);
     };
 
     return (
@@ -44,7 +44,7 @@ export default function HistoryCard() {
                                 <div className="border-gray-200 border-[1px] rounded-lg p-4 flex flex-col min-w-[296px] shadow-[0_2px_4px_0px_rgba(0,0,0,0.09)] hover:bg-gray-50 transition delay-75">
                                     <div className='flex gap-4 h-full w-full select-none flex-col rounded-md bg-gradient-to-b  from-white to-primary p-6 no-underline outline-none focus:shadow-md'>
                                         <div className="flex flex-row justify-between">
-                                            <Icon name={mapCareerIcon(history.result)} color="black" />
+                                            <Icon name={mapCareerIcon(history.career_path)} color="black" />
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger className="border-maingray border-[1px] rounded-lg p-2 relative -right-2 -top-2 bg-white hover:bg-gray-100">
                                                     <Icon name={"MoreHorizontal"} color="black" />
@@ -56,7 +56,7 @@ export default function HistoryCard() {
                                             </DropdownMenu>
                                         </div>
                                         <div className="text-lg font-semibold">
-                                            {history.result}
+                                            {history.career_path}
                                         </div>
                                         <div className="p-4 flex justify-between text-sm bg-white rounded-md">
                                             <div>

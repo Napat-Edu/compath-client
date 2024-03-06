@@ -66,11 +66,11 @@ export function InsightSelect() {
                         {
                             localStorage.predictionHistory.map((history, idx) => {
                                 return (
-                                    <SelectItem value={history.object_id} key={"history-" + history.result + idx}>
+                                    <SelectItem value={history.object_id} key={"history-" + history.career_path + idx}>
                                         <div className="flex flex-row items-center">
                                             <p className="flex flex-row items-center gap-2 basis-2/5 text-left truncate">
-                                                <Icon name={mapCareerIcon(history.result)} color="black" strokeWidth={1} size={16} />
-                                                {history.result}
+                                                <Icon name={mapCareerIcon(history.career_path)} color="black" strokeWidth={1} size={16} />
+                                                {history.career_path}
                                             </p>
                                             <p className="basis-1/5 text-left">{displayTime(history.submit_date)}</p>
                                             <p className="basis-2/5 text-left">{displayDate(history.submit_date)}</p>

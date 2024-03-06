@@ -1,5 +1,5 @@
 export interface IPredictionHistory {
-  result: string;
+  career_path: string;
   submit_date: string;
   object_id?: any;
 }
