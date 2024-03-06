@@ -48,7 +48,7 @@ export default function CareerInfoSection(props: ICareerInfoSection) {
                     }
                 </div>
             </InsightBox>
-            <InsightBox title="ผู้ร่วมทาง" subtitle="จำนวนคนที่ทำนายได้สายอาชีพนี้" className="basis-1/3" name={"User"}>
+            <InsightBox title="ถูกทำนายไปแล้ว" subtitle="จำนวนครั้งที่ทำนายได้สายอาชีพนี้" className="basis-1/3" name={"User"}>
                 <div className={`${props.isLoading ? 'bg-slate-100 rounded-lg h-6 animate-pulse bg-gradient-to-b' : null}`}>
                     {
                         !props.isLoading && <p className={`font-semibold text-lg`}>{props.careerPathInfo.careermate_count} คน</p>
