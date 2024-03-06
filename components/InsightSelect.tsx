@@ -36,7 +36,10 @@ export function InsightSelect() {
 
     useEffect(() => {
         if (localStorage.isStorageReady && localStorage.predictionHistory.length) {
-            const focusHistory = selectInsight.selectedInsight;
+            let focusHistory = selectInsight.selectedInsight;
+            if (focusHistory.object_id === '') {
+                focusHistory = localStorage.getLatestHistory();
+            }
             setCurrentSelectCareer(focusHistory.object_id);
             selectInsight.upDateSelectedInsight(focusHistory.career_path, focusHistory.object_id);
         }
