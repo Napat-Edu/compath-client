@@ -11,9 +11,14 @@ import {
 import Link from "next/link";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import Icon from "./Icon";
+import useSelectInsight from "@/hooks/useSelectInsight";
+import { IPredictionHistory } from "@/interfaces/storage.interface";
+import useSidebar from "@/hooks/useSidebar";
 
 export default function HistoryCard() {
     const localStorage = useLocalStorage();
+    const selectInsight = useSelectInsight();
+    const sidebar = useSidebar();
 
     if (!localStorage.isStorageReady) {
         return null;
@@ -23,6 +28,11 @@ export default function HistoryCard() {
         localStorage.deleteHistory(object_id);
     };
 
+    const handleCardClick = (history: IPredictionHistory) => {
+        sidebar.setActiveTab(1);
+        selectInsight.upDateSelectedInsight(history.result, history.object_id);
+    };
+
     return (
         localStorage.predictionHistory.length > 0 &&
         <ScrollArea>
@@ -30,7 +40,7 @@ export default function HistoryCard() {
                 {
                     localStorage.predictionHistory.map((history, idx) => {
                         return (
-                            <Link href='#' key={"prediction-history-card" + idx}>
+                            <Link href='/career-insight' onClick={() => { handleCardClick(history) }} key={"prediction-history-card" + idx}>
                                 <div className="border-gray-200 border-[1px] rounded-lg p-4 flex flex-col min-w-[296px] shadow-[0_2px_4px_0px_rgba(0,0,0,0.09)] hover:bg-gray-50 transition delay-75">
                                     <div className='flex gap-4 h-full w-full select-none flex-col rounded-md bg-gradient-to-b  from-white to-primary p-6 no-underline outline-none focus:shadow-md'>
                                         <div className="flex flex-row justify-between">

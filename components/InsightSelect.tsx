@@ -30,15 +30,15 @@ export function InsightSelect() {
         selectInsight.upDateSelectedInsight(foundedHistory.career_path, foundedHistory.object_id);
     };
 
-    const handleSelectClick = () => {
+    const handleCreateSelectClick = () => {
         sidebar.setActiveTab(0);
     };
 
     useEffect(() => {
         if (localStorage.isStorageReady && localStorage.predictionHistory.length) {
-            const latestHistory = localStorage.getLatestHistory();
-            setCurrentSelectCareer(latestHistory.object_id);
-            selectInsight.upDateSelectedInsight(latestHistory.career_path, latestHistory.object_id);
+            const focusHistory = selectInsight.selectedInsight;
+            setCurrentSelectCareer(focusHistory.object_id);
+            selectInsight.upDateSelectedInsight(focusHistory.career_path, focusHistory.object_id);
         }
     }, [localStorage.isStorageReady]);
 
@@ -76,7 +76,7 @@ export function InsightSelect() {
                                 );
                             })}
                         <Separator className="my-1" />
-                        <Link href="/" onClick={handleSelectClick}>
+                        <Link href="/" onClick={handleCreateSelectClick}>
                             <SelectLabel className="flex flex-row gap-2 items-center">
                                 <Icon name={"PlusSquare"} size={16} />
                                 เพิ่มการ์ดทำนายใหม่
