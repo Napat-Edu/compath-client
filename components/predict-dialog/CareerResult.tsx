@@ -7,6 +7,11 @@ import useLocalStorage from "../../hooks/useLocalStorage";
 import { Badge } from "../ui/badge";
 import { toSalaryNumber } from "../../utils/utils";
 import Icon from "../Icon";
+import ConfirmAlertDialog from "../ConfirmAlertDialog";
+import { useRouter } from "next/navigation";
+import useSidebar from "@/hooks/useSidebar";
+import useSelectInsight from "@/hooks/useSelectInsight";
+import { IPredictionHistory } from "@/interfaces/storage.interface";
 
 interface ICareerResult {
     isPredictionLoading: boolean;
@@ -16,6 +21,10 @@ interface ICareerResult {
 
 export default function CareerResult(props: ICareerResult) {
     const localStorage = useLocalStorage();
+    const selectInsight = useSelectInsight();
+    const sidebar = useSidebar();
+
+    const router = useRouter()
 
     const handleSaveClick = () => {
         localStorage.addPredictionHistory({
@@ -23,6 +32,18 @@ export default function CareerResult(props: ICareerResult) {
             submit_date: props.predictionResult!.input_date.toString(),
             object_id: props.predictionResult?.object_id
         });
+    };
+
+    const handleToInsightClick = () => {
+        sidebar.setActiveTab(1);
+        const newHistory: IPredictionHistory = {
+            career_path: props.predictionResult?.career_path_name!,
+            submit_date: props.predictionResult?.input_date.toString()!,
+            object_id: props.predictionResult?.object_id
+        };
+        localStorage.addPredictionHistory(newHistory);
+        selectInsight.upDateSelectedInsight(props.predictionResult?.career_path_name, props.predictionResult?.object_id);
+        router.push('/career-insight');
     };
 
     const samplingRelatedCareers = (relatedCareers: ICareer[]) => {
@@ -104,10 +125,16 @@ export default function CareerResult(props: ICareerResult) {
                             </p>
                         </div>
                         <div className="flex flex-row items-center gap-2 px-2">
-                            <Button className="px-4 py-2 h-full border-2 border-primary">
-                                <Icon name={"Newspaper"} color="white" size={16} className="mr-[6px]" />
-                                ดูเพิ่มเติม
-                            </Button>
+                            <ConfirmAlertDialog
+                                title={"บันทึกประวัติการทำนาย"}
+                                description={"ประวัติการทำนายในครั้งนี้จะถูกบันทึกไว้ที่เครื่องของคุณ และจะสามารถย้อนกลับมาดูเมื่อไหร่ก็ได้"}
+                                onAcceptClick={handleToInsightClick}
+                            >
+                                <Button className="px-4 py-2 h-full border-2 border-primary">
+                                    <Icon name={"Newspaper"} color="white" size={16} className="mr-[6px]" />
+                                    ดูเพิ่มเติม
+                                </Button>
+                            </ConfirmAlertDialog>
                             <DialogClose asChild>
                                 <Button className="p-3 rounded-md h-full" variant="outline" onClick={handleSaveClick}>
                                     <Icon name={"Save"} color="black" size={16} />
