@@ -47,7 +47,7 @@ export default function HistoryCard() {
                                             <Icon name={mapCareerIcon(history.career_path)} color="black" />
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger className="border-maingray border-[1px] rounded-lg p-2 relative -right-2 -top-2 bg-white hover:bg-gray-100">
-                                                    <Icon name={"MoreHorizontal"} color="black" />
+                                                    <Icon name={"MoreHorizontal"} color="black" size={16} />
                                                 </DropdownMenuTrigger>
                                                 <DropdownMenuContent className="rounded-lg">
                                                     <DropdownMenuItem>Edit</DropdownMenuItem>
