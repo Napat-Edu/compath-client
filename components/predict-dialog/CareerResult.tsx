@@ -19,7 +19,7 @@ export default function CareerResult(props: ICareerResult) {
 
     const handleSaveClick = () => {
         localStorage.addPredictionHistory({
-            result: props.predictionResult!.career_path_name ?? "Unknown",
+            career_path: props.predictionResult!.career_path_name ?? "Unknown",
             submit_date: props.predictionResult!.input_date.toString(),
             object_id: props.predictionResult?.object_id
         });
