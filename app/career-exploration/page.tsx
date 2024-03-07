@@ -1,6 +1,6 @@
 import NodeTree from "@/components/NodeTree";
 
-export default function CareerPathPage() {
+export default function CareerExplorationPage() {
     return (
         <>
             <NodeTree></NodeTree>

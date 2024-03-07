@@ -33,11 +33,11 @@ export const SidebarProvider = ({ children }: any) => {
             navigateLink: '/career-insight'
         },
         {
-            label: 'Career Path',
+            label: 'Career Exploration',
             icon: {
                 name: 'LayoutGrid'
             },
-            navigateLink: '/career-path'
+            navigateLink: '/career-exploration'
         }
     ];
 
