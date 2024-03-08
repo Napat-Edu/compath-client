@@ -1,12 +1,25 @@
-export interface ICareerPredictionResult {
+export interface ICareerPredictionBase {
   career_path_name: string;
   career_path_description: string;
-  related_careers: ICareer[];
   base_salary: ISalary;
   careermate_count: number;
   icon_svg: string | TrustedHTML;
   input_date: Date;
   object_id?: any;
+}
+export interface ICareerPredictionResult extends ICareerPredictionBase {
+  related_careers: ICareer[];
+}
+
+export interface ICareerNodeTree extends ICareerPredictionBase {
+  related_careers: ICareerWithSoftSkill[];
+}
+
+export interface ICareerWithSoftSkill extends ICareer {
+  soft_skills: {
+    id: string;
+    name: string[];
+  };
 }
 
 export interface ICareer {
