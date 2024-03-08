@@ -5,7 +5,7 @@ import { Alert, AlertDescription } from "../ui/alert"
 import { DialogClose } from "../ui/dialog";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { Badge } from "../ui/badge";
-import { toSalaryNumber } from "../../utils/utils";
+import { mapCareerIcon, toSalaryNumber } from "../../utils/utils";
 import Icon from "../Icon";
 import ConfirmAlertDialog from "../ConfirmAlertDialog";
 import { useRouter } from "next/navigation";
@@ -72,11 +72,7 @@ export default function CareerResult(props: ICareerResult) {
                             {
                                 props.isPredictionLoading ?
                                     null :
-                                    <object
-                                        dangerouslySetInnerHTML={{ __html: props.predictionResult!.icon_svg }}
-                                        width="24px"
-                                        height="24px"
-                                    />
+                                    <Icon name={mapCareerIcon(props.predictionResult?.career_path_name!)} size={24} color="black" />
                             }
                             <div className="mb-2 mt-4 text-lg font-medium">
                                 {props.isPredictionLoading ? null : props.predictionResult?.career_path_name}
