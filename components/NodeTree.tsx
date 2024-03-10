@@ -4,9 +4,16 @@ import ReactFlow, { Background, Controls, Edge, Node, Position, useEdgesState, u
 import Icon from "./Icon";
 import { ICareerNodeTree } from "@/interfaces/career-prediction.interface";
 
-import 'reactflow/dist/style.css';
+import 'reactflow/dist/base.css';
+import './custom-node-tree/tailwind-reactflow-config'
+import MainNode from "./custom-node-tree/MainNode";
+
+const nodeTypes = {
+    custom: MainNode,
+};
 
 export default function NodeTree() {
+
     const [isLoading, setIsLoading] = useState(true);
     const [landingViewport, setLandingViewport] = useState({
         x: 0,
@@ -46,6 +53,7 @@ export default function NodeTree() {
                 draggable: false,
                 connectable: false,
                 parentNode: '',
+                type: 'custom'
             }
             initialNodes.push(newNodeData);
 
@@ -64,6 +72,7 @@ export default function NodeTree() {
                     draggable: false,
                     connectable: false,
                     parentNode: '',
+                    type: 'custom'
                 }
                 initialNodes.push(newNodeData);
                 const newEdgeData = {
@@ -73,48 +82,48 @@ export default function NodeTree() {
                 }
                 initialEdges.push(newEdgeData);
 
-                career.skill_domains.map((domain, domainIdx) => {
-                    const newNodeData = {
-                        id: domain.name + careerpathIdx + careerIdx,
-                        position: { x: nodeWidth * 2, y: posY },
-                        data: { label: domain.name },
-                        style: {
-                            width: nodeWidth + 100,
-                            height: nodeHeight * domain.skill_list.length + 10 * domain.skill_list.length + 60,
-                        },
-                        targetPosition: Position.Left,
-                        type: 'output',
-                    }
-                    initialNodes.push(newNodeData);
+                // career.skill_domains.map((domain, domainIdx) => {
+                //     const newNodeData = {
+                //         id: domain.name + careerpathIdx + careerIdx,
+                //         position: { x: nodeWidth * 2, y: posY },
+                //         data: { label: domain.name },
+                //         style: {
+                //             width: nodeWidth + 100,
+                //             height: nodeHeight * domain.skill_list.length + 10 * domain.skill_list.length + 60,
+                //         },
+                //         targetPosition: Position.Left,
+                //         type: 'output',
+                //     }
+                //     initialNodes.push(newNodeData);
 
-                    const newEdgeData = {
-                        id: `${career.career}->${domain.name + careerpathIdx + careerIdx + domainIdx}`,
-                        source: career.career,
-                        target: domain.name + careerpathIdx + careerIdx,
-                    }
-                    initialEdges.push(newEdgeData);
+                //     const newEdgeData = {
+                //         id: `${career.career}->${domain.name + careerpathIdx + careerIdx + domainIdx}`,
+                //         source: career.career,
+                //         target: domain.name + careerpathIdx + careerIdx,
+                //     }
+                //     initialEdges.push(newEdgeData);
 
-                    let posY_skill = 40;
-                    domain.skill_list.map((skill) => {
-                        const newNodeData: Node = {
-                            id: skill.toString() + careerpathIdx + careerIdx + domainIdx,
-                            position: { x: 50, y: posY_skill },
-                            data: { label: skill.toString() },
-                            style: {
-                                width: nodeWidth,
-                                height: nodeHeight,
-                                lineHeight: 1,
-                            },
-                            parentNode: domain.name + careerpathIdx + careerIdx,
-                            extent: 'parent',
-                            draggable: false,
-                            connectable: false,
-                        }
-                        posY_skill += nodeHeight + 10;
-                        initialNodes.push(newNodeData);
-                    });
-                    posY += posY_skill + 40
-                });
+                //     let posY_skill = 40;
+                //     domain.skill_list.map((skill) => {
+                //         const newNodeData: Node = {
+                //             id: skill.toString() + careerpathIdx + careerIdx + domainIdx,
+                //             position: { x: 50, y: posY_skill },
+                //             data: { label: skill.toString() },
+                //             style: {
+                //                 width: nodeWidth,
+                //                 height: nodeHeight,
+                //                 lineHeight: 1,
+                //             },
+                //             parentNode: domain.name + careerpathIdx + careerIdx,
+                //             extent: 'parent',
+                //             draggable: false,
+                //             connectable: false,
+                //         }
+                //         posY_skill += nodeHeight + 10;
+                //         initialNodes.push(newNodeData);
+                //     });
+                //     posY += posY_skill + 40
+                // });
                 posY += 60
             });
             posY += 80
@@ -133,7 +142,7 @@ export default function NodeTree() {
             position: { x: -nodeWidth, y: posY / 2 },
             data: { label: 'Compath' },
             sourcePosition: Position.Right,
-            type: 'input',
+            type: 'custom',
             draggable: false,
             connectable: false,
             parentNode: '',
@@ -188,6 +197,7 @@ export default function NodeTree() {
                 onEdgesChange={onEdgesChange}
                 nodesConnectable={false}
                 nodesDraggable={false}
+                nodeTypes={nodeTypes}
                 onNodeClick={(e, n) => handleHidden(n)}
             >
                 <Background />
