@@ -41,7 +41,7 @@ export default function HistoryCard() {
                     localStorage.predictionHistory.map((history, idx) => {
                         return (
                             <Link href='/career-insight' onClick={() => { handleCardClick(history) }} key={"prediction-history-card" + idx}>
-                                <div className="border-gray-200 border-[1px] rounded-lg p-4 flex flex-col min-w-[296px] shadow-[0_2px_4px_0px_rgba(0,0,0,0.09)] hover:bg-gray-50 transition delay-75">
+                                <div className="border-gray-200 border-[1px] rounded-lg p-4 flex flex-col min-w-[296px] shadow-[0_2px_4px_0px_rgba(0,0,0,0.09)] hover:bg-gray-50 hover:-translate-y-1.5 transition delay-75">
                                     <div className='flex gap-4 h-full w-full select-none flex-col rounded-md bg-gradient-to-b  from-white to-primary p-6 no-underline outline-none focus:shadow-md'>
                                         <div className="flex flex-row justify-between">
                                             <Icon name={mapCareerIcon(history.career_path)} color="black" />
