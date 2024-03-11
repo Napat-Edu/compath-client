@@ -80,6 +80,9 @@ export default function NodeTree() {
                     id: `${careerPath.career_path_name}->${career.career}`,
                     source: careerPath.career_path_name,
                     target: career.career,
+                    style: {
+                        stroke: '#e4e4e7'
+                    }
                 }
                 initialEdges.push(newEdgeData);
 
@@ -107,6 +110,9 @@ export default function NodeTree() {
                         source: career.career,
                         hidden: true,
                         target: domain.name + careerpathIdx + careerIdx,
+                        style: {
+                            stroke: '#e4e4e7'
+                        }
                     }
                     initialEdges.push(newEdgeData);
                 });
@@ -118,6 +124,9 @@ export default function NodeTree() {
                 id: `compath->${careerPath.career_path_name}`,
                 source: 'compath',
                 target: careerPath.career_path_name,
+                style: {
+                    stroke: '#e4e4e7'
+                }
             }
             initialEdges.push(newEdgeData)
         });
