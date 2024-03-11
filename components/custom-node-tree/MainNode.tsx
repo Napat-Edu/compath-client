@@ -1,14 +1,15 @@
+import Image from "next/image";
 import { memo } from "react";
 import { Handle, Position } from "reactflow";
+import NodeBox from "./NodeBox";
 
-function MainNode({ data }: { data: any }) {
+function MainNode() {
 
     return (
-        <div className="border-[1px] border-maingray rounded-lg px-2 py-1 bg-teal-200">
-            {data.label}
-            <Handle type="target" position={Position.Top} />
-            <Handle type="source" position={Position.Bottom} />
-        </div>
+        <NodeBox>
+            <Image width={0} height={0} className="w-44 h-auto" src={"compath-logo.svg"} alt={"compath-logo"} />
+            <Handle type="source" position={Position.Right} className="!bg-white border-2 border-maingray rounded-full" />
+        </NodeBox>
     );
 }
 

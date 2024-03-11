@@ -35,7 +35,7 @@ export interface IAltSkill {
 export interface ISkillDomain {
   id: string;
   name: string;
-  skill_list: ISkillInfo[];
+  skill_list: string[][];
   is_in_resume: boolean;
 }
 
