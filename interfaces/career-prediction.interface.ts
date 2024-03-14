@@ -12,7 +12,14 @@ export interface ICareerPredictionResult extends ICareerPredictionBase {
 }
 
 export interface ICareerNodeTree extends ICareerPredictionBase {
-  related_careers: ICareerWithSoftSkill[];
+  related_careers: ICareerWithSoftSkillNodeTree[];
+}
+
+export interface ICareerWithSoftSkillNodeTree extends ICareerNodeTree {
+  soft_skills: {
+    id: string;
+    name: string[];
+  };
 }
 
 export interface ICareerWithSoftSkill extends ICareer {
@@ -20,6 +27,12 @@ export interface ICareerWithSoftSkill extends ICareer {
     id: string;
     name: string[];
   };
+}
+
+export interface ICareerNodeTree {
+  career: string;
+  skill_domains: ISkillDomainNodeTree[];
+  alt_skills: IAltSkill[];
 }
 
 export interface ICareer {
@@ -32,10 +45,17 @@ export interface IAltSkill {
   name: string[];
 }
 
+export interface ISkillDomainNodeTree {
+  id: string;
+  name: string;
+  skill_list: string[];
+  is_in_resume: boolean;
+}
+
 export interface ISkillDomain {
   id: string;
   name: string;
-  skill_list: string[][];
+  skill_list: ISkillInfo[];
   is_in_resume: boolean;
 }
 
