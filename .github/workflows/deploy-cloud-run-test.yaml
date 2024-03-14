@@ -39,7 +39,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: compath-test
-          region: us-west2
+          region: asia-southeast1
           image: asia-southeast1-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-test
 
       - name: Show Output
