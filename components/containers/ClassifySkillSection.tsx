@@ -9,6 +9,9 @@ import { Doughnut } from 'react-chartjs-2';
 import { ArcElement, Chart, Legend, Tooltip } from "chart.js";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Icon from "../Icon";
+import Link from "next/link";
+import useSidebar from "@/hooks/useSidebar";
+import useSelectInsight from "@/hooks/useSelectInsight";
 
 interface IClassifySkillSection {
     careerPathInfo: ICareerPredictionResult;
@@ -18,6 +21,9 @@ interface IClassifySkillSection {
 Chart.register(ArcElement, Tooltip, Legend);
 
 export default function ClassifySkillSection(props: IClassifySkillSection) {
+    const sidebar = useSidebar();
+    const selectInsight = useSelectInsight();
+
     const [skillTypeCount, setSkillTypeCount] = useState({
         existSkill: 0,
         nonExistSkill: 0,
@@ -161,6 +167,11 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         });
     };
 
+    const handleExplorationClick = (career: string) => {
+        sidebar.setActiveTab(2);
+        selectInsight.upDateFocusCareer(career);
+    };
+
     useEffect(() => {
         if (!props.isLoading) {
             handleCareerChange(0);
@@ -236,7 +247,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                                     <h5 className="font-medium text-base">อาชีพและทักษะที่เกี่ยวข้อง</h5>
                                                     <p className="font-normal text-sm text-gray-500">คุณสามารถดูอาชีพและทักษะที่เกี่ยวข้องอื่น ๆ ได้</p>
                                                 </div>
-                                                <Button>ไปดู</Button>
+                                                <Link href={"/career-exploration"}><Button onClick={() => { handleExplorationClick(career.career) }}>ไปดู</Button></Link>
                                             </div>
                                         </div>
                                     </InsightBox>

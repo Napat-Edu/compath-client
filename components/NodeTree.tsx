@@ -10,6 +10,7 @@ import MainNode from "./custom-node-tree/MainNode";
 import CareerpathNode from "./custom-node-tree/CareerpathNode";
 import CareerNode from "./custom-node-tree/CareerNode";
 import DomainSkillNode from "./custom-node-tree/DomainSkillNode";
+import useSelectInsight from "@/hooks/useSelectInsight";
 
 const nodeTypes = {
     main: MainNode,
@@ -19,6 +20,7 @@ const nodeTypes = {
 };
 
 export default function NodeTree() {
+    const selectInsight = useSelectInsight();
 
     const [isLoading, setIsLoading] = useState(true);
     const landingViewport = {
@@ -42,6 +44,7 @@ export default function NodeTree() {
 
     const initNodeTree = async () => {
         const careerPathData: ICareerNodeTree[] = await getCareerPathData();
+        const focusCareer = selectInsight.focusCareer;
 
         const initialNodes: Node[] = [];
         const initialEdges: Edge[] = [];
@@ -64,6 +67,7 @@ export default function NodeTree() {
             initialNodes.push(newNodeData);
 
             careerPath.related_careers.map((career, careerIdx) => {
+                const hiddenState = focusCareer === career.career ? false : true;
                 const newNodeData = {
                     id: career.career,
                     position: { x: 200, y: posY + 5 },
@@ -96,7 +100,7 @@ export default function NodeTree() {
                         data: { domain_name: domain.name, skill_list: domain.skill_list },
                         targetPosition: Position.Left,
                         type: 'domainskill',
-                        hidden: true,
+                        hidden: hiddenState,
                         style: {
                             width: nodeWidth
                         }
@@ -108,7 +112,7 @@ export default function NodeTree() {
                     const newEdgeData = {
                         id: `${career.career}->${domain.name + careerpathIdx + careerIdx + domainIdx}`,
                         source: career.career,
-                        hidden: true,
+                        hidden: hiddenState,
                         target: domain.name + careerpathIdx + careerIdx,
                         style: {
                             stroke: '#e4e4e7'
@@ -145,6 +149,7 @@ export default function NodeTree() {
 
         setNodes(initialNodes);
         setEdges(initialEdges);
+        selectInsight.clearFocusCareer();
     };
 
     useEffect(() => {
