@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
-import { IBM_Plex_Sans_Thai, Inter } from 'next/font/google'
+import { IBM_Plex_Sans_Thai } from 'next/font/google'
 import './globals.css'
 import { Sidebar } from '@/components/Sidebar'
+import { LocalStorageProvider } from '@/contexts/LocalStorageContext';
+import { SelectInsightProvider } from '@/contexts/SelectInsightContext';
+import { SidebarProvider } from '@/contexts/SidebarContext';
 
 const IBM_PLEX_SANS_THAI = IBM_Plex_Sans_Thai({
   subsets: ['thai'],
@@ -21,10 +24,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={IBM_PLEX_SANS_THAI.className}>
-        <div className='flex flex-row min-h-screen'>
-          <Sidebar></Sidebar>
-          {children}
-        </div>
+        <main className='flex flex-row min-h-screen'>
+          <SidebarProvider>
+
+            <Sidebar></Sidebar>
+
+            <LocalStorageProvider>
+              <SelectInsightProvider>
+                <main className='grow overflow-x-hidden px-6'>
+                  {children}
+                </main>
+              </SelectInsightProvider>
+            </LocalStorageProvider>
+
+          </SidebarProvider>
+        </main>
       </body>
     </html>
   )

@@ -1,29 +1,30 @@
-import { FormDialog } from "@/components/FormDialog";
+import { FormDialog } from "@/components/predict-dialog/FormDialog";
+import HistoryCard from "@/components/HistoryCard";
+import Icon from "@/components/Icon";
 
 export default function Home() {
 
   return (
-    <section className="w-full px-6">
+    <>
 
-      <section className="border-b-2 border-[#E4E4E7] pt-6 pb-4 flex flex-col gap-1">
+      <section className="flex flex-col border-b-2 border-subgray pt-6 pb-4 gap-1">
         <h1 className="text-primary font-bold text-4xl">Career Prediction</h1>
-        <p className="text-[#71717A]">แนะนำอาชีพเหมาะสมกับคุณจากข้อมูลในเรซูเม</p>
+        <p className="text-subtext">แนะนำอาชีพเหมาะสมกับคุณจากข้อมูลในเรซูเม</p>
       </section>
 
-      <section className="border-2 border-dashed border-primary rounded-2xl min-h-96 flex flex-col justify-center mt-4">
-        <img
-          src="resume.svg"
-          alt="resume icon"
-          height="32px"
-          width="32px"
-          className="ml-auto mr-auto" />
+      <section className="flex flex-col justify-center border-2 border-primary border-dashed rounded-2xl min-h-96 mt-4">
+        <Icon className="mx-auto" name={"Newspaper"} size={32} />
         <div className="my-4">
           <p className="text-center font-semibold text-xl">เริ่มทำนายอาชีพของคุณ</p>
-          <p className="text-center text-[#71717A]">ให้ข้อมูลกับเราเพื่อทำนายอาชีพที่เหมาะสมกับคุณ</p>
+          <p className="text-center text-subtext">ให้ข้อมูลกับเราเพื่อทำนายอาชีพที่เหมาะสมกับคุณ</p>
         </div>
         <FormDialog></FormDialog>
       </section>
 
-    </section>
+      <section className="min-h-96 flex flex-col mt-8">
+        <HistoryCard></HistoryCard>
+      </section>
+
+    </>
   )
 }

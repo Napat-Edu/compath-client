@@ -14,10 +14,10 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form"
-import { DialogFooter } from "./ui/dialog"
-import { Checkbox } from "./ui/checkbox"
-import Image from "next/image"
-import { Textarea } from "./ui/textarea"
+import { DialogFooter } from "../ui/dialog"
+import { Checkbox } from "../ui/checkbox"
+import { Textarea } from "../ui/textarea"
+import Icon from "../Icon"
 
 const FormSchema = z.object({
     educational: z.string().min(1, {
@@ -113,7 +113,7 @@ export function InputForm(props: IInputForm) {
                         </FormItem>
                     )}
                 />
-                <DialogFooter className="flex flex-row lg:justify-between">
+                <DialogFooter className="flex flex-row lg:justify-between pt-4">
                     <div className="flex flex-row">
                         <FormField
                             name="agreement"
@@ -139,7 +139,7 @@ export function InputForm(props: IInputForm) {
                             )}
                         />
                     </div>
-                    <Button type="submit">เริ่มทำนาย<Image className="ml-2" src="arrow-right.svg" alt="arrow-right" width={16} height={16} /></Button>
+                    <Button type="submit">เริ่มทำนาย<Icon className="ml-[6px]" name={"ArrowRight"} color="white" size={16} /></Button>
                 </DialogFooter>
             </form>
         </Form>
