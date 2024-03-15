@@ -7,9 +7,11 @@ import ClassifySkillSection from "./ClassifySkillSection";
 import Icon from "../Icon";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import useSidebar from "@/hooks/useSidebar";
 
 export default function CareerInsightContainer() {
     const localStorage = useLocalStorage();
+    const sidebar = useSidebar();
     const [isLoading, setIsloading] = useState(true);
     const [careerPathInfo, setCareerPathInfo] = useState<ICareerPredictionResult>();
 
@@ -34,6 +36,10 @@ export default function CareerInsightContainer() {
         );
     }
 
+    const handleLinkClick = () => {
+        sidebar.setActiveTab(0);
+    };
+
     return (
         <>
             {
@@ -56,7 +62,7 @@ export default function CareerInsightContainer() {
                                 <p className="text-center font-semibold text-xl">คุณยังไม่ได้ทำนายอาชีพกับเรา</p>
                                 <p className="text-center text-subtext">ไปทำนายสายอาชีพเพื่อดูข้อมูลเชิงลึกของสายอาชีพที่เหมาะสมกับคุณ</p>
                             </div>
-                            <Link href={"/"} className="ml-auto mr-auto">
+                            <Link href={"/"} className="ml-auto mr-auto" onClick={handleLinkClick}>
                                 <Button className="px-4 py-2">
                                     <Icon name={"Sparkles"} color="white" size={16} className="mr-[6px]" />
                                     ไปทำนายอาชีพ
