@@ -22,10 +22,6 @@ export default function Home() {
       </section>
 
       <section className="min-h-96 flex flex-col mt-8">
-        <div className="flex flex-row mb-4 gap-[6px]">
-          <Icon name={"BookMarked"} />
-          <h3 className="font-semibold text-lg">การ์ดที่ทำนายไว้</h3>
-        </div>
         <HistoryCard></HistoryCard>
       </section>
 
