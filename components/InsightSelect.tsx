@@ -46,7 +46,7 @@ export function InsightSelect() {
     }, [localStorage.isStorageReady]);
 
     return (
-        localStorage.isStorageReady &&
+        (localStorage.isStorageReady && localStorage.predictionHistory.length > 0) &&
         <div className="border-maingray border-[1px] rounded-3xl flex flex-row gap-4 p-6 leading-9 justify-between">
             <Select onValueChange={(id) => { handleHistoryChange(id) }} value={currentSelectCareer}>
                 <Icon name={"Newspaper"} className="my-auto" />
