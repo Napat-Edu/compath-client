@@ -14,6 +14,7 @@ import Icon from "./Icon";
 import useSelectInsight from "@/hooks/useSelectInsight";
 import { IPredictionHistory } from "@/interfaces/storage.interface";
 import useSidebar from "@/hooks/useSidebar";
+import { MouseEvent } from "react";
 
 export default function HistoryCard() {
     const localStorage = useLocalStorage();
@@ -24,7 +25,8 @@ export default function HistoryCard() {
         return null;
     }
 
-    const handleDeleteCard = (object_id: string) => {
+    const handleDeleteCard = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>, object_id: string) => {
+        e.stopPropagation();
         localStorage.deleteHistory(object_id);
     };
 
@@ -56,7 +58,7 @@ export default function HistoryCard() {
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent className="rounded-lg">
                                                         <DropdownMenuItem>Edit</DropdownMenuItem>
-                                                        <DropdownMenuItem className="text-red-500" onClick={() => { handleDeleteCard(history.object_id) }}>Delete</DropdownMenuItem>
+                                                        <DropdownMenuItem className="text-red-500" onClick={(e) => { handleDeleteCard(e, history.object_id) }}>Delete</DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </div>
