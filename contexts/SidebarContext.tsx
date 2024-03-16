@@ -1,14 +1,14 @@
 'use client'
 import { createContext, useEffect, useState } from "react";
-import { ISidebarTab } from "@/interfaces/sidebar.interface"
+import { ISidebarTab } from "@/interfaces/sidebar.interface";
 
-type sidebarContent = {
+type SidebarContent = {
     activeTab: number | undefined;
     setActiveTab: any;
     sideBarTabs: ISidebarTab[];
 };
 
-export const SidebarContext = createContext<sidebarContent>({
+export const SidebarContext = createContext<SidebarContent>({
     activeTab: 0,
     setActiveTab: undefined,
     sideBarTabs: []
@@ -41,14 +41,22 @@ export const SidebarProvider = ({ children }: any) => {
         }
     ];
 
+    const handlePopState = () => {
+        const newFocusTab = sideBarTabs.findIndex((tab) => tab.navigateLink === window.location.pathname);
+        setActiveTab(newFocusTab);
+    };
+
     useEffect(() => {
-        if (window.location.pathname !== "") {
-            const newFocusTab = sideBarTabs.findIndex((tab) => {
-                return tab.navigateLink == window.location.pathname;
-            });
-            setActiveTab(newFocusTab);
-        }
+        handlePopState();
+        window.addEventListener('popstate', handlePopState);
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
     }, []);
 
-    return (<SidebarContext.Provider value={{ activeTab, setActiveTab, sideBarTabs }}>{children}</SidebarContext.Provider>);
+    return (
+        <SidebarContext.Provider value={{ activeTab, setActiveTab, sideBarTabs }}>
+            {children}
+        </SidebarContext.Provider>
+    );
 };
