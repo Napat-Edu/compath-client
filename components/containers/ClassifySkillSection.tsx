@@ -62,16 +62,17 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
 
     const findExistingSkill = (related_careers: ICareer[], tabCareerIdx: number) => {
         const domains = related_careers[tabCareerIdx].skill_domains;
-        let existSkills: string[] = [];
+        const uniqueExistSkills: Set<string> = new Set();
         domains.forEach((domain) => {
             domain.skill_list.forEach((skill) => {
                 if (skill.isExisInResume) {
-                    existSkills.push(skill.name[0]);
+                    uniqueExistSkills.add(skill.name[0]);
                 }
             });
         });
-        return existSkills;
+        return Array.from(uniqueExistSkills);
     };
+
 
     const findNonExistingDomain = (related_careers: ICareer[], tabCareerIdx: number) => {
         const domains = related_careers[tabCareerIdx].skill_domains;
