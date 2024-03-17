@@ -126,17 +126,17 @@ export default function CareerResult(props: ICareerResult) {
                                 description={"ประวัติการทำนายในครั้งนี้จะถูกบันทึกไว้ที่เครื่องของคุณ และจะสามารถย้อนกลับมาดูเมื่อไหร่ก็ได้"}
                                 onAcceptClick={handleToInsightClick}
                             >
-                                <Button className="px-4 py-2 h-full border-2 border-primary">
+                                <Button className="px-4 py-2 h-full border-2 border-primary" disabled={props.isPredictionLoading}>
                                     <Icon name={"Newspaper"} color="white" size={16} className="mr-[6px]" />
                                     ดูเพิ่มเติม
                                 </Button>
                             </ConfirmAlertDialog>
                             <DialogClose asChild>
-                                <Button className="p-3 rounded-md h-full" variant="outline" onClick={handleSaveClick}>
+                                <Button className="p-3 rounded-md h-full" variant="outline" onClick={handleSaveClick} disabled={props.isPredictionLoading}>
                                     <Icon name={"Save"} color="black" size={16} />
                                 </Button>
                             </DialogClose>
-                            <Button className="p-3 rounded-md h-full" onClick={props.togglePredictionState} variant="outline">
+                            <Button className="p-3 rounded-md h-full" onClick={props.togglePredictionState} variant="outline" disabled={props.isPredictionLoading}>
                                 <Icon name={"SquarePen"} color="black" size={16} />
                             </Button>
                         </div>
