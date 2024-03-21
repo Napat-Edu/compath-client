@@ -50,7 +50,7 @@ export function InsightSelect() {
         <div className="border-maingray border-[1px] rounded-3xl flex flex-row gap-4 p-6 leading-9 justify-between">
             <Select onValueChange={(id) => { handleHistoryChange(id) }} value={currentSelectCareer}>
                 <Icon name={"Newspaper"} className="my-auto" />
-                <h3 className="text-center font-semibold">การ์ดสายทำนาย</h3>
+                <h3 className="text-center font-semibold">การ์ดสายอาชีพ</h3>
                 <SelectTrigger className="w-[492px] py-2 flex flex-row">
                     <div className="w-full">
                         <SelectValue className="w-full" placeholder="เลือกการ์ดทำนาย" />

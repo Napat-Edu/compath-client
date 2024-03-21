@@ -228,7 +228,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                     </div>
                                     <InsightBox
                                         title={"กราฟทักษะ"}
-                                        subtitle={"โปรดกรอกข้อมูลให้ระบบเพื่อนำไปทำนายสายอาชีพที่เหมาะสมกับคุณ"}
+                                        subtitle={"กราฟแสดงอัตราส่วนของทักษะในอาชีพนี้"}
                                         name={"AreaChart"}
                                         className="basis-1/2"
                                     >
