@@ -1,13 +1,11 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useEffect } from "react";
 import { Button } from "../ui/button";
 import { ICareer, ICareerPredictionResult } from "@/interfaces/career-prediction.interface";
 import { Alert, AlertDescription } from "../ui/alert"
-import { DialogClose } from "../ui/dialog";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { Badge } from "../ui/badge";
 import { mapCareerIcon, toSalaryNumber } from "../../utils/utils";
 import Icon from "../Icon";
-import ConfirmAlertDialog from "../ConfirmAlertDialog";
 import { useRouter } from "next/navigation";
 import useSidebar from "@/hooks/useSidebar";
 import useSelectInsight from "@/hooks/useSelectInsight";
@@ -26,23 +24,22 @@ export default function CareerResult(props: ICareerResult) {
 
     const router = useRouter()
 
-    const handleSaveClick = () => {
-        localStorage.addPredictionHistory({
-            career_path: props.predictionResult!.career_path_name ?? "Unknown",
-            submit_date: props.predictionResult!.input_date.toString(),
-            object_id: props.predictionResult?.object_id
-        });
-    };
+    useEffect(() => {
+        if (props.predictionResult) {
+            const newHistory: IPredictionHistory = {
+                career_path: props.predictionResult?.career_path_name!,
+                submit_date: props.predictionResult?.input_date.toString()!,
+                object_id: props.predictionResult?.object_id
+            };
+            localStorage.addPredictionHistory(newHistory);
+        }
+        return () => { };
+    }, [props.predictionResult]);
 
     const handleToInsightClick = () => {
         sidebar.setActiveTab(1);
-        const newHistory: IPredictionHistory = {
-            career_path: props.predictionResult?.career_path_name!,
-            submit_date: props.predictionResult?.input_date.toString()!,
-            object_id: props.predictionResult?.object_id
-        };
-        localStorage.addPredictionHistory(newHistory);
-        selectInsight.upDateSelectedInsight(props.predictionResult?.career_path_name, props.predictionResult?.object_id);
+        const latestHistory = localStorage.getLatestHistory();
+        selectInsight.upDateSelectedInsight(latestHistory.career_path, latestHistory.object_id);
         router.push('/career-insight');
     };
 
@@ -121,7 +118,7 @@ export default function CareerResult(props: ICareerResult) {
                             </p>
                         </div>
                         <div className="flex flex-row items-center gap-2 mt-3">
-                            <Button className="grow px-4 py-2 h-full leading-6" disabled={props.isPredictionLoading}>
+                            <Button onClick={handleToInsightClick} className="grow px-4 py-2 h-full leading-6" disabled={props.isPredictionLoading}>
                                 <Icon name={"Newspaper"} color="white" size={16} className="mr-[6px]" />
                                 ดูเพิ่มเติม
                             </Button>
