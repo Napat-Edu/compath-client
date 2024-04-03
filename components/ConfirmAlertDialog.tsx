@@ -1,5 +1,6 @@
 import { Dispatch, MouseEventHandler, SetStateAction } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "./ui/alert-dialog";
+import Icon from "./Icon";
 
 interface IConfirmAlertDialogProp {
     onAcceptClick: any;
@@ -22,8 +23,8 @@ export default function ConfirmAlertDialog(props: IConfirmAlertDialogProp) {
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel onClick={() => { props.handleOpenChange(false); }}>ย้อนกลับ</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => { props.onAcceptClick() }}>ไปต่อ</AlertDialogAction>
+                    <AlertDialogCancel onClick={() => { props.handleOpenChange(false); }}> <Icon name={"Undo2"} color={"black"} size={16} className="mr-1" /> ย้อนกลับ</AlertDialogCancel>
+                    <AlertDialogAction className="bg-destructive" onClick={() => { props.onAcceptClick() }}>ยืนยัน</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
