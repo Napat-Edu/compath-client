@@ -84,8 +84,8 @@ export default function CareerResult(props: ICareerResult) {
                     </li>
 
                     <div>
-                        <div className="p-3">
-                            <h3 className="font-medium text-primary text-sm">ตัวอย่างอาชีพที่เกี่ยวข้อง</h3>
+                        <div className="border-[1px] rounded-lg p-4">
+                            <h3 className="font-medium text-primary text-sm">อาชีพที่เกี่ยวข้อง</h3>
                             <div className={`flex flex-row flex-wrap self-stretch items-start content-start gap-1 ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
 
                                 {
@@ -100,7 +100,7 @@ export default function CareerResult(props: ICareerResult) {
 
                             </div>
                         </div>
-                        <div className="p-3 font-medium text-sm">
+                        <div className="border-[1px] rounded-lg p-4 font-medium text-sm mt-2">
                             <h3 className="font-medium text-primary text-sm">ฐานเงินเดือน</h3>
                             <p className={`font-semibold text-lg ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
                                 {
@@ -110,7 +110,7 @@ export default function CareerResult(props: ICareerResult) {
                                 }
                             </p>
                         </div>
-                        <div className="p-3 font-medium text-sm">
+                        <div className="border-[1px] rounded-lg p-4 font-medium text-sm mt-2">
                             <h3 className="font-medium text-primary text-sm">ถูกทำนายไปแล้ว</h3>
                             <p className={`font-semibold text-lg ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
                                 {
@@ -120,22 +120,11 @@ export default function CareerResult(props: ICareerResult) {
                                 }
                             </p>
                         </div>
-                        <div className="flex flex-row items-center gap-2 px-2">
-                            <ConfirmAlertDialog
-                                title={"บันทึกประวัติการทำนาย"}
-                                description={"ประวัติการทำนายในครั้งนี้จะถูกบันทึกไว้ที่เครื่องของคุณ และจะสามารถย้อนกลับมาดูเมื่อไหร่ก็ได้"}
-                                onAcceptClick={handleToInsightClick}
-                            >
-                                <Button className="px-4 py-2 h-full border-2 border-primary" disabled={props.isPredictionLoading}>
-                                    <Icon name={"Newspaper"} color="white" size={16} className="mr-[6px]" />
-                                    ดูเพิ่มเติม
-                                </Button>
-                            </ConfirmAlertDialog>
-                            <DialogClose asChild>
-                                <Button className="p-3 rounded-md h-full" variant="outline" onClick={handleSaveClick} disabled={props.isPredictionLoading}>
-                                    <Icon name={"Save"} color="black" size={16} />
-                                </Button>
-                            </DialogClose>
+                        <div className="flex flex-row items-center gap-2 mt-3">
+                            <Button className="grow px-4 py-2 h-full leading-6" disabled={props.isPredictionLoading}>
+                                <Icon name={"Newspaper"} color="white" size={16} className="mr-[6px]" />
+                                ดูเพิ่มเติม
+                            </Button>
                             <Button className="p-3 rounded-md h-full" onClick={props.togglePredictionState} variant="outline" disabled={props.isPredictionLoading}>
                                 <Icon name={"SquarePen"} color="black" size={16} />
                             </Button>
