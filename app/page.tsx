@@ -21,7 +21,7 @@ export default function Home() {
         <FormDialog></FormDialog>
       </section>
 
-      <section className="min-h-96 flex flex-col mt-8">
+      <section className="flex flex-col mt-8">
         <HistoryCard></HistoryCard>
       </section>
 
