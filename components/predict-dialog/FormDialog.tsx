@@ -9,11 +9,12 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { InputForm } from "./InputForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CareerResult from "./CareerResult";
 import { ICareerPredictionResult, IUserResume } from "@/interfaces/career-prediction.interface";
 import Icon from "../Icon";
 import ConfirmAlertDialog from "../ConfirmAlertDialog";
+import InformAlertDialog from "./InformAlertDialog";
 
 export function FormDialog() {
     const [isPredicting, setPredicting] = useState(false);
@@ -23,12 +24,29 @@ export function FormDialog() {
     const [isFormDialogOpen, setIsFormDialogOpen] = useState(false);
     const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
 
+    const [informHidden, setInformHidden] = useState<boolean>(false);
+    useEffect(() => {
+        const informConfig = localStorage.getItem('hideInform') === 'true';
+        setInformHidden(informConfig);
+    }, [])
+    const [isAgreementFilled, setIsAgreementFilled] = useState(false);
+
     const [currentUserInput, setCurrentUserInput] = useState({
         skill: undefined,
         educational: undefined,
         experience: undefined,
         agreement: undefined
     });
+
+    const acceptInformStatus = (agreement: boolean) => {
+        setIsFormDialogOpen(true);
+        setInformHidden(true);
+        setIsAgreementFilled(agreement);
+    };
+
+    if (!informHidden && !isAgreementFilled) {
+        return (<InformAlertDialog acceptInformStatus={acceptInformStatus}></InformAlertDialog>);
+    }
 
     const updateCurrentUserInput = (input: any) => {
         setCurrentUserInput(input);
@@ -79,6 +97,7 @@ export function FormDialog() {
         setPredicting(false);
         setIsConfirmDialogOpen(false);
         setIsFormDialogOpen(false);
+        setInformHidden(false);
     };
 
     return (
