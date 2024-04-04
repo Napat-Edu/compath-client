@@ -114,7 +114,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                         return (
                             <HoverCard key={`non-exist-domain-${idx}`} openDelay={0} closeDelay={0}>
                                 <HoverCardTrigger>
-                                    <Badge className="border-primary" variant={'outline'} key={`badge-${idx}`}>
+                                    <Badge className="text-primary" variant={'outline'} key={`badge-${idx}`}>
                                         {domain.name}
                                     </Badge>
                                 </HoverCardTrigger>
@@ -227,20 +227,20 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                         </InsightBox>
                                     </div>
                                     <InsightBox
-                                        title={"กราฟทักษะ"}
+                                        title={"สรุปผลทักษะ"}
                                         subtitle={"กราฟแสดงอัตราส่วนของทักษะในอาชีพนี้"}
                                         name={"AreaChart"}
                                         className="basis-1/2"
                                     >
                                         <div className="flex flex-col h-full">
-                                            <div className="flex flex-row justify-center items-center gap-6 border-[1px] rounded-[8px] p-5 h-full">
+                                            <div className="flex flex-row justify-center items-center gap-1 border-[1px] rounded-[8px] p-5 h-full">
                                                 <div className="flex flex-row justify-center align-middle items-center h-full">
                                                     {!props.isLoading && <Doughnut className="max-h-full max-w-full" data={data} options={options}></Doughnut>}
                                                 </div>
                                                 <div className="flex flex-col gap-5">
-                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#4EBC62] mr-1" />เหมาะสม : {skillTypeCount.existSkill}</Badge>
-                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EDF8EF] mr-1" />ควรเรียนรู้ : {skillTypeCount.nonExistSkill}</Badge>
-                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EFEFEF] mr-1" />อื่น ๆ : {skillTypeCount.altSkill}</Badge>
+                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#4EBC62] mr-1" />ทักษะที่เหมาะสม : {skillTypeCount.existSkill}</Badge>
+                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EDF8EF] mr-1" />ทักษะที่ควรเรียนรู้ : {skillTypeCount.nonExistSkill}</Badge>
+                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EFEFEF] mr-1" />ทักษะอื่น ๆ : {skillTypeCount.altSkill}</Badge>
                                                 </div>
                                             </div>
                                             <div className="flex flex-row p-5 border-[1px] rounded-[8px] gap-3 items-center w-full justify-between mt-4">

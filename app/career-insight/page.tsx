@@ -9,9 +9,9 @@ export default function CareerInsightPage() {
                     <h1 className="text-primary font-bold text-4xl">Career Insight</h1>
                     <p className="text-subtext">แสดงผลข้อมูลเชิงลึกของอาชีพที่คุณทำนายได้</p>
                 </div>
-                <InsightSelect></InsightSelect>
             </section>
 
+            <InsightSelect></InsightSelect>
             <CareerInsightContainer />
         </>
     );

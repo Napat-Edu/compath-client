@@ -47,16 +47,18 @@ export function InsightSelect() {
 
     return (
         (localStorage.isStorageReady && localStorage.predictionHistory.length > 0) &&
-        <div className="border-maingray border-[1px] rounded-3xl flex flex-row gap-4 p-6 leading-9 justify-between">
+        <div className="border-maingray border-[1px] rounded-3xl flex flex-row gap-4 justify-between p-6 leading-9 max-w-3xl mt-4">
             <Select onValueChange={(id) => { handleHistoryChange(id) }} value={currentSelectCareer}>
-                <Icon name={"Newspaper"} className="my-auto" />
-                <h3 className="text-center font-semibold">การ์ดสายอาชีพ</h3>
-                <SelectTrigger className="w-[492px] py-2 flex flex-row">
+                <div className="flex gap-1 min-w-fit">
+                    <Icon name={"BookMarked"} className="my-auto" />
+                    <h3 className="text-center font-semibold">การ์ดที่ทำนายไว้</h3>
+                </div>
+                <SelectTrigger className="w-full py-2 flex flex-row">
                     <div className="w-full">
                         <SelectValue className="w-full" placeholder="เลือกการ์ดทำนาย" />
                     </div>
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="w-full">
                     <SelectGroup>
                         <SelectLabel className="flex flex-row w-full pr-8">
                             <p className="basis-2/5 text-left">สายอาชีพ</p>
