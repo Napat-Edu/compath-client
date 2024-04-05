@@ -12,6 +12,20 @@ export function Sidebar() {
         sidebar.setActiveTab(index);
     };
 
+    const handleSignIn = () => {
+        const popupWidth = 350;
+        const popupHeight = 500;
+        const dualScreenLeft = window.screenLeft || window.screenX || 0;
+        const dualScreenTop = window.screenTop || window.screenY || 0;
+        const screenWidth = window.screen.width;
+        const screenHeight = window.screen.height;
+        const left = (screenWidth - popupWidth) / 2 + dualScreenLeft;
+        const top = (screenHeight - popupHeight) / 2 + dualScreenTop;
+        const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
+
+        window.open('', 'MsgWindow', popupFeatures);
+    };
+
     return (
         <nav className="min-w-56 max-w-56 border-r-2">
             <div className="space-y-4 py-4 sticky top-0 h-screen">
@@ -50,8 +64,7 @@ export function Sidebar() {
                     </section>
 
                     <section className="px-8 py-4 flex flex-col gap-2">
-                        <Button variant="outline" className="border-primary text-primary hover:text-primary">Login</Button>
-                        <Button>Sign Up</Button>
+                        <Button variant="outline" onClick={handleSignIn}>Sign In with Google</Button>
                     </section>
 
                 </div>
