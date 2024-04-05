@@ -1,6 +1,4 @@
-import dynamic from "next/dynamic";
-import dynamicIconImports from 'lucide-react/dynamicIconImports';
-import { LucideProps, icons } from 'lucide-react';
+import { icons } from 'lucide-react';
 import Icon from "./Icon";
 
 interface IInsightBox {

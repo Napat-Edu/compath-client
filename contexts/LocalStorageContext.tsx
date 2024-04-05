@@ -1,5 +1,6 @@
 'use client'
-import { IPredictionHistory } from "@/interfaces/career-prediction-interface";
+import { IFocusCareerInsight } from "@/interfaces/career-insight.interface";
+import { IPredictionHistory } from "@/interfaces/storage.interface";
 import { createContext, useEffect, useState } from "react";
 
 type localStorageContent = {
@@ -7,7 +8,8 @@ type localStorageContent = {
     addPredictionHistory: (newPredictHistory: IPredictionHistory) => void,
     findPredictionHistory: (id: string) => any,
     isStorageReady: boolean,
-    getLatestHistory: () => any
+    getLatestHistory: () => IFocusCareerInsight,
+    deleteHistory: (object_id: string) => void,
 };
 
 export const LocalStorageContext = createContext<localStorageContent>({
@@ -20,6 +22,9 @@ export const LocalStorageContext = createContext<localStorageContent>({
         throw new Error("Function not implemented.");
     },
     getLatestHistory: function () {
+        throw new Error("Function not implemented.");
+    },
+    deleteHistory: function () {
         throw new Error("Function not implemented.");
     }
 });
@@ -50,7 +55,7 @@ export const LocalStorageProvider = ({ children }: any) => {
             }
         });
         const foundedHistory = {
-            career_path: historyResult?.result ?? "",
+            career_path: historyResult?.career_path ?? "",
             object_id: historyResult?.object_id ?? ""
         };
         return foundedHistory;
@@ -73,10 +78,16 @@ export const LocalStorageProvider = ({ children }: any) => {
                 return acc;
             }
         });
-        return { career_path: latestHistory.result, object_id: latestHistory.object_id };
+        return { career_path: latestHistory.career_path, object_id: latestHistory.object_id };
+    };
+
+    const deleteHistory = (object_id: string) => {
+        const fitleredHistory = predictionHistory.filter((history) => history.object_id !== object_id);
+        localStorage.setItem("predictionHistory", JSON.stringify(fitleredHistory));
+        setPredictionHistory(fitleredHistory);
     };
 
     return (
-        <LocalStorageContext.Provider value={{ predictionHistory, addPredictionHistory, findPredictionHistory, isStorageReady, getLatestHistory }}>{children}</LocalStorageContext.Provider>
+        <LocalStorageContext.Provider value={{ predictionHistory, addPredictionHistory, findPredictionHistory, isStorageReady, getLatestHistory, deleteHistory }}>{children}</LocalStorageContext.Provider>
     );
 };

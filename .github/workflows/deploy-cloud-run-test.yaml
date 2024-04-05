@@ -17,31 +17,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Google Auth
         id: auth
-        uses: "google-github-actions/auth@v1"
+        uses: "google-github-actions/auth@v2"
         with:
-          workload_identity_provider: "${{ secrets.WIF_PROVIDER }}"
-          service_account: "${{ secrets.WIF_SERVICE_ACCOUNT }}"
+          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS }}"
 
       - name: Login Docker
-        run: gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-west2-docker.pkg.dev
+        run: gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://asia-southeast1-docker.pkg.dev
 
       - name: Build Docker Image
-        run: docker build -t us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-test --build-arg API_BASE_URL=${{secrets.API_BASE_URL_TEST}} --build-arg API_CAREER_ENDPOINT=${{secrets.API_CAREER_ENDPOINT}} --build-arg API_INSIGHT_ENDPOINT=${{secrets.API_INSIGHT_ENDPOINT}} .
+        run: docker build -t asia-southeast1-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-test --build-arg API_BASE_URL=${{secrets.API_BASE_URL_TEST}} --build-arg API_CAREER_ENDPOINT=${{secrets.API_CAREER_ENDPOINT}} --build-arg API_INSIGHT_ENDPOINT=${{secrets.API_INSIGHT_ENDPOINT}} --build-arg API_EXPLORATION_ENDPOINT=${{secrets.API_EXPLORATION_ENDPOINT}} .
 
       - name: Push Image to Artifact Registry
-        run: docker push us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-test
+        run: docker push asia-southeast1-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-test
 
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v1
         with:
           service: compath-test
-          region: us-west2
-          image: us-west2-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-test
+          region: asia-southeast1
+          image: asia-southeast1-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-test
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}

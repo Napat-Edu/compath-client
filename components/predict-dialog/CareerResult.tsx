@@ -1,12 +1,15 @@
-import { MouseEventHandler } from "react";
-import { Button } from "./ui/button";
-import { ICareer, ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
-import { Alert, AlertDescription } from "./ui/alert"
-import { DialogClose } from "./ui/dialog";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { Badge } from "./ui/badge";
-import { toSalaryNumber } from "../utils/utils";
-import Icon from "./Icon";
+import { MouseEventHandler, useEffect } from "react";
+import { Button } from "../ui/button";
+import { ICareer, ICareerPredictionResult } from "@/interfaces/career-prediction.interface";
+import { Alert, AlertDescription } from "../ui/alert"
+import useLocalStorage from "../../hooks/useLocalStorage";
+import { Badge } from "../ui/badge";
+import { mapCareerIcon, toSalaryNumber } from "../../utils/utils";
+import Icon from "../Icon";
+import { useRouter } from "next/navigation";
+import useSidebar from "@/hooks/useSidebar";
+import useSelectInsight from "@/hooks/useSelectInsight";
+import { IPredictionHistory } from "@/interfaces/storage.interface";
 
 interface ICareerResult {
     isPredictionLoading: boolean;
@@ -16,13 +19,28 @@ interface ICareerResult {
 
 export default function CareerResult(props: ICareerResult) {
     const localStorage = useLocalStorage();
+    const selectInsight = useSelectInsight();
+    const sidebar = useSidebar();
 
-    const handleSaveClick = () => {
-        localStorage.addPredictionHistory({
-            result: props.predictionResult!.career_path_name ?? "Unknown",
-            submit_date: props.predictionResult!.input_date.toString(),
-            object_id: props.predictionResult?.object_id
-        });
+    const router = useRouter()
+
+    useEffect(() => {
+        if (props.predictionResult) {
+            const newHistory: IPredictionHistory = {
+                career_path: props.predictionResult?.career_path_name!,
+                submit_date: props.predictionResult?.input_date.toString()!,
+                object_id: props.predictionResult?.object_id
+            };
+            localStorage.addPredictionHistory(newHistory);
+        }
+        return () => { };
+    }, [props.predictionResult]);
+
+    const handleToInsightClick = () => {
+        sidebar.setActiveTab(1);
+        const latestHistory = localStorage.getLatestHistory();
+        selectInsight.upDateSelectedInsight(latestHistory.career_path, latestHistory.object_id);
+        router.push('/career-insight');
     };
 
     const samplingRelatedCareers = (relatedCareers: ICareer[]) => {
@@ -51,11 +69,7 @@ export default function CareerResult(props: ICareerResult) {
                             {
                                 props.isPredictionLoading ?
                                     null :
-                                    <object
-                                        dangerouslySetInnerHTML={{ __html: props.predictionResult!.icon_svg }}
-                                        width="24px"
-                                        height="24px"
-                                    />
+                                    <Icon name={mapCareerIcon(props.predictionResult?.career_path_name!)} size={24} color="black" />
                             }
                             <div className="mb-2 mt-4 text-lg font-medium">
                                 {props.isPredictionLoading ? null : props.predictionResult?.career_path_name}
@@ -67,8 +81,8 @@ export default function CareerResult(props: ICareerResult) {
                     </li>
 
                     <div>
-                        <div className="p-3">
-                            <h3 className="font-medium text-primary text-sm">ตัวอย่างอาชีพที่เกี่ยวข้อง</h3>
+                        <div className="border-[1px] rounded-lg p-4">
+                            <h3 className="font-medium text-primary text-sm">อาชีพที่เกี่ยวข้อง</h3>
                             <div className={`flex flex-row flex-wrap self-stretch items-start content-start gap-1 ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
 
                                 {
@@ -83,7 +97,7 @@ export default function CareerResult(props: ICareerResult) {
 
                             </div>
                         </div>
-                        <div className="p-3 font-medium text-sm">
+                        <div className="border-[1px] rounded-lg p-4 font-medium text-sm mt-2">
                             <h3 className="font-medium text-primary text-sm">ฐานเงินเดือน</h3>
                             <p className={`font-semibold text-lg ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
                                 {
@@ -93,8 +107,8 @@ export default function CareerResult(props: ICareerResult) {
                                 }
                             </p>
                         </div>
-                        <div className="p-3 font-medium text-sm">
-                            <h3 className="font-medium text-primary text-sm">มีคนทำนายได้สายอาชีพนี้</h3>
+                        <div className="border-[1px] rounded-lg p-4 font-medium text-sm mt-2">
+                            <h3 className="font-medium text-primary text-sm">ถูกทำนายไปแล้ว</h3>
                             <p className={`font-semibold text-lg ${props.isPredictionLoading ? 'bg-slate-100 rounded-lg h-6' : null}`}>
                                 {
                                     props.isPredictionLoading ?
@@ -103,18 +117,13 @@ export default function CareerResult(props: ICareerResult) {
                                 }
                             </p>
                         </div>
-                        <div className="flex flex-row items-center gap-2 px-2">
-                            <Button className="px-4 py-2 h-full border-2 border-primary">
-                                <Icon name={"Newspaper"} color="white" />
+                        <div className="flex flex-row items-center gap-2 mt-3">
+                            <Button onClick={handleToInsightClick} className="grow px-4 py-2 h-full leading-6" disabled={props.isPredictionLoading}>
+                                <Icon name={"Newspaper"} color="white" size={16} className="mr-[6px]" />
                                 ดูเพิ่มเติม
                             </Button>
-                            <DialogClose asChild>
-                                <Button className="p-3 rounded-md h-full" variant="outline" onClick={handleSaveClick}>
-                                    <Icon name={"Save"} color="black" />
-                                </Button>
-                            </DialogClose>
-                            <Button className="p-3 rounded-md h-full" onClick={props.togglePredictionState} variant="outline">
-                                <Icon name={"SquarePen"} color="black" />
+                            <Button className="p-3 rounded-md h-full" onClick={props.togglePredictionState} variant="outline" disabled={props.isPredictionLoading}>
+                                <Icon name={"SquarePen"} color="black" size={16} />
                             </Button>
                         </div>
                     </div>
@@ -122,7 +131,7 @@ export default function CareerResult(props: ICareerResult) {
                 </ul >
             </div >
             <Alert className="flex flex-row gap-3 p-4 items-start">
-                <Icon name={"Lightbulb"} color="black" />
+                <Icon name={"Lightbulb"} color="black" size={16} />
                 <AlertDescription>
                     สายอาชีพที่ทำนายเป็นเพียงการนำข้อมูลที่ผู้ใช้กรอกมาหาสายอาชีพที่เหมาะสม ยังสายมีอาชีพอื่น ๆ ที่คุณสามารถเป็นได้ตามความต้องการ
                 </AlertDescription>

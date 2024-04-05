@@ -1,10 +1,10 @@
 'use client'
 import { useEffect } from "react";
-import InsightBox from "./InsightBox";
-import { Badge } from "./ui/badge";
-import { toSalaryNumber } from "../utils/utils";
-import useSelectInsight from "../hooks/useSelectInsight";
-import { ICareerPredictionResult } from "@/interfaces/career-prediction-interface";
+import InsightBox from "../InsightBox";
+import { Badge } from "../ui/badge";
+import { toSalaryNumber } from "../../utils/utils";
+import useSelectInsight from "../../hooks/useSelectInsight";
+import { ICareerPredictionResult } from "@/interfaces/career-prediction.interface";
 
 interface ICareerInfoSection {
     setIsloading(arg0: boolean): unknown;
@@ -17,7 +17,12 @@ export default function CareerInfoSection(props: ICareerInfoSection) {
     const { selectedInsight } = useSelectInsight();
 
     useEffect(() => {
-        if (selectedInsight.career_path !== '' && selectedInsight.object_id !== '' && selectedInsight.career_path && selectedInsight.object_id) {
+        if (
+            selectedInsight.career_path !== '' &&
+            selectedInsight.object_id !== '' &&
+            selectedInsight.career_path &&
+            selectedInsight.object_id
+        ) {
             props.setIsloading(true);
             props.getCareerInfo(selectedInsight.career_path, selectedInsight.object_id);
         }
@@ -43,7 +48,7 @@ export default function CareerInfoSection(props: ICareerInfoSection) {
                     }
                 </div>
             </InsightBox>
-            <InsightBox title="ผู้ร่วมทาง" subtitle="จำนวนคนที่ทำนายได้สายอาชีพนี้" className="basis-1/3" name={"User"}>
+            <InsightBox title="ถูกทำนายไปแล้ว" subtitle="จำนวนครั้งที่ทำนายได้สายอาชีพนี้" className="basis-1/3" name={"Users"}>
                 <div className={`${props.isLoading ? 'bg-slate-100 rounded-lg h-6 animate-pulse bg-gradient-to-b' : null}`}>
                     {
                         !props.isLoading && <p className={`font-semibold text-lg`}>{props.careerPathInfo.careermate_count} คน</p>
