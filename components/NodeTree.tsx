@@ -3,6 +3,7 @@ import { MouseEvent, useEffect, useState } from "react";
 import ReactFlow, { Background, Controls, Edge, Node, Position, useEdgesState, useNodesState } from "reactflow";
 import Icon from "./Icon";
 import { ICareerNodeTree } from "@/interfaces/career-prediction.interface";
+import { Button } from "./ui/button"
 
 import 'reactflow/dist/base.css';
 import './custom-node-tree/tailwind-reactflow-config'
@@ -31,8 +32,8 @@ export default function NodeTree() {
 
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
     const [expandNodes, setExpandNode] = useState<string[]>([]);
+    const [nodeLayout, setNodeLayout] = useState<string[]>([]);
 
     const getCareerPathData = async () => {
         const careerPathData = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_EXPLORATION_ENDPOINT}`, {
@@ -42,7 +43,7 @@ export default function NodeTree() {
         return careerPathData;
     };
 
-    const initNodeTree = async () => {
+    const initNodeTree = async (nodeLayout:string[] = []) => {
         const careerPathData: ICareerNodeTree[] = await getCareerPathData();
         const focusCareer = selectInsight.focusCareer;
 
@@ -51,7 +52,6 @@ export default function NodeTree() {
         const posX = 0;
         let posY = 0;
         const nodeWidth = 400;
-        const nodeHeight = 30;
         careerPathData.map((careerPath, careerpathIdx) => {
             const newNodeData = {
                 id: careerPath.career_path_name,
@@ -59,25 +59,29 @@ export default function NodeTree() {
                 data: { career_path_name: careerPath.career_path_name },
                 sourcePosition: Position.Right,
                 targetPosition: Position.Left,
-                draggable: false,
                 connectable: false,
                 parentNode: '',
-                type: 'careerpath'
+                type: 'careerpath',
+                style: {
+                    backgroundColor: '#fff',
+                }
             }
             initialNodes.push(newNodeData);
 
             careerPath.related_careers.map((career, careerIdx) => {
-                const hiddenState = focusCareer === career.career ? false : true;
+                // const hiddenState = focusCareer === career.career ? false : true;
                 const newNodeData = {
                     id: career.career,
-                    position: { x: 200, y: posY + 5 },
+                    position: { x: 200, y: posY },
                     data: { career: career.career },
                     targetPosition: Position.Left,
                     sourcePosition: Position.Right,
-                    draggable: false,
                     connectable: false,
                     parentNode: '',
                     type: 'career',
+                    style: {
+                        backgroundColor: '#fff',
+                    }
                 }
                 initialNodes.push(newNodeData);
                 const newEdgeData = {
@@ -92,18 +96,22 @@ export default function NodeTree() {
 
                 let totalTextLength = 0;
                 let estimatedLineCount = 0;
+                let sumPosY = 0;
                 const averageCharactersPerLine = 30;
                 career.skill_domains.map((domain, domainIdx) => {
+                    const hiddenState = nodeLayout.includes(domain.name + careerpathIdx + careerIdx) ? false : true;
                     const newNodeData = {
                         id: domain.name + careerpathIdx + careerIdx,
-                        position: { x: nodeWidth * 2, y: posY + (domainIdx * 130) + (estimatedLineCount * 10) },
+                        position: { x: nodeWidth * 2, y: posY + (130 * domainIdx) + (estimatedLineCount * 10) },
                         data: { domain_name: domain.name, skill_list: domain.skill_list },
                         targetPosition: Position.Left,
                         type: 'domainskill',
                         hidden: hiddenState,
                         style: {
-                            width: nodeWidth
-                        }
+                            width: nodeWidth,
+                            backgroundColor: '#fff',
+                        },
+
                     }
                     initialNodes.push(newNodeData);
                     totalTextLength = domain.name.length + domain.skill_list.reduce((total, skill) => total + skill[0].length + 5, 0);
@@ -118,18 +126,23 @@ export default function NodeTree() {
                             stroke: '#e4e4e7'
                         }
                     }
+                    
+                    if (nodeLayout.includes(domain.name + careerpathIdx + careerIdx)) {
+                        sumPosY += 130 + (estimatedLineCount * 10)
+                    }
                     initialEdges.push(newEdgeData);
                 });
-                posY += 60
+                if(sumPosY > 0){
+                    sumPosY -= 130 + (estimatedLineCount * 10)
+                }
+                posY += 60 + sumPosY
             });
-            posY += 80
-
             const newEdgeData = {
                 id: `compath->${careerPath.career_path_name}`,
                 source: 'compath',
                 target: careerPath.career_path_name,
                 style: {
-                    stroke: '#e4e4e7'
+                    stroke: '#e4e4e7',
                 }
             }
             initialEdges.push(newEdgeData)
@@ -141,9 +154,11 @@ export default function NodeTree() {
             data: { label: 'Compath' },
             sourcePosition: Position.Right,
             type: 'main',
-            draggable: false,
             connectable: false,
             parentNode: '',
+            style: {
+                backgroundColor: '#fff',
+            }
         }
         initialNodes.push(newNodeData)
 
@@ -159,6 +174,11 @@ export default function NodeTree() {
 
         return () => { };
     }, []);
+
+    useEffect(() => {
+        autoLayout();
+        return () => { };
+    }, [nodeLayout]);
 
     const hideNode = (isHidden: boolean, nodeId: string) => (nodeOrEdge: Node) => {
         if (nodeOrEdge.id == nodeId || nodeOrEdge.parentNode == nodeId) {
@@ -186,6 +206,16 @@ export default function NodeTree() {
             }
             setEdges((eds: Edge[]) => eds.map(hideEdge(isHidden, n.id)))
         }
+        setNodeLayout([])
+    }
+    
+    const autoLayout = () => {
+        nodes.forEach((node:Node) => {
+            if(node.hidden !== undefined && !node.hidden){
+                setNodeLayout((prev) => [...prev, node.id])
+            }
+        });
+        initNodeTree(nodeLayout)
     }
 
     return (
@@ -200,6 +230,7 @@ export default function NodeTree() {
                 nodesDraggable={false}
                 nodeTypes={nodeTypes}
                 onNodeClick={(e, n) => handleHidden(e, n)}
+                draggable={false}
             >
                 <Background />
                 <Controls position="bottom-right" />
