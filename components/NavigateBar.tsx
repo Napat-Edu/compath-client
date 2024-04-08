@@ -4,8 +4,10 @@ import { Button } from "./ui/button"
 import Image from "next/image";
 import Icon from "./Icon";
 import useSidebar from "@/hooks/useSidebar";
+import { SidebarContent } from "@/contexts/SidebarContext";
+import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerTrigger } from "./ui/drawer";
 
-export function Sidebar() {
+export default function NavigateBar() {
     const sidebar = useSidebar();
 
     const handleTabClicked = (index: number) => {
@@ -27,7 +29,22 @@ export function Sidebar() {
     };
 
     return (
-        <nav className="min-w-56 max-w-56 border-r-2">
+        <>
+            <Sidebar sidebar={sidebar} handleTabClicked={handleTabClicked} handleSignIn={handleSignIn}></Sidebar>
+            <NavigateDrawer sidebar={sidebar} handleTabClicked={handleTabClicked} handleSignIn={handleSignIn}></NavigateDrawer>
+        </>
+    )
+}
+
+interface INavigate {
+    handleTabClicked: (index: number) => void;
+    sidebar: SidebarContent;
+    handleSignIn: () => void;
+}
+
+function Sidebar({ handleTabClicked, sidebar, handleSignIn }: INavigate) {
+    return (
+        <nav className="min-w-56 max-w-56 border-r-2 hidden md:block">
             <div className="space-y-4 py-4 sticky top-0 h-screen">
                 <div className="flex flex-col justify-between h-full">
 
@@ -70,5 +87,40 @@ export function Sidebar() {
                 </div>
             </div>
         </nav>
-    )
+    );
+}
+
+function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) {
+    return (
+        <Drawer>
+            <div className="sticky md:hidden flex gap-4 border-b-[1px] p-4">
+                <DrawerTrigger asChild>
+                    <button>
+                        <Icon name={"Menu"} color={"black"} size={24} />
+                    </button>
+                </DrawerTrigger>
+                <Image
+                    src="compath-logo.svg"
+                    alt="compath-logo icon"
+                    width={0}
+                    height={0}
+                    className="w-[172px] h-auto"
+                    priority
+                />
+            </div>
+            <DrawerContent>
+                <div className="mx-auto w-full max-w-sm">
+
+                    Content
+
+                    <DrawerFooter>
+                        <Button>Submit</Button>
+                        <DrawerClose asChild>
+                            <Button variant="outline">Cancel</Button>
+                        </DrawerClose>
+                    </DrawerFooter>
+                </div>
+            </DrawerContent>
+        </Drawer>
+    );
 }
