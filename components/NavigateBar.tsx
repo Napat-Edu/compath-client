@@ -92,7 +92,7 @@ function Sidebar({ handleTabClicked, sidebar, handleSignIn }: INavigate) {
 
 function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) {
     return (
-        <Drawer>
+        <Drawer direction={"top"}>
             <div className="sticky md:hidden flex gap-4 border-b-[1px] p-4">
                 <DrawerTrigger asChild>
                     <button>
