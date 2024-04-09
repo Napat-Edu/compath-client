@@ -34,6 +34,7 @@ export default function NodeTree() {
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [expandNodes, setExpandNode] = useState<string[]>([]);
     const [nodeLayout, setNodeLayout] = useState<string[]>([]);
+    const [careerPathData, setCareerPathData] = useState<ICareerNodeTree[]>([]);
 
     const getCareerPathData = async () => {
         const careerPathData = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_EXPLORATION_ENDPOINT}`, {
@@ -44,7 +45,7 @@ export default function NodeTree() {
     };
 
     const initNodeTree = async (nodeLayout:string[] = []) => {
-        const careerPathData: ICareerNodeTree[] = await getCareerPathData();
+        // const careerPathData: ICareerNodeTree[] = await getCareerPathData();
         const focusCareer = selectInsight.focusCareer;
 
         const initialNodes: Node[] = [];
@@ -168,8 +169,13 @@ export default function NodeTree() {
     };
 
     useEffect(() => {
+        async function fetchingData(){
+            const data = await getCareerPathData();
+            setCareerPathData(data);
+        }
         setIsLoading(true);
-        initNodeTree();
+        // initNodeTree();
+        fetchingData();
         setIsLoading(false);
 
         return () => { };
@@ -178,7 +184,7 @@ export default function NodeTree() {
     useEffect(() => {
         autoLayout();
         return () => { };
-    }, [nodeLayout]);
+    }, [nodeLayout, careerPathData]);
 
     const hideNode = (isHidden: boolean, nodeId: string) => (nodeOrEdge: Node) => {
         if (nodeOrEdge.id == nodeId || nodeOrEdge.parentNode == nodeId) {
