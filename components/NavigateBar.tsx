@@ -108,7 +108,7 @@ function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) 
                     priority
                 />
             </div>
-            <DrawerContent>
+            <DrawerContent className="inset-x-0 top-0 bottom-1/5 rounded-t-none rounded-b-md mt-0">
                 <div className="mx-auto w-full max-w-sm">
 
                     Content
