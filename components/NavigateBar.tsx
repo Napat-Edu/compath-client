@@ -6,6 +6,7 @@ import Icon from "./Icon";
 import useSidebar from "@/hooks/useSidebar";
 import { SidebarContent } from "@/contexts/SidebarContext";
 import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerTrigger } from "./ui/drawer";
+import { useState } from "react";
 
 export default function NavigateBar() {
     const sidebar = useSidebar();
@@ -91,14 +92,14 @@ function Sidebar({ handleTabClicked, sidebar, handleSignIn }: INavigate) {
 }
 
 function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) {
+    const [isOpen, setIsOpen] = useState(false);
+
     return (
-        <Drawer direction={"top"}>
+        <>
             <div className="sticky md:hidden flex gap-4 border-b-[1px] p-4">
-                <DrawerTrigger asChild>
-                    <button>
-                        <Icon name={"Menu"} color={"black"} size={24} />
-                    </button>
-                </DrawerTrigger>
+                <button onClick={() => { setIsOpen((prev) => !prev) }}>
+                    <Icon name={"Menu"} color={"black"} size={24} />
+                </button>
                 <Image
                     src="compath-logo.svg"
                     alt="compath-logo icon"
@@ -108,7 +109,32 @@ function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) 
                     priority
                 />
             </div>
-            <DrawerContent className="inset-x-0 top-0 bottom-1/5 rounded-t-none rounded-b-md mt-0">
+            {
+                <div className={`p-4 w-full ${isOpen ? 'hidden' : ''}  bg-white`}>
+                    <h3 className="font-semibold text-primary">Feature</h3>
+                    <div className="flex flex-col gap-1 w-full pb-1 border-b">
+                        {
+                            sidebar.sideBarTabs.map((tab, idx) => {
+                                return (
+                                    <Link href={tab.navigateLink} key={'sidebar-tab-' + idx}>
+                                        <Button
+                                            variant={sidebar.activeTab == idx ? 'outline' : 'ghost'}
+                                            className={`flex flex-row gap-2 w-full justify-start border-2 ${sidebar.activeTab == idx ? 'border-primary' : 'border-transparent'}`}
+                                            onClick={() => { handleTabClicked(idx) }}
+                                        >
+                                            <Icon name={tab.icon.name} size={20} />
+                                            {tab.label}
+                                        </Button>
+                                    </Link>
+                                );
+                            })
+                        }
+                    </div>
+                    <h3 className="font-semibold text-primary">Account</h3>
+                    <Button variant="outline" onClick={handleSignIn}>Sign In with Google</Button>
+                </div>
+            }
+            {/* <DrawerContent className="inset-x-0 top-0 bottom-1/5 rounded-t-none rounded-b-md mt-0">
                 <div className="mx-auto w-full max-w-sm">
 
                     Content
@@ -120,7 +146,7 @@ function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) 
                         </DrawerClose>
                     </DrawerFooter>
                 </div>
-            </DrawerContent>
-        </Drawer>
+            </DrawerContent> */}
+        </>
     );
 }
