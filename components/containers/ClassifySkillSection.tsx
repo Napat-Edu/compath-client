@@ -248,7 +248,15 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                                     <h5 className="font-medium text-base">อาชีพและทักษะที่เกี่ยวข้อง</h5>
                                                     <p className="font-normal text-sm text-gray-500">คุณสามารถดูอาชีพและทักษะที่เกี่ยวข้องอื่น ๆ ได้</p>
                                                 </div>
-                                                <Link href={"/career-exploration"}><Button onClick={() => { handleExplorationClick(career.career) }}>ไปดู</Button></Link>
+                                                <Link href={"/career-exploration"}>
+                                                    <Button className="relative" onClick={() => { handleExplorationClick(career.career) }}>
+                                                        ไปดู
+                                                        <span className="absolute flex h-3 w-3 -right-1 -top-1">
+                                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
+                                                            <span className="relative inline-flex rounded-full h-3 w-3 bg-destructive"></span>
+                                                        </span>
+                                                    </Button>
+                                                </Link>
                                             </div>
                                         </div>
                                     </InsightBox>

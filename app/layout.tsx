@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { IBM_Plex_Sans_Thai } from 'next/font/google'
 import './globals.css'
-import { Sidebar } from '@/components/Sidebar'
+import NavigateBar from '@/components/NavigateBar'
 import { LocalStorageProvider } from '@/contexts/LocalStorageContext';
 import { SelectInsightProvider } from '@/contexts/SelectInsightContext';
 import { SidebarProvider } from '@/contexts/SidebarContext';
@@ -24,10 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={IBM_PLEX_SANS_THAI.className}>
-        <main className='flex flex-row min-h-screen'>
+        <main className='flex flex-col md:flex-row min-h-screen'>
           <SidebarProvider>
 
-            <Sidebar></Sidebar>
+            <NavigateBar></NavigateBar>
 
             <LocalStorageProvider>
               <SelectInsightProvider>

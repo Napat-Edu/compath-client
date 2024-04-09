@@ -2,7 +2,7 @@
 import { createContext, useEffect, useState } from "react";
 import { ISidebarTab } from "@/interfaces/sidebar.interface";
 
-type SidebarContent = {
+export type SidebarContent = {
     activeTab: number | undefined;
     setActiveTab: any;
     sideBarTabs: ISidebarTab[];
