@@ -95,8 +95,8 @@ function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) 
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <>
-            <div className="sticky md:hidden flex gap-4 border-b-[1px] p-4">
+        <nav>
+            <div className="md:hidden flex gap-4 border-b-[1px] p-4 bg-white">
                 <button onClick={() => { setIsOpen((prev) => !prev) }}>
                     <Icon name={"Menu"} color={"black"} size={24} />
                 </button>
@@ -109,44 +109,36 @@ function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) 
                     priority
                 />
             </div>
-            {
-                <div className={`p-4 w-full ${isOpen ? 'hidden' : ''}  bg-white`}>
-                    <h3 className="font-semibold text-primary">Feature</h3>
-                    <div className="flex flex-col gap-1 w-full pb-1 border-b">
-                        {
-                            sidebar.sideBarTabs.map((tab, idx) => {
-                                return (
-                                    <Link href={tab.navigateLink} key={'sidebar-tab-' + idx}>
-                                        <Button
-                                            variant={sidebar.activeTab == idx ? 'outline' : 'ghost'}
-                                            className={`flex flex-row gap-2 w-full justify-start border-2 ${sidebar.activeTab == idx ? 'border-primary' : 'border-transparent'}`}
-                                            onClick={() => { handleTabClicked(idx) }}
-                                        >
-                                            <Icon name={tab.icon.name} size={20} />
-                                            {tab.label}
-                                        </Button>
-                                    </Link>
-                                );
-                            })
-                        }
+            <div>
+                <div onClick={() => { setIsOpen((prev) => !prev) }} className={`fixed z-30 bg-black w-full h-full opacity-50 ${isOpen ? '' : 'hidden'}`} />
+                {
+                    <div className={`fixed w-full z-50 bg-white rounded-b-xl overflow-hidden ${isOpen ? 'max-h-fit overflow-visible p-4 pb-6' : 'max-h-0'}`}>
+                        <h3 className="font-semibold text-primary">Feature</h3>
+                        <div className="flex flex-col gap-1 w-full pb-1 border-b">
+                            {
+                                sidebar.sideBarTabs.map((tab, idx) => {
+                                    return (
+                                        <Link href={tab.navigateLink} key={'sidebar-tab-' + idx}>
+                                            <Button
+                                                variant={sidebar.activeTab == idx ? 'outline' : 'ghost'}
+                                                className={`flex flex-row gap-2 w-full justify-start border-2 ${sidebar.activeTab == idx ? 'border-primary' : 'border-transparent'}`}
+                                                onClick={() => { handleTabClicked(idx) }}
+                                            >
+                                                <Icon name={tab.icon.name} size={20} />
+                                                {tab.label}
+                                            </Button>
+                                        </Link>
+                                    );
+                                })
+                            }
+                        </div>
+                        <h3 className="font-semibold text-primary my-2">Account</h3>
+                        <Button variant="outline" className="w-full" onClick={handleSignIn}>Sign In with Google</Button>
+
+                        <Button variant={"outline"} size={"icon"} onClick={() => setIsOpen((prev) => !prev)} className="rounded-full p-1 absolute z-50 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-white" > <Icon name={"ChevronsUp"} size={16} color={"black"} /> </Button>
                     </div>
-                    <h3 className="font-semibold text-primary">Account</h3>
-                    <Button variant="outline" onClick={handleSignIn}>Sign In with Google</Button>
-                </div>
-            }
-            {/* <DrawerContent className="inset-x-0 top-0 bottom-1/5 rounded-t-none rounded-b-md mt-0">
-                <div className="mx-auto w-full max-w-sm">
-
-                    Content
-
-                    <DrawerFooter>
-                        <Button>Submit</Button>
-                        <DrawerClose asChild>
-                            <Button variant="outline">Cancel</Button>
-                        </DrawerClose>
-                    </DrawerFooter>
-                </div>
-            </DrawerContent> */}
-        </>
+                }
+            </div>
+        </nav>
     );
 }
