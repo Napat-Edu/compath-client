@@ -59,10 +59,10 @@ export default function CareerResult(props: ICareerResult) {
 
     return (
         <>
-            <div className="border-gray-200 border-[1px] rounded-lg">
-                <ul className={`flex flex-row gap-3 p-4 ${props.isPredictionLoading ? 'animate-pulse' : null}`}>
+            <div className="border-gray-200 border-[1px] rounded-lg overflow-auto">
+                <ul className={`flex flex-col sm:flex-row gap-3 p-4 ${props.isPredictionLoading ? 'animate-pulse' : null}`}>
 
-                    <li className="max-w-[45%] min-w-[47%]">
+                    <li className="max-w-full sm:max-w-[45%] min-w-[47%]">
                         <div
                             className={`flex h-full w-full select-none flex-col justify-end rounded-md ${props.isPredictionLoading ? 'bg-slate-100' : 'bg-gradient-to-b'} from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md`}
                         >
