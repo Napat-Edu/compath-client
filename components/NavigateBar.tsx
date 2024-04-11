@@ -111,38 +111,35 @@ function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) 
             </div>
             <div>
                 <div onClick={() => { setIsOpen((prev) => !prev) }} className={`fixed z-30 bg-black w-full h-full opacity-50 ${isOpen ? '' : 'hidden'}`} />
-                {
-                    <div className={`
-                        fixed w-full z-50 bg-white rounded-b-xl ease-in-out duration-200 px-4
-                        ${isOpen ?
-                            'max-h-fit overflow-visible pt-4 pb-6' :
-                            'max-h-0 overflow-hidden transition-[max-height]'}`
-                    }>
+                <div className="fixed w-full z-50">
+                    <div className={`bg-white rounded-b-xl ease-in-out duration-200 px-4 overflow-hidden transition-all ${isOpen ? 'max-h-fit pt-4 pb-6' : 'max-h-0 pt-0 pb-0'}`}>
                         <h3 className="font-semibold text-primary">Feature</h3>
                         <div className="flex flex-col gap-1 w-full pb-1 border-b">
-                            {
-                                sidebar.sideBarTabs.map((tab, idx) => {
-                                    return (
-                                        <Link href={tab.navigateLink} key={'sidebar-tab-' + idx}>
-                                            <Button
-                                                variant={sidebar.activeTab == idx ? 'outline' : 'ghost'}
-                                                className={`flex flex-row gap-2 w-full justify-start border-2 ${sidebar.activeTab == idx ? 'border-primary' : 'border-transparent'}`}
-                                                onClick={() => { handleTabClicked(idx) }}
-                                            >
-                                                <Icon name={tab.icon.name} size={20} />
-                                                {tab.label}
-                                            </Button>
-                                        </Link>
-                                    );
-                                })
-                            }
+                            {sidebar.sideBarTabs.map((tab, idx) => (
+                                <Link href={tab.navigateLink} key={'sidebar-tab-' + idx}>
+                                    <Button
+                                        variant={sidebar.activeTab === idx ? 'outline' : 'ghost'}
+                                        className={`flex flex-row gap-2 w-full justify-start border-2 ${sidebar.activeTab === idx ? 'border-primary' : 'border-transparent'}`}
+                                        onClick={() => { handleTabClicked(idx) }}
+                                    >
+                                        <Icon name={tab.icon.name} size={20} />
+                                        {tab.label}
+                                    </Button>
+                                </Link>
+                            ))}
                         </div>
                         <h3 className="font-semibold text-primary my-2">Account</h3>
                         <Button variant="outline" className="w-full" onClick={handleSignIn}>Sign In with Google</Button>
-
-                        <Button variant={"outline"} size={"icon"} onClick={() => setIsOpen((prev) => !prev)} className="rounded-full p-1 absolute z-50 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-white" > <Icon name={"ChevronsUp"} size={16} color={"black"} /> </Button>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            onClick={() => setIsOpen((prev) => !prev)}
+                            className={`rounded-full p-1 absolute z-50 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-white ${!isOpen && 'hidden'}`}
+                        >
+                            <Icon name={"ChevronsUp"} size={16} color="black" />
+                        </Button>
                     </div>
-                }
+                </div>
             </div>
         </nav>
     );
