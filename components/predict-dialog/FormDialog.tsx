@@ -97,7 +97,6 @@ export function FormDialog() {
         setPredicting(false);
         setIsConfirmDialogOpen(false);
         setIsFormDialogOpen(false);
-        setInformHidden(false);
     };
 
     return (
