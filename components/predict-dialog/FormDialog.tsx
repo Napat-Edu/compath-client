@@ -113,7 +113,7 @@ export function FormDialog() {
                     </Button>
                 </DialogTrigger>
                 <DialogContent
-                    className="w-4/5"
+                    className="w-full sm:w-4/5 h-full sm:max-h-[80%]"
                     onEscapeKeyDown={(e) => {
                         e.preventDefault();
                         setIsConfirmDialogOpen(true);
@@ -130,7 +130,7 @@ export function FormDialog() {
                                 <label>{!isPredicting ? "กรอกข้อมูลของคุณเพื่อทำนายอาชีพ" : "ผลการทำนายสายอาชีพ"}</label>
                             </div>
                         </DialogTitle>
-                        <DialogDescription>
+                        <DialogDescription className="text-left">
                             {!isPredicting ? "โปรดกรอกข้อมูลให้ระบบเพื่อนำไปทำนายอาชีพที่เหมาะสมกับคุณ" : "สายอาชีพที่เหมาะสมกับคุณคือ"}
                         </DialogDescription>
                     </DialogHeader>

@@ -67,7 +67,7 @@ export function InputForm(props: IInputForm) {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-1">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full h-full overflow-auto">
                 <FormField
                     control={form.control}
                     name="educational"
@@ -119,7 +119,7 @@ export function InputForm(props: IInputForm) {
                         </FormItem>
                     )}
                 />
-                <DialogFooter className="flex flex-row lg:justify-between pt-4">
+                <DialogFooter className="flex flex-col gap-4 sm:gap-0 sm:flex-row sm:justify-between pt-4 h-fit">
                     <div className="flex flex-row">
                         <FormField
                             name="agreement"
