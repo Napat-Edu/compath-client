@@ -27,16 +27,19 @@ export default function InformAlertDialog({ acceptInformStatus }: IInformAlertDi
                     ไปทำนายอาชีพ
                 </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent>
-                <AlertDialogHeader>
-                    <AlertDialogTitle>โปรดกรอกข้อมูลเป็นภาษาอังกฤษ</AlertDialogTitle>
-                </AlertDialogHeader>
+            <AlertDialogContent className="w-full h-full sm:h-auto">
 
-                <Image src={"inform.svg"} alt={"inform-english"} width={0} height={0} className="w-full h-auto"></Image>
+                <div className="flex flex-col-reverse sm:flex-col">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>โปรดกรอกข้อมูลเป็นภาษาอังกฤษ</AlertDialogTitle>
+                    </AlertDialogHeader>
+
+                    <Image src={"inform.svg"} alt={"inform-english"} width={0} height={0} className="w-full h-auto"></Image>
+                </div>
                 <p className="text-subtext text-sm">โปรดกรอกข้อมูลเป็นภาษาอังกฤษเพื่อให้โมเดลสามารถทำนายสายอาชีพได้อย่างแม่นยำและมีประสิทธิภาพมากยิ่งขึ้น</p>
 
                 <AlertDialogFooter>
-                    <div className="flex flex-row justify-between w-full">
+                    <div className="flex flex-col sm:flex-row justify-between w-full">
                         <div className="flex gap-1 h-full items-center">
                             <Checkbox id="agreement-inform" onCheckedChange={(checked) => { setInformHiddenState(checked); }} />
                             <div className="grid gap-1.5 leading-none">
@@ -48,7 +51,7 @@ export default function InformAlertDialog({ acceptInformStatus }: IInformAlertDi
                                 </label>
                             </div>
                         </div>
-                        <div className="flex gap-2">
+                        <div className="flex flex-col sm:flex-row gap-2">
                             <AlertDialogCancel><Icon name={"Undo2"} size={16} color={"black"} className={"mr-1"} />ย้อนกลับ</AlertDialogCancel>
                             <AlertDialogAction onClick={() => { acceptInformStatus(agreement); }}>รับทราบ<Icon name={"ArrowRight"} size={16} color={"white"} className={"ml-1"} /></AlertDialogAction>
                         </div>
