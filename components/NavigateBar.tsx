@@ -112,7 +112,7 @@ function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) 
             <div>
                 <div onClick={() => { setIsOpen((prev) => !prev) }} className={`fixed z-30 bg-black w-full h-full opacity-50 ${isOpen ? '' : 'hidden'}`} />
                 <div className="fixed w-full z-50">
-                    <div className={`bg-white rounded-b-xl ease-in-out duration-200 px-4 overflow-hidden transition-all ${isOpen ? 'max-h-fit pt-4 pb-6' : 'max-h-0 pt-0 pb-0'}`}>
+                    <div className={`bg-white rounded-b-xl ease-in-out duration-200 px-4 overflow-hidden transition-all ${isOpen ? 'max-h-96 pt-4 pb-6' : 'max-h-0 pt-0 pb-0'}`}>
                         <h3 className="font-semibold text-primary">Feature</h3>
                         <div className="flex flex-col gap-1 w-full pb-1 border-b">
                             {sidebar.sideBarTabs.map((tab, idx) => (
