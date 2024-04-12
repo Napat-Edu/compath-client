@@ -47,7 +47,7 @@ export function InsightSelect() {
 
     return (
         (localStorage.isStorageReady && localStorage.predictionHistory.length > 0) &&
-        <div className="border-maingray border-[1px] rounded-3xl flex flex-row gap-4 justify-between p-6 leading-9 max-w-3xl mt-4">
+        <div className="flex flex-col md:flex-row gap-4 justify-between border-maingray border-[1px] rounded-3xl p-6 leading-9 max-w-3xl mt-4">
             <Select onValueChange={(id) => { handleHistoryChange(id) }} value={currentSelectCareer}>
                 <div className="flex gap-1 min-w-fit">
                     <Icon name={"BookMarked"} className="my-auto" />
@@ -61,21 +61,21 @@ export function InsightSelect() {
                 <SelectContent className="w-full">
                     <SelectGroup>
                         <SelectLabel className="flex flex-row w-full pr-8">
-                            <p className="basis-2/5 text-left">สายอาชีพ</p>
-                            <p className="basis-1/5 text-left">เวลาที่ทำนาย</p>
-                            <p className="basis-2/5 text-left">วันที่ทำนาย</p>
+                            <p className="basis-3/5 sm:basis-2/5 text-left">สายอาชีพ</p>
+                            <p className="basis-2/5 sm:basis-1/5 text-left">เวลาที่ทำนาย</p>
+                            <p className="basis-2/5 text-left hidden sm:block">วันที่ทำนาย</p>
                         </SelectLabel>
                         {
                             localStorage.predictionHistory.map((history, idx) => {
                                 return (
                                     <SelectItem value={history.object_id} key={"history-" + history.career_path + idx}>
                                         <div className="flex flex-row items-center">
-                                            <p className="flex flex-row items-center gap-2 basis-2/5 text-left truncate">
+                                            <p className="flex flex-row items-center gap-2 basis-3/5 sm:basis-2/5 text-left truncate">
                                                 <Icon name={mapCareerIcon(history.career_path)} color="black" strokeWidth={1} size={16} />
                                                 {history.career_path}
                                             </p>
-                                            <p className="basis-1/5 text-left">{displayTime(history.submit_date)}</p>
-                                            <p className="basis-2/5 text-left">{displayDate(history.submit_date)}</p>
+                                            <p className="basis-2/5 sm:basis-1/5 text-left">{displayTime(history.submit_date)}</p>
+                                            <p className="basis-2/5 text-left hidden sm:block">{displayDate(history.submit_date)}</p>
                                         </div>
                                     </SelectItem>
                                 );
