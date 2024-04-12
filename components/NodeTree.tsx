@@ -3,7 +3,6 @@ import { MouseEvent, useEffect, useState } from "react";
 import ReactFlow, { Background, Controls, Edge, Node, Position, useEdgesState, useNodesState } from "reactflow";
 import Icon from "./Icon";
 import { ICareerNodeTree } from "@/interfaces/career-prediction.interface";
-import { Button } from "./ui/button"
 
 import 'reactflow/dist/base.css';
 import './custom-node-tree/tailwind-reactflow-config'
@@ -22,19 +21,19 @@ const nodeTypes = {
 
 export default function NodeTree() {
     const selectInsight = useSelectInsight();
-
     const [isLoading, setIsLoading] = useState(true);
-    const landingViewport = {
-        x: 200,
-        y: 0,
-        zoom: 0,
-    };
+    const [careerPathData, setCareerPathData] = useState<ICareerNodeTree[]>([]);
 
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [expandNodes, setExpandNode] = useState<string[]>([]);
     const [nodeLayout, setNodeLayout] = useState<string[]>([]);
-    const [careerPathData, setCareerPathData] = useState<ICareerNodeTree[]>([]);
+
+    const landingViewport = {
+        x: 200,
+        y: 0,
+        zoom: 0,
+    };
 
     const getCareerPathData = async () => {
         const careerPathData = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_EXPLORATION_ENDPOINT}`, {
@@ -44,8 +43,14 @@ export default function NodeTree() {
         return careerPathData;
     };
 
-    const initNodeTree = async (nodeLayout: string[] = []) => {
-        // const careerPathData: ICareerNodeTree[] = await getCareerPathData();
+    const initNodeTree = async () => {
+        await getCareerPathData().then((data) => {
+            setIsLoading(false);
+            setCareerPathData(data);
+        });
+    };
+
+    const drawNodeTree = async (nodeLayout: string[] = []) => {
         const focusCareer = selectInsight.focusCareer;
 
         const initialNodes: Node[] = [];
@@ -70,11 +75,11 @@ export default function NodeTree() {
             initialNodes.push(newNodeData);
 
             careerPath.related_careers.map((career, careerIdx) => {
-                // const hiddenState = focusCareer === career.career ? false : true;
+                const isCareerFocused = focusCareer === career.career ? true : false;
                 const newNodeData = {
                     id: career.career,
                     position: { x: 200, y: posY },
-                    data: { career: career.career },
+                    data: { career: career.career, isSelected: isCareerFocused },
                     targetPosition: Position.Left,
                     sourcePosition: Position.Right,
                     connectable: false,
@@ -100,7 +105,7 @@ export default function NodeTree() {
                 let sumPosY = 0;
                 const averageCharactersPerLine = 30;
                 career.skill_domains.map((domain, domainIdx) => {
-                    const hiddenState = nodeLayout.includes(domain.name + careerpathIdx + careerIdx) ? false : true;
+                    const hiddenState = isCareerFocused ? false : nodeLayout.includes(domain.name + careerpathIdx + careerIdx) ? false : true;
                     const newNodeData = {
                         id: domain.name + careerpathIdx + careerIdx,
                         position: { x: nodeWidth * 2, y: posY + (130 * domainIdx) + (estimatedLineCount * 10) },
@@ -128,13 +133,13 @@ export default function NodeTree() {
                         }
                     }
 
-                    if (nodeLayout.includes(domain.name + careerpathIdx + careerIdx)) {
+                    if (nodeLayout.includes(domain.name + careerpathIdx + careerIdx) || isCareerFocused) {
                         sumPosY += 130 + (estimatedLineCount * 10)
                     }
                     initialEdges.push(newEdgeData);
                 });
 
-                const hiddenState = nodeLayout.includes('Soft Skills' + careerpathIdx + careerIdx) ? false : true;
+                const hiddenState = isCareerFocused ? false : nodeLayout.includes('Soft Skills' + careerpathIdx + careerIdx) ? false : true;
                 const softSkillNode = {
                     id: 'Soft Skills' + careerpathIdx + careerIdx,
                     position: { x: nodeWidth * 2, y: posY + (130 * (career.skill_domains.length + 1)) + (estimatedLineCount * 10) },
@@ -195,26 +200,39 @@ export default function NodeTree() {
 
         setNodes(initialNodes);
         setEdges(initialEdges);
-        selectInsight.clearFocusCareer();
     };
 
+    const autoLayout = () => {
+        nodes.forEach((node: Node) => {
+            if (node.hidden !== undefined && !node.hidden) {
+                setNodeLayout((prev) => [...prev, node.id])
+            }
+        });
+        drawNodeTree(nodeLayout);
+    }
+
     useEffect(() => {
-        async function fetchingData() {
-            const data = await getCareerPathData();
-            setCareerPathData(data);
+        if (isLoading) {
+            initNodeTree();
+        } else {
+            drawNodeTree();
         }
-        setIsLoading(true);
-        // initNodeTree();
-        fetchingData();
-        setIsLoading(false);
 
         return () => { };
-    }, []);
+    }, [isLoading]);
 
     useEffect(() => {
         autoLayout();
         return () => { };
-    }, [nodeLayout, careerPathData]);
+    }, [nodeLayout]);
+
+    if (isLoading) {
+        return (
+            <div className="h-full w-full flex justify-center items-center">
+                <Icon name={"Loader2"} className={`animate-spin`} size={64} />
+            </div>
+        );
+    }
 
     const hideNode = (isHidden: boolean, nodeId: string) => (nodeOrEdge: Node) => {
         if (nodeOrEdge.id == nodeId || nodeOrEdge.parentNode == nodeId) {
@@ -234,7 +252,9 @@ export default function NodeTree() {
 
     const handleHidden = (event: MouseEvent<Element, globalThis.MouseEvent>, n: Node) => {
         if (n.type == 'career') {
-            const isHidden = expandNodes.some((expandNode) => expandNode == n.id);
+            const isHidden = n.id == selectInsight.focusCareer ? true : expandNodes.some((expandNode) => expandNode == n.id);
+            selectInsight.clearFocusCareer();
+
             if (isHidden) {
                 setExpandNode((prev) => prev.filter((oldExpandNode) => oldExpandNode != n.id));
             } else {
@@ -245,36 +265,23 @@ export default function NodeTree() {
         setNodeLayout([])
     }
 
-    const autoLayout = () => {
-        nodes.forEach((node: Node) => {
-            if (node.hidden !== undefined && !node.hidden) {
-                setNodeLayout((prev) => [...prev, node.id])
-            }
-        });
-        initNodeTree(nodeLayout)
-    }
-
     return (
-        !isLoading ?
-            <div className="w-96 h-[750px] sm:w-[650px] md:w-full md:h-full">
-                <ReactFlow
-                    defaultViewport={landingViewport}
-                    nodes={nodes}
-                    edges={edges}
-                    onNodesChange={onNodesChange}
-                    onEdgesChange={onEdgesChange}
-                    nodesConnectable={false}
-                    nodesDraggable={false}
-                    nodeTypes={nodeTypes}
-                    onNodeClick={(e, n) => handleHidden(e, n)}
-                    draggable={false}
-                >
-                    <Background />
-                    <Controls position="bottom-right" />
-                </ReactFlow>
-            </div > :
-            <div className="h-full w-full flex justify-center items-center">
-                <Icon name={"Loader2"} className={`animate-spin`} size={64} />
-            </div>
+        <div className="w-96 h-[750px] sm:w-[650px] md:w-full md:h-full">
+            <ReactFlow
+                defaultViewport={landingViewport}
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                nodesConnectable={false}
+                nodesDraggable={false}
+                nodeTypes={nodeTypes}
+                onNodeClick={(e, n) => handleHidden(e, n)}
+                draggable={false}
+            >
+                <Background />
+                <Controls position="bottom-right" />
+            </ReactFlow>
+        </div >
     );
 }
