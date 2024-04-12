@@ -134,7 +134,7 @@ export default function NodeTree() {
                     }
 
                     if (nodeLayout.includes(domain.name + careerpathIdx + careerIdx) || isCareerFocused) {
-                        sumPosY += 130 + (estimatedLineCount * 10)
+                        sumPosY += 150 + ((estimatedLineCount + 1) * 10)
                     }
                     initialEdges.push(newEdgeData);
                 });
@@ -142,7 +142,7 @@ export default function NodeTree() {
                 const hiddenState = isCareerFocused ? false : nodeLayout.includes('Soft Skills' + careerpathIdx + careerIdx) ? false : true;
                 const softSkillNode = {
                     id: 'Soft Skills' + careerpathIdx + careerIdx,
-                    position: { x: nodeWidth * 2, y: posY + (130 * (career.skill_domains.length + 1)) + (estimatedLineCount * 10) },
+                    position: { x: nodeWidth * 2, y: posY + (130 * (career.skill_domains.length)) + (estimatedLineCount * 10) },
                     data: { domain_name: 'Soft Skills', skill_list: null, soft_skill: career.soft_skills },
                     targetPosition: Position.Left,
                     type: 'domainskill',
