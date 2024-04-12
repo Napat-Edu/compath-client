@@ -256,21 +256,23 @@ export default function NodeTree() {
 
     return (
         !isLoading ?
-            <ReactFlow
-                defaultViewport={landingViewport}
-                nodes={nodes}
-                edges={edges}
-                onNodesChange={onNodesChange}
-                onEdgesChange={onEdgesChange}
-                nodesConnectable={false}
-                nodesDraggable={false}
-                nodeTypes={nodeTypes}
-                onNodeClick={(e, n) => handleHidden(e, n)}
-                draggable={false}
-            >
-                <Background />
-                <Controls position="bottom-right" />
-            </ReactFlow> :
+            <div className="w-96 h-[750px] sm:w-[650px] md:w-full md:h-full">
+                <ReactFlow
+                    defaultViewport={landingViewport}
+                    nodes={nodes}
+                    edges={edges}
+                    onNodesChange={onNodesChange}
+                    onEdgesChange={onEdgesChange}
+                    nodesConnectable={false}
+                    nodesDraggable={false}
+                    nodeTypes={nodeTypes}
+                    onNodeClick={(e, n) => handleHidden(e, n)}
+                    draggable={false}
+                >
+                    <Background />
+                    <Controls position="bottom-right" />
+                </ReactFlow>
+            </div > :
             <div className="h-full w-full flex justify-center items-center">
                 <Icon name={"Loader2"} className={`animate-spin`} size={64} />
             </div>
