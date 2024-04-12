@@ -123,27 +123,30 @@ export function FormDialog() {
                         setIsConfirmDialogOpen(true);
                     }}
                 >
-                    <DialogHeader>
-                        <DialogTitle>
-                            <div className="flex flex-row gap-2 items-center">
-                                <Icon name={!isPredicting ? "Newspaper" : "Wand2"} />
-                                <label>{!isPredicting ? "กรอกข้อมูลของคุณเพื่อทำนายอาชีพ" : "ผลการทำนายสายอาชีพ"}</label>
-                            </div>
-                        </DialogTitle>
-                        <DialogDescription className="text-left">
-                            {!isPredicting ? "โปรดกรอกข้อมูลให้ระบบเพื่อนำไปทำนายอาชีพที่เหมาะสมกับคุณ" : "สายอาชีพที่เหมาะสมกับคุณคือ"}
-                        </DialogDescription>
-                    </DialogHeader>
 
-                    {
-                        !isPredicting ?
-                            <InputForm getCareerPrediction={getCareerPrediction} currentUserInput={currentUserInput} updateCurrentUserInput={updateCurrentUserInput}></InputForm> :
-                            <CareerResult
-                                predictionResult={predictionResult}
-                                isPredictionLoading={isPredictionLoading}
-                                togglePredictionState={togglePredictionState}
-                            />
-                    }
+                    <div className="max-h-fit flex flex-col gap-4">
+                        <DialogHeader className="space-y-0 h-fit mb-4 min-h-fit">
+                            <DialogTitle>
+                                <div className="flex flex-row gap-2 items-center">
+                                    <Icon name={!isPredicting ? "Newspaper" : "Wand2"} />
+                                    <label>{!isPredicting ? "กรอกข้อมูลของคุณเพื่อทำนายอาชีพ" : "ผลการทำนายสายอาชีพ"}</label>
+                                </div>
+                            </DialogTitle>
+                            <DialogDescription className="text-left">
+                                {!isPredicting ? "โปรดกรอกข้อมูลให้ระบบเพื่อนำไปทำนายอาชีพที่เหมาะสมกับคุณ" : "สายอาชีพที่เหมาะสมกับคุณคือ"}
+                            </DialogDescription>
+                        </DialogHeader>
+
+                        {
+                            !isPredicting ?
+                                <InputForm getCareerPrediction={getCareerPrediction} currentUserInput={currentUserInput} updateCurrentUserInput={updateCurrentUserInput}></InputForm> :
+                                <CareerResult
+                                    predictionResult={predictionResult}
+                                    isPredictionLoading={isPredictionLoading}
+                                    togglePredictionState={togglePredictionState}
+                                />
+                        }
+                    </div>
 
                 </DialogContent>
             </Dialog>
