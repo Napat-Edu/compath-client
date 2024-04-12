@@ -44,7 +44,7 @@ export default function NodeTree() {
         return careerPathData;
     };
 
-    const initNodeTree = async (nodeLayout:string[] = []) => {
+    const initNodeTree = async (nodeLayout: string[] = []) => {
         // const careerPathData: ICareerNodeTree[] = await getCareerPathData();
         const focusCareer = selectInsight.focusCareer;
 
@@ -127,13 +127,43 @@ export default function NodeTree() {
                             stroke: '#e4e4e7'
                         }
                     }
-                    
+
                     if (nodeLayout.includes(domain.name + careerpathIdx + careerIdx)) {
                         sumPosY += 130 + (estimatedLineCount * 10)
                     }
                     initialEdges.push(newEdgeData);
                 });
-                if(sumPosY > 0){
+
+                const hiddenState = nodeLayout.includes('Soft Skills' + careerpathIdx + careerIdx) ? false : true;
+                const softSkillNode = {
+                    id: 'Soft Skills' + careerpathIdx + careerIdx,
+                    position: { x: nodeWidth * 2, y: posY + (130 * (career.skill_domains.length + 1)) + (estimatedLineCount * 10) },
+                    data: { domain_name: 'Soft Skills', skill_list: null, soft_skill: career.soft_skills },
+                    targetPosition: Position.Left,
+                    type: 'domainskill',
+                    hidden: hiddenState,
+                    style: {
+                        width: nodeWidth,
+                        backgroundColor: '#fff',
+                    },
+
+                }
+                initialNodes.push(softSkillNode);
+                totalTextLength = 'Soft Skills'.length + career.soft_skills.reduce((total, skill) => total + skill.name[0].length + 5, 0);
+                estimatedLineCount = Math.ceil(totalTextLength / averageCharactersPerLine);
+
+                const softSkillEdge = {
+                    id: `${career.career}->${'Soft Skills' + careerpathIdx + careerIdx + career.skill_domains.length + 1}`,
+                    source: career.career,
+                    hidden: hiddenState,
+                    target: 'Soft Skills' + careerpathIdx + careerIdx,
+                    style: {
+                        stroke: '#e4e4e7'
+                    }
+                }
+                initialEdges.push(softSkillEdge);
+
+                if (sumPosY > 0) {
                     sumPosY -= 130 + (estimatedLineCount * 10)
                 }
                 posY += 60 + sumPosY
@@ -169,7 +199,7 @@ export default function NodeTree() {
     };
 
     useEffect(() => {
-        async function fetchingData(){
+        async function fetchingData() {
             const data = await getCareerPathData();
             setCareerPathData(data);
         }
@@ -214,10 +244,10 @@ export default function NodeTree() {
         }
         setNodeLayout([])
     }
-    
+
     const autoLayout = () => {
-        nodes.forEach((node:Node) => {
-            if(node.hidden !== undefined && !node.hidden){
+        nodes.forEach((node: Node) => {
+            if (node.hidden !== undefined && !node.hidden) {
                 setNodeLayout((prev) => [...prev, node.id])
             }
         });

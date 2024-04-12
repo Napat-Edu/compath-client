@@ -19,7 +19,7 @@ export interface ICareerWithSoftSkillNodeTree extends ICareerNodeTree {
   soft_skills: {
     id: string;
     name: string[];
-  };
+  }[];
 }
 
 export interface ICareerWithSoftSkill extends ICareer {
