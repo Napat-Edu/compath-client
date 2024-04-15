@@ -5,7 +5,6 @@ import Image from "next/image";
 import Icon from "./Icon";
 import useSidebar from "@/hooks/useSidebar";
 import { SidebarContent } from "@/contexts/SidebarContext";
-import { Drawer, DrawerClose, DrawerContent, DrawerFooter, DrawerTrigger } from "./ui/drawer";
 import { useState } from "react";
 
 export default function NavigateBar() {
