@@ -5,11 +5,15 @@ import NavigateBar from '@/components/NavigateBar'
 import { LocalStorageProvider } from '@/contexts/LocalStorageContext';
 import { SelectInsightProvider } from '@/contexts/SelectInsightContext';
 import { SidebarProvider } from '@/contexts/SidebarContext';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 const IBM_PLEX_SANS_THAI = IBM_Plex_Sans_Thai({
   subsets: ['thai'],
   weight: ['400', '500', '600', '700']
 });
+
+const CLIENT_ID = process.env.NEXT_PUBLIC_API_CLIENT_ID;
 
 export const metadata: Metadata = {
   title: 'Compath',
@@ -25,19 +29,23 @@ export default function RootLayout({
     <html lang="en">
       <body className={IBM_PLEX_SANS_THAI.className}>
         <main className='flex flex-col md:flex-row min-h-screen'>
-          <SidebarProvider>
+          <GoogleOAuthProvider clientId={`${CLIENT_ID}`}>
+            <AuthProvider>
+              <SidebarProvider>
 
-            <NavigateBar></NavigateBar>
+                <NavigateBar></NavigateBar>
 
-            <LocalStorageProvider>
-              <SelectInsightProvider>
-                <main className='grow overflow-x-hidden px-6'>
-                  {children}
-                </main>
-              </SelectInsightProvider>
-            </LocalStorageProvider>
+                <LocalStorageProvider>
+                  <SelectInsightProvider>
+                    <main className='grow overflow-x-hidden px-6'>
+                      {children}
+                    </main>
+                  </SelectInsightProvider>
+                </LocalStorageProvider>
 
-          </SidebarProvider>
+              </SidebarProvider>
+            </AuthProvider>
+          </GoogleOAuthProvider>
         </main>
       </body>
     </html>

@@ -6,6 +6,9 @@ import Icon from "./Icon";
 import useSidebar from "@/hooks/useSidebar";
 import { SidebarContent } from "@/contexts/SidebarContext";
 import { useState } from "react";
+import { CredentialResponse, GoogleLogin, googleLogout } from "@react-oauth/google";
+import useAuth from "@/hooks/useAuth";
+import { useGoogleLogin } from '@react-oauth/google';
 
 export default function NavigateBar() {
     const sidebar = useSidebar();
@@ -14,24 +17,24 @@ export default function NavigateBar() {
         sidebar.setActiveTab(index);
     };
 
-    const handleSignIn = () => {
-        const popupWidth = 350;
-        const popupHeight = 500;
-        const dualScreenLeft = window.screenLeft || window.screenX || 0;
-        const dualScreenTop = window.screenTop || window.screenY || 0;
-        const screenWidth = window.screen.width;
-        const screenHeight = window.screen.height;
-        const left = (screenWidth - popupWidth) / 2 + dualScreenLeft;
-        const top = (screenHeight - popupHeight) / 2 + dualScreenTop;
-        const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
+    // const handleSignIn = () => {
+    //     const popupWidth = 350;
+    //     const popupHeight = 500;
+    //     const dualScreenLeft = window.screenLeft || window.screenX || 0;
+    //     const dualScreenTop = window.screenTop || window.screenY || 0;
+    //     const screenWidth = window.screen.width;
+    //     const screenHeight = window.screen.height;
+    //     const left = (screenWidth - popupWidth) / 2 + dualScreenLeft;
+    //     const top = (screenHeight - popupHeight) / 2 + dualScreenTop;
+    //     const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
 
-        window.open('', 'MsgWindow', popupFeatures);
-    };
+    //     window.open('', 'MsgWindow', popupFeatures);
+    // };
 
     return (
         <>
-            <Sidebar sidebar={sidebar} handleTabClicked={handleTabClicked} handleSignIn={handleSignIn}></Sidebar>
-            <NavigateDrawer sidebar={sidebar} handleTabClicked={handleTabClicked} handleSignIn={handleSignIn}></NavigateDrawer>
+            <Sidebar sidebar={sidebar} handleTabClicked={handleTabClicked}></Sidebar>
+            <NavigateDrawer sidebar={sidebar} handleTabClicked={handleTabClicked}></NavigateDrawer>
         </>
     )
 }
@@ -39,10 +42,9 @@ export default function NavigateBar() {
 interface INavigate {
     handleTabClicked: (index: number) => void;
     sidebar: SidebarContent;
-    handleSignIn: () => void;
 }
 
-function Sidebar({ handleTabClicked, sidebar, handleSignIn }: INavigate) {
+function Sidebar({ handleTabClicked, sidebar }: INavigate) {
     return (
         <nav className="min-w-56 max-w-56 border-r-2 hidden md:block">
             <div className="space-y-4 py-4 sticky top-0 h-screen">
@@ -81,7 +83,7 @@ function Sidebar({ handleTabClicked, sidebar, handleSignIn }: INavigate) {
                     </section>
 
                     <section className="px-8 py-4 flex flex-col gap-2">
-                        <Button variant="outline" onClick={handleSignIn}>Sign In with Google</Button>
+                        <SignInButton />
                     </section>
 
                 </div>
@@ -90,7 +92,7 @@ function Sidebar({ handleTabClicked, sidebar, handleSignIn }: INavigate) {
     );
 }
 
-function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) {
+function NavigateDrawer({ handleTabClicked, sidebar }: INavigate) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -128,7 +130,7 @@ function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) 
                             ))}
                         </div>
                         <h3 className="font-semibold text-primary my-2">Account</h3>
-                        <Button variant="outline" className="w-full" onClick={handleSignIn}>Sign In with Google</Button>
+                        <SignInButton />
                         <Button
                             variant="outline"
                             size="icon"
@@ -141,5 +143,57 @@ function NavigateDrawer({ handleTabClicked, sidebar, handleSignIn }: INavigate) 
                 </div>
             </div>
         </nav>
+    );
+}
+
+function SignInButton() {
+    const auth = useAuth();
+
+    const handleLoginSuccess = async (credential: CredentialResponse) => {
+        const requestLogin = {
+            token: credential.credential
+        };
+        const authData = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google/login`, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(requestLogin)
+        }).then((data) => data.json());
+        localStorage.setItem('authData', JSON.stringify(authData));
+        auth.updateAuthData(authData);
+    };
+
+    const handleLogout = () => {
+        googleLogout();
+        localStorage.setItem('authData', JSON.stringify({}));
+        auth.updateAuthData({});
+    };
+
+    const login = useGoogleLogin({
+        onSuccess: tokenResponse => console.log(tokenResponse),
+        flow: 'auth-code',
+        ux_mode: 'popup'
+    });
+
+    if (!auth.authData || Object.keys(auth.authData).length === 0) {
+        return (<GoogleLogin
+            type={"standard"}
+            theme={"outline"}
+            text={"continue_with"}
+            locale={"en"}
+            onSuccess={credentialResponse => {
+                handleLoginSuccess(credentialResponse);
+            }}
+            onError={() => {
+                console.log('Login Failed');
+            }}
+        />);
+
+        // <Button onClick={() => login()} className="w-full border" variant={"outline"}>
+        //     Sign in
+        // </Button>
+    }
+
+    return (
+        <Button variant={"outline"} onClick={handleLogout}>Log out</Button>
     );
 }
