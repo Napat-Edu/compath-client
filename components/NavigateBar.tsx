@@ -169,28 +169,44 @@ function SignInButton() {
     };
 
     const login = useGoogleLogin({
-        onSuccess: tokenResponse => console.log(tokenResponse),
+        onSuccess: (codeResponse) => {
+            fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google/login`, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: codeResponse.code })
+            })
+                .then(response => response.json())
+                .then(authData => {
+                    localStorage.setItem('authData', JSON.stringify(authData));
+                    auth.updateAuthData(authData);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        },
         flow: 'auth-code',
         ux_mode: 'popup'
     });
 
     if (!auth.authData || Object.keys(auth.authData).length === 0) {
-        return (<GoogleLogin
-            type={"standard"}
-            theme={"outline"}
-            text={"continue_with"}
-            locale={"en"}
-            onSuccess={credentialResponse => {
-                handleLoginSuccess(credentialResponse);
-            }}
-            onError={() => {
-                console.log('Login Failed');
-            }}
-        />);
+        return (
+            <Button onClick={() => login()} className="w-full border" variant={"outline"}>
+                Sign in
+            </Button>
+        );
 
-        // <Button onClick={() => login()} className="w-full border" variant={"outline"}>
-        //     Sign in
-        // </Button>
+        // return (<GoogleLogin
+        //     type={"standard"}
+        //     theme={"outline"}
+        //     text={"continue_with"}
+        //     locale={"en"}
+        //     onSuccess={credentialResponse => {
+        //         handleLoginSuccess(credentialResponse);
+        //     }}
+        //     onError={() => {
+        //         console.log('Login Failed');
+        //     }}
+        // />);
     }
 
     return (
