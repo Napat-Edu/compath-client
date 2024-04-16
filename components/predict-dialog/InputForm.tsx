@@ -76,7 +76,7 @@ export function InputForm(props: IInputForm) {
                             <FormItem>
                                 <FormLabel className="text-primary text-lg font-semibold">การศึกษา</FormLabel>
                                 <FormControl>
-                                    <Textarea className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Computer Engineering, KMUTT" {...field} />
+                                    <Textarea className="text-base focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Computer Engineering, KMUTT" {...field} />
                                 </FormControl>
                                 <FormDescription>
                                     <FormMessage>
@@ -93,7 +93,7 @@ export function InputForm(props: IInputForm) {
                             <FormItem>
                                 <FormLabel className="text-primary text-lg font-semibold">ทักษะ</FormLabel>
                                 <FormControl>
-                                    <Textarea className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Javascript, Typescript, Python, ..." {...field} />
+                                    <Textarea className="text-base focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Javascript, Typescript, Python, ..." {...field} />
                                 </FormControl>
                                 <FormDescription>
                                     <FormMessage>
@@ -110,7 +110,7 @@ export function InputForm(props: IInputForm) {
                             <FormItem>
                                 <FormLabel className="text-primary text-lg font-semibold">ประสบการณ์</FormLabel>
                                 <FormControl>
-                                    <Textarea className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. To do list with React" {...field} />
+                                    <Textarea className="text-base focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. To do list with React" {...field} />
                                 </FormControl>
                                 <FormDescription>
                                     <FormMessage>
