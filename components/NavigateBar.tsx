@@ -185,6 +185,19 @@ function SignInButton() {
     }
 
     return (
-        <Button variant={"outline"} onClick={handleLogout}>Log out</Button>
+        <div className="flex justify-between w-full max-h-14 border rounded-lg p-2 align-middle items-center">
+            <div className="flex gap-2 h-full md:basis-3/4 align-middle">
+                <Image src={auth.authData.picture} alt={"user-profile"} width={64} height={64} className="w-10 h-10 rounded-full" />
+                <div className="flex flex-col justify-center md:max-w-24">
+                    <span className="text-sm font-medium truncate">{auth.authData.displayName}</span>
+                    <span className="text-sm text-subtext truncate">{auth.authData.email}</span>
+                </div>
+            </div>
+            <Button variant={"outline"} onClick={handleLogout} className="flex gap-2 h-full w-fit md:h-fit md:p-2 items-center bg-white">
+                <Icon name={"LogOut"} size={16} color={"black"} />
+                <span className="md:hidden">Sign Out</span>
+            </Button>
+        </div>
+
     );
 }
