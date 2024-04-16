@@ -1,4 +1,5 @@
 'use client'
+import useAuth from "@/hooks/useAuth";
 import { IFocusCareerInsight } from "@/interfaces/career-insight.interface";
 import { IPredictionHistory } from "@/interfaces/storage.interface";
 import { createContext, useEffect, useState } from "react";
@@ -30,20 +31,50 @@ export const LocalStorageContext = createContext<localStorageContent>({
 });
 
 export const LocalStorageProvider = ({ children }: any) => {
+    const auth = useAuth();
     const [predictionHistory, setPredictionHistory] = useState<IPredictionHistory[]>([]);
     const [isStorageReady, setIsStorageReady] = useState(false);
 
     useEffect(() => {
-        const oldHistory = localStorage.getItem("predictionHistory");
+        if (auth.isReady) {
+            initHistories();
+        }
+    }, [auth.isReady, auth.authData]);
+
+    const initHistories = async () => {
+        let oldHistory;
+        if (!auth.authData.email) {
+            oldHistory = localStorage.getItem("predictionHistory");
+        } else {
+            oldHistory = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_INSIGHT_ENDPOINT}/history?email=${auth.authData.email}`, {
+                method: "GET",
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    const mappedHistory = data.map((history: any) => {
+                        return {
+                            career_path: history.prediction_result,
+                            object_id: history._id,
+                            submit_date: history.input_date
+                        };
+                    });
+                    return JSON.stringify(mappedHistory);
+                });
+        }
         const sortedHistory = sortHistoryByDate(oldHistory ? JSON.parse(oldHistory) : []);
         setPredictionHistory(sortedHistory);
         setIsStorageReady(true);
-    }, []);
+    };
 
     const addPredictionHistory = (newPredictHistory: IPredictionHistory) => {
-        predictionHistory.push(newPredictHistory);
-        setPredictionHistory(sortHistoryByDate([...predictionHistory]));
-        localStorage.setItem("predictionHistory", JSON.stringify(predictionHistory));
+        if (!auth.authData.email) {
+            predictionHistory.push(newPredictHistory);
+            setPredictionHistory(sortHistoryByDate([...predictionHistory]));
+            localStorage.setItem("predictionHistory", JSON.stringify(predictionHistory));
+        } else {
+            initHistories();
+        }
     };
 
     const findPredictionHistory = (id: string) => {
@@ -81,10 +112,21 @@ export const LocalStorageProvider = ({ children }: any) => {
         return { career_path: latestHistory.career_path, object_id: latestHistory.object_id };
     };
 
-    const deleteHistory = (object_id: string) => {
-        const fitleredHistory = predictionHistory.filter((history) => history.object_id !== object_id);
-        localStorage.setItem("predictionHistory", JSON.stringify(fitleredHistory));
-        setPredictionHistory(fitleredHistory);
+    const deleteHistory = async (object_id: string) => {
+        if (!auth.authData.email) {
+            const fitleredHistory = predictionHistory.filter((history) => history.object_id !== object_id);
+            localStorage.setItem("predictionHistory", JSON.stringify(fitleredHistory));
+            setPredictionHistory(fitleredHistory);
+        } else {
+            await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_INSIGHT_ENDPOINT}/history?id=${object_id}`, {
+                method: "DELETE",
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    initHistories();
+                });
+        }
     };
 
     return (
