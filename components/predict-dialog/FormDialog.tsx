@@ -128,7 +128,7 @@ export function FormDialog() {
                     }}
                 >
 
-                    <div className="max-h-fit flex flex-col gap-4">
+                    <div className="max-h-fit flex flex-col">
                         <DialogHeader className="space-y-0 h-fit mb-4 min-h-fit">
                             <DialogTitle>
                                 <div className="flex flex-row gap-2 items-center">
