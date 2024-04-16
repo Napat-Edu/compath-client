@@ -81,10 +81,19 @@ function Sidebar({ handleTabClicked, sidebar }: INavigate) {
 function NavigateDrawer({ handleTabClicked, sidebar }: INavigate) {
     const [isOpen, setIsOpen] = useState(false);
 
+    const handleDrawerTrigger = () => {
+        if (!isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'scroll';
+        }
+        setIsOpen((prev) => !prev)
+    };
+
     return (
         <>
             <div className="sticky top-0 z-50 md:hidden flex gap-4 border-b-[1px] p-4 bg-white">
-                <button onClick={() => { setIsOpen((prev) => !prev) }}>
+                <button onClick={() => { handleDrawerTrigger() }}>
                     <Icon name={"Menu"} color={"black"} size={24} />
                 </button>
                 <Image
@@ -97,7 +106,7 @@ function NavigateDrawer({ handleTabClicked, sidebar }: INavigate) {
                 />
             </div>
             <div>
-                <div onClick={() => { setIsOpen((prev) => !prev) }} className={`fixed z-30 bg-black w-full h-full opacity-50 ${isOpen ? '' : 'hidden'}`} />
+                <div onClick={() => { handleDrawerTrigger() }} className={`fixed z-30 bg-black w-full h-full opacity-50 ${isOpen ? '' : 'hidden'}`} />
                 <div className="fixed w-full z-50">
                     <div className={`bg-white rounded-b-xl ease-in-out duration-200 px-4 overflow-hidden transition-all ${isOpen ? 'max-h-96 pt-4 pb-6' : 'max-h-0 pt-0 pb-0'}`}>
                         <h3 className="font-semibold text-primary">Feature</h3>
@@ -107,7 +116,7 @@ function NavigateDrawer({ handleTabClicked, sidebar }: INavigate) {
                                     <Button
                                         variant={sidebar.activeTab === idx ? 'outline' : 'ghost'}
                                         className={`flex flex-row gap-2 w-full justify-start border-2 ${sidebar.activeTab === idx ? 'border-primary' : 'border-transparent'}`}
-                                        onClick={() => { handleTabClicked(idx); setIsOpen(false); }}
+                                        onClick={() => { handleTabClicked(idx); handleDrawerTrigger(); }}
                                     >
                                         <Icon name={tab.icon.name} size={20} />
                                         {tab.label}
@@ -120,7 +129,7 @@ function NavigateDrawer({ handleTabClicked, sidebar }: INavigate) {
                         <Button
                             variant="outline"
                             size="icon"
-                            onClick={() => setIsOpen((prev) => !prev)}
+                            onClick={() => handleDrawerTrigger()}
                             className={`rounded-full p-1 absolute z-50 bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 bg-white ${!isOpen && 'hidden'}`}
                         >
                             <Icon name={"ChevronsUp"} size={16} color="black" />
