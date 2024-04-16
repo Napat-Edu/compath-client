@@ -57,7 +57,7 @@ export default function HistoryCard() {
                                                         <Icon name={"MoreHorizontal"} color="black" size={16} />
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent className="rounded-lg">
-                                                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                                                        <DropdownMenuItem>View</DropdownMenuItem>
                                                         <DropdownMenuItem className="text-red-500" onClick={(e) => { handleDeleteCard(e, history.object_id) }}>Delete</DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
