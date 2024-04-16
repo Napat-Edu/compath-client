@@ -107,7 +107,7 @@ function NavigateDrawer({ handleTabClicked, sidebar }: INavigate) {
                                     <Button
                                         variant={sidebar.activeTab === idx ? 'outline' : 'ghost'}
                                         className={`flex flex-row gap-2 w-full justify-start border-2 ${sidebar.activeTab === idx ? 'border-primary' : 'border-transparent'}`}
-                                        onClick={() => { handleTabClicked(idx) }}
+                                        onClick={() => { handleTabClicked(idx); setIsOpen(false); }}
                                     >
                                         <Icon name={tab.icon.name} size={20} />
                                         {tab.label}
