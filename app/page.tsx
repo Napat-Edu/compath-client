@@ -12,7 +12,7 @@ export default function Home() {
         <p className="text-subtext">แนะนำอาชีพเหมาะสมกับคุณจากข้อมูลในเรซูเม</p>
       </section>
 
-      <section className="flex flex-col justify-center border-2 border-primary border-dashed rounded-2xl min-h-96 mt-4">
+      <section className="flex flex-col justify-center border-2 border-primary border-dashed rounded-2xl min-h-96 mt-4 px-4">
         <Icon className="mx-auto" name={"Newspaper"} size={32} />
         <div className="my-4 mx-8">
           <p className="text-center font-semibold text-xl">เริ่มทำนายอาชีพของคุณ</p>
