@@ -46,11 +46,11 @@ interface INavigate {
 
 function Sidebar({ handleTabClicked, sidebar }: INavigate) {
     return (
-        <nav className="min-w-56 max-w-56 border-r-2 hidden md:block">
+        <nav className="min-w-60 max-w-60 border-r-2 hidden md:block">
             <div className="space-y-4 py-4 sticky top-0 h-screen">
                 <div className="flex flex-col justify-between h-full">
 
-                    <section className="px-3 py-2">
+                    <section className="px-4 py-2">
                         <div className="flex flex-row mb-2 px-4 gap-1">
                             <Image
                                 src="compath-logo.svg"
@@ -82,7 +82,7 @@ function Sidebar({ handleTabClicked, sidebar }: INavigate) {
                         </div>
                     </section>
 
-                    <section className="px-8 py-4 flex flex-col gap-2">
+                    <section className="px-4 py-4 flex flex-col gap-2">
                         <SignInButton />
                     </section>
 
@@ -149,19 +149,6 @@ function NavigateDrawer({ handleTabClicked, sidebar }: INavigate) {
 function SignInButton() {
     const auth = useAuth();
 
-    const handleLoginSuccess = async (credential: CredentialResponse) => {
-        const requestLogin = {
-            token: credential.credential
-        };
-        const authData = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google/login`, {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(requestLogin)
-        }).then((data) => data.json());
-        localStorage.setItem('authData', JSON.stringify(authData));
-        auth.updateAuthData(authData);
-    };
-
     const handleLogout = () => {
         googleLogout();
         localStorage.setItem('authData', JSON.stringify({}));
@@ -190,23 +177,11 @@ function SignInButton() {
 
     if (!auth.authData || Object.keys(auth.authData).length === 0) {
         return (
-            <Button onClick={() => login()} className="w-full border" variant={"outline"}>
-                Sign in
+            <Button onClick={() => login()} className="w-full border rounded-lg flex px-4 py-2 items-center justify-center gap-2" variant={"outline"}>
+                <Image src={"google-logo.svg"} alt={"google-logo"} width={0} height={0} className="h-full w-auto" />
+                <span>Sign in with Google</span>
             </Button>
         );
-
-        // return (<GoogleLogin
-        //     type={"standard"}
-        //     theme={"outline"}
-        //     text={"continue_with"}
-        //     locale={"en"}
-        //     onSuccess={credentialResponse => {
-        //         handleLoginSuccess(credentialResponse);
-        //     }}
-        //     onError={() => {
-        //         console.log('Login Failed');
-        //     }}
-        // />);
     }
 
     return (
