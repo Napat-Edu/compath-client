@@ -6,6 +6,7 @@ import { toSalaryNumber } from "../../utils/utils";
 import useSelectInsight from "../../hooks/useSelectInsight";
 import { ICareerPredictionResult } from "@/interfaces/career-prediction.interface";
 import { Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 interface ICareerInfoSection {
     setIsloading(arg0: boolean): unknown;
@@ -82,7 +83,7 @@ function InfoCarousel(props: ICareerInfoSection) {
     }, [api])
 
     return (
-        <Carousel className="w-full sm:hidden" setApi={setApi}>
+        <Carousel className="w-full sm:hidden" setApi={setApi} plugins={[Autoplay({ delay: 2000 })]}>
             <CarouselContent>
 
                 <CarouselItem key={0}>
