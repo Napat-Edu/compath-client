@@ -6,7 +6,7 @@ import Icon from "./Icon";
 import useSidebar from "@/hooks/useSidebar";
 import { SidebarContent } from "@/contexts/SidebarContext";
 import { useState } from "react";
-import { CredentialResponse, GoogleLogin, googleLogout } from "@react-oauth/google";
+import { googleLogout } from "@react-oauth/google";
 import useAuth from "@/hooks/useAuth";
 import { useGoogleLogin } from '@react-oauth/google';
 
@@ -16,20 +16,6 @@ export default function NavigateBar() {
     const handleTabClicked = (index: number) => {
         sidebar.setActiveTab(index);
     };
-
-    // const handleSignIn = () => {
-    //     const popupWidth = 350;
-    //     const popupHeight = 500;
-    //     const dualScreenLeft = window.screenLeft || window.screenX || 0;
-    //     const dualScreenTop = window.screenTop || window.screenY || 0;
-    //     const screenWidth = window.screen.width;
-    //     const screenHeight = window.screen.height;
-    //     const left = (screenWidth - popupWidth) / 2 + dualScreenLeft;
-    //     const top = (screenHeight - popupHeight) / 2 + dualScreenTop;
-    //     const popupFeatures = `width=${popupWidth},height=${popupHeight},left=${left},top=${top}`;
-
-    //     window.open('', 'MsgWindow', popupFeatures);
-    // };
 
     return (
         <>
