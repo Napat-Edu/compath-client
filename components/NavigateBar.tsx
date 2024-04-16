@@ -82,8 +82,8 @@ function NavigateDrawer({ handleTabClicked, sidebar }: INavigate) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <nav>
-            <div className="md:hidden flex gap-4 border-b-[1px] p-4 bg-white">
+        <>
+            <div className="sticky top-0 z-50 md:hidden flex gap-4 border-b-[1px] p-4 bg-white">
                 <button onClick={() => { setIsOpen((prev) => !prev) }}>
                     <Icon name={"Menu"} color={"black"} size={24} />
                 </button>
@@ -128,7 +128,7 @@ function NavigateDrawer({ handleTabClicked, sidebar }: INavigate) {
                     </div>
                 </div>
             </div>
-        </nav>
+        </>
     );
 }
 
