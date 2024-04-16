@@ -323,11 +323,11 @@ function ClassifySectionTab(props: IClassifySectionTab) {
                 <div className="flex flex-row justify-between mb-4">
                     <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Icon name={"Boxes"} />ทักษะ</h3>
                     <TabsList>
-                        <TabsTrigger value={`info`} key={`tab-info`}>
-                            <Icon name={"LayoutList"} />
+                        <TabsTrigger value={`info`} key={`tab-info`} className="w-full h-full">
+                            <Icon name={"LayoutList"} size={16} />
                         </TabsTrigger>
-                        <TabsTrigger value={`pie`} key={`tab-pie`}>
-                            <Icon name={"PieChart"} />
+                        <TabsTrigger value={`pie`} key={`tab-pie`} className="w-full h-full">
+                            <Icon name={"PieChart"} size={16} />
                         </TabsTrigger>
                     </TabsList>
                 </div>
