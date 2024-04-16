@@ -15,8 +15,10 @@ import { ICareerPredictionResult, IUserResume } from "@/interfaces/career-predic
 import Icon from "../Icon";
 import ConfirmAlertDialog from "../ConfirmAlertDialog";
 import InformAlertDialog from "./InformAlertDialog";
+import useAuth from "@/hooks/useAuth";
 
 export function FormDialog() {
+    const auth = useAuth();
     const [isPredicting, setPredicting] = useState(false);
     const [isPredictionLoading, setIsPredictionLoading] = useState(false);
     const [predictionResult, setPredictionResult] = useState<ICareerPredictionResult>();
@@ -65,11 +67,13 @@ export function FormDialog() {
         setPredicting(true);
         setIsPredictionLoading(true);
 
+        const owner = (!auth.authData || Object.keys(auth.authData).length === 0) ? undefined : auth.authData.email;
         setPredictionResult(
             await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_CAREER_ENDPOINT}`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    resume_owner: owner,
                     resume_input: userResume
                 })
             })
