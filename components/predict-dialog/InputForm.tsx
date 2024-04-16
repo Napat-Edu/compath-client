@@ -67,8 +67,8 @@ export function InputForm(props: IInputForm) {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-between h-full overflow-auto py-1">
-                <div className="flex flex-col py-1">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-between h-full overflow-auto pt-1">
+                <div className="flex flex-col p-1">
                     <FormField
                         control={form.control}
                         name="educational"
