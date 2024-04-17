@@ -111,7 +111,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         if (filteredDomain.length > 0) {
             return (
                 <React.Fragment key={`${related_careers[tabCareerIdx]}-learning-domain`}>
-                    <div className="hidden md:block">
+                    <div className="hidden md:flex md:flex-row md:flex-wrap md:gap-1">
                         {filteredDomain.map((domain, idx) => {
                             return (
                                 <HoverCard key={`non-exist-domain-${idx}-hovercard`} openDelay={0} closeDelay={0}>
@@ -133,7 +133,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                             );
                         })}
                     </div>
-                    <div className="block md:hidden">
+                    <div className="flex flex-row flex-wrap gap-1 md:hidden">
                         {filteredDomain.map((domain, idx) => {
                             return (
                                 <Popover key={`non-exist-domain-${idx}-popover`}>
@@ -254,9 +254,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                             subtitle={"ทักษะที่มักจะมีอยู่ในเรซูเมในสายอาชีพนี้  ที่คุณควรเรียนรู้เพิ่มเติม"}
                                             name={"PlusCircle"}
                                         >
-                                            <div className="flex flex-row flex-wrap gap-1">
-                                                {!props.isLoading && mapNonExistingDomain(props.careerPathInfo.related_careers, tabCareerIdx)}
-                                            </div>
+                                            {!props.isLoading && mapNonExistingDomain(props.careerPathInfo.related_careers, tabCareerIdx)}
                                         </InsightBox>
                                         <InsightBox
                                             title={"ทักษะอื่น ๆ"}
