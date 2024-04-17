@@ -23,7 +23,11 @@ export const AuthProvider = ({ children }: any) => {
     }
 
     useEffect(() => {
-        const oldAuthData = JSON.parse(localStorage.getItem('authData')!);
+        let oldAuthData = JSON.parse(localStorage.getItem('authData')!);
+        if (!oldAuthData) {
+            localStorage.setItem('authData', JSON.stringify({}));
+            oldAuthData = {};
+        }
         setAuthData(oldAuthData);
         setIsReady(true);
 
