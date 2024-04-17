@@ -12,6 +12,7 @@ import Icon from "../Icon";
 import Link from "next/link";
 import useSidebar from "@/hooks/useSidebar";
 import useSelectInsight from "@/hooks/useSelectInsight";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 interface IClassifySkillSection {
     careerPathInfo: ICareerPredictionResult;
@@ -110,26 +111,50 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         if (filteredDomain.length > 0) {
             return (
                 <React.Fragment key={`${related_careers[tabCareerIdx]}-learning-domain`}>
-                    {filteredDomain.map((domain, idx) => {
-                        return (
-                            <HoverCard key={`non-exist-domain-${idx}`} openDelay={0} closeDelay={0}>
-                                <HoverCardTrigger>
-                                    <Badge className="text-primary" variant={'outline'} key={`badge-${idx}`}>
-                                        {domain.name}
-                                    </Badge>
-                                </HoverCardTrigger>
-                                <HoverCardContent>
-                                    <div className="flex flex-row flex-wrap justify-center gap-1">
-                                        {domain.skill_list.map((skill, skillIdx) => (
-                                            <Badge key={`non-exist-domain-${idx}-skill-${skillIdx}`} variant={'outline'}>
-                                                {skill.name[0]}
-                                            </Badge>
-                                        ))}
-                                    </div>
-                                </HoverCardContent>
-                            </HoverCard>
-                        );
-                    })}
+                    <div className="hidden md:block">
+                        {filteredDomain.map((domain, idx) => {
+                            return (
+                                <HoverCard key={`non-exist-domain-${idx}-hovercard`} openDelay={0} closeDelay={0}>
+                                    <HoverCardTrigger>
+                                        <Badge className="text-primary" variant={'outline'} key={`badge-${idx}`}>
+                                            {domain.name}
+                                        </Badge>
+                                    </HoverCardTrigger>
+                                    <HoverCardContent>
+                                        <div className="flex flex-row flex-wrap justify-center gap-1">
+                                            {domain.skill_list.map((skill, skillIdx) => (
+                                                <Badge key={`non-exist-domain-${idx}-skill-${skillIdx}`} variant={'outline'}>
+                                                    {skill.name[0]}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    </HoverCardContent>
+                                </HoverCard>
+                            );
+                        })}
+                    </div>
+                    <div className="block md:hidden">
+                        {filteredDomain.map((domain, idx) => {
+                            return (
+                                <Popover key={`non-exist-domain-${idx}-popover`}>
+                                    <PopoverTrigger>
+                                        <Badge className="text-primary" variant={'outline'} key={`badge-${idx}`}>
+                                            {domain.name}
+                                        </Badge>
+                                    </PopoverTrigger>
+                                    <PopoverContent>
+                                        <div className="flex flex-row flex-wrap justify-center gap-1">
+                                            {domain.skill_list.map((skill, skillIdx) => (
+                                                <Badge key={`non-exist-domain-${idx}-skill-${skillIdx}`} variant={'outline'}>
+                                                    {skill.name[0]}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    </PopoverContent>
+                                </Popover>
+                            );
+                        })}
+                    </div>
                 </React.Fragment>
             );
         } else {
