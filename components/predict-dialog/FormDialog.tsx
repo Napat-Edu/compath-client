@@ -117,7 +117,7 @@ export function FormDialog() {
                     </Button>
                 </DialogTrigger>
                 <DialogContent
-                    className="w-full sm:w-4/5 h-full sm:max-h-[88%]"
+                    className="w-full sm:w-4/5 h-full sm:h-fit sm:max-h-fit"
                     onEscapeKeyDown={(e) => {
                         e.preventDefault();
                         if (!isPredicting) {
