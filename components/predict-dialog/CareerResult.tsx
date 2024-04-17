@@ -130,7 +130,7 @@ export default function CareerResult(props: ICareerResult) {
 
                 </ul >
             </div >
-            <Alert className="flex flex-row gap-3 p-4 items-start">
+            <Alert className="flex flex-row gap-3 p-4 items-start mt-4">
                 <Icon name={"Lightbulb"} color="black" size={16} />
                 <AlertDescription>
                     สายอาชีพที่ทำนายเป็นเพียงการนำข้อมูลที่ผู้ใช้กรอกมาหาสายอาชีพที่เหมาะสม ยังสายมีอาชีพอื่น ๆ ที่คุณสามารถเป็นได้ตามความต้องการ
