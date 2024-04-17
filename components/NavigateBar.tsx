@@ -180,19 +180,16 @@ function SignInButton() {
     }
 
     return (
-        <div className="flex justify-between w-full max-h-14 border rounded-lg p-2 align-middle items-center">
-            <div className="flex gap-2 h-full md:basis-3/4 align-middle">
-                <Image src={auth.authData.picture} alt={"user-profile"} width={64} height={64} className="w-10 h-10 rounded-full" />
-                <div className="flex flex-col justify-center md:max-w-24">
-                    <span className="text-sm font-medium truncate">{auth.authData.displayName}</span>
-                    <span className="text-sm text-subtext truncate">{auth.authData.email}</span>
-                </div>
+        <div className="flex w-full max-h-14 border rounded-lg p-2 align-middle items-center">
+            <Image src={auth.authData.picture} alt={"user-profile"} width={64} height={64} className="w-10 h-10 rounded-full mr-2" />
+            <div className="flex flex-col flex-grow truncate justify-center md:max-w-24">
+                <span className="text-sm font-medium truncate">{auth.authData.displayName}</span>
+                <span className="text-sm text-subtext truncate">{auth.authData.email}</span>
             </div>
-            <Button variant={"outline"} onClick={handleLogout} className="flex gap-2 h-full w-fit md:h-fit md:p-2 items-center bg-white">
+            <Button variant={"outline"} onClick={handleLogout} className="ml-2 flex gap-2 h-full w-fit md:h-fit md:p-2 items-center bg-white">
                 <Icon name={"LogOut"} size={16} color={"black"} />
                 <span className="md:hidden">Sign Out</span>
             </Button>
         </div>
-
     );
 }
