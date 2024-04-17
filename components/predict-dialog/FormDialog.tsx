@@ -106,7 +106,7 @@ export function FormDialog() {
     return (
         <>
             <Dialog open={isFormDialogOpen} onOpenChange={(open) => {
-                if (!open) {
+                if (!open && !isPredicting) {
                     setIsConfirmDialogOpen(true);
                 }
             }}>
@@ -120,11 +120,19 @@ export function FormDialog() {
                     className="w-full sm:w-4/5 h-full sm:max-h-[88%]"
                     onEscapeKeyDown={(e) => {
                         e.preventDefault();
-                        setIsConfirmDialogOpen(true);
+                        if (!isPredicting) {
+                            setIsConfirmDialogOpen(true);
+                        } else {
+                            setIsFormDialogOpen(false);
+                        }
                     }}
                     onInteractOutside={(e) => {
                         e.preventDefault();
-                        setIsConfirmDialogOpen(true);
+                        if (!isPredicting) {
+                            setIsConfirmDialogOpen(true);
+                        } else {
+                            setIsFormDialogOpen(false);
+                        }
                     }}
                 >
 
