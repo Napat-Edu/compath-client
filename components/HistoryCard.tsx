@@ -1,33 +1,38 @@
 'use client'
 import useLocalStorage from "../hooks/useLocalStorage";
 import { displayDate, displayTime, mapCareerIcon } from "../utils/utils";
-
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import Link from "next/link";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import Icon from "./Icon";
 import useSelectInsight from "@/hooks/useSelectInsight";
 import { IPredictionHistory } from "@/interfaces/storage.interface";
 import useSidebar from "@/hooks/useSidebar";
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
+import { Button } from "./ui/button";
+import ConfirmAlertDialog from "./ConfirmAlertDialog";
 
 export default function HistoryCard() {
     const localStorage = useLocalStorage();
     const selectInsight = useSelectInsight();
     const sidebar = useSidebar();
 
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [focusHistory, setFocusHistory] = useState('');
+
     if (!localStorage.isStorageReady) {
         return null;
     }
 
-    const handleDeleteCard = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>, object_id: string) => {
+    const handleDeleteButtonClick = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>, object_id: string) => {
         e.stopPropagation();
+        e.preventDefault();
+        setIsConfirmOpen(true);
+        setFocusHistory(object_id);
+    };
+
+    const handleDeleteCard = (object_id: string) => {
         localStorage.deleteHistory(object_id);
+        setIsConfirmOpen(false);
     };
 
     const handleCardClick = (history: IPredictionHistory) => {
@@ -47,34 +52,33 @@ export default function HistoryCard() {
                     {
                         localStorage.predictionHistory.map((history, idx) => {
                             return (
-                                <Link href='/career-insight' onClick={() => { handleCardClick(history) }} key={"prediction-history-card" + idx}>
-                                    <div className="border-gray-200 border-[1px] rounded-lg p-4 flex flex-col min-w-[296px] shadow-[0_2px_4px_0px_rgba(0,0,0,0.09)] hover:bg-gray-50 transition delay-75">
-                                        <div className='flex gap-4 h-full w-full select-none flex-col rounded-md bg-gradient-to-b  from-white to-primary p-6 no-underline outline-none focus:shadow-md'>
-                                            <div className="flex flex-row justify-between">
-                                                <Icon name={mapCareerIcon(history.career_path)} color="black" />
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger className="border-maingray border-[1px] rounded-lg p-2 relative -right-2 -top-2 bg-white hover:bg-gray-100">
-                                                        <Icon name={"MoreHorizontal"} color="black" size={16} />
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent className="rounded-lg">
-                                                        <DropdownMenuItem>View</DropdownMenuItem>
-                                                        <DropdownMenuItem className="text-red-500" onClick={(e) => { handleDeleteCard(e, history.object_id) }}>Delete</DropdownMenuItem>
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
+                                <Link href='/career-insight' onClick={(e) => { handleCardClick(history); }} key={"prediction-history-card" + idx}>
+                                    <div className="border border-gray-200 rounded-lg flex flex-col gap-4 p-4 w-64 h-full hover:shadow">
+                                        <div className="flex flex-row justify-between items-center">
+                                            <div className="flex flex-row gap-1">
+                                                <Icon name={mapCareerIcon(history.career_path)} />
+                                                <span className="font-medium">{history.career_path}</span>
                                             </div>
-                                            <div className="text-lg font-semibold">
-                                                {history.career_path}
+                                            <Icon name={"ChevronRight"} size={18} color="black" />
+                                        </div>
+                                        <div className="flex justify-between text-sm border border-gray-200 rounded-lg p-3">
+                                            <div className="min-w-fit">
+                                                <p className="text-muted-foreground">วันที่</p>
+                                                <p className="font-medium">{displayDate(history.submit_date)}</p>
                                             </div>
-                                            <div className="p-4 flex justify-between text-sm bg-white rounded-md">
-                                                <div>
-                                                    <p className="text-[#64748B] font-normal">วันที่</p>
-                                                    <p>{displayDate(history.submit_date)}</p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-[#64748B] font-medium">เวลา</p>
-                                                    <p>{displayTime(history.submit_date)}</p>
-                                                </div>
+                                            <div className="min-w-fit">
+                                                <p className="text-muted-foreground">เวลา</p>
+                                                <p className="font-medium">{displayTime(history.submit_date)}</p>
                                             </div>
+                                        </div>
+                                        <div className="flex gap-2 justify-between mt-1">
+                                            <Button className="flex grow gap-2 p-2 border" variant={"outline"}>
+                                                <Icon name={"MousePointerSquare"} className="w-auto h-full" color="black"></Icon>
+                                                ดูข้อมูลเชิงลึก
+                                            </Button>
+                                            <Button className="shrink-0 p-2 border" variant={"outline"} onClick={(e) => { handleDeleteButtonClick(e, history.object_id); }}>
+                                                <Icon name={"Trash2"} color="red" className="w-auto h-full"></Icon>
+                                            </Button>
                                         </div>
                                     </div>
                                 </Link>
@@ -85,6 +89,8 @@ export default function HistoryCard() {
 
                 <ScrollBar orientation="horizontal" />
             </ScrollArea>
+
+            <ConfirmAlertDialog isOpen={isConfirmOpen} onAcceptClick={() => { handleDeleteCard(focusHistory) }} handleOpenChange={setIsConfirmOpen} title={"คุณต้องการลบผลการทำนายหรือไม่"} description={"หากคุณลบผลการทำนายไปแล้ว จะไม่สามารถกลับมาดูผลการทำนายครั้งนี้ได้อีก"}></ConfirmAlertDialog>
         </>
     );
 }
