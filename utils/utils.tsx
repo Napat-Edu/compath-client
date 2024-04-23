@@ -57,3 +57,31 @@ export const mapCareerIcon = (career: string) => {
     }
     return icon;
 };
+
+export const mapCareerThemeColor = (career: string) => {
+    let color: string;
+    switch (career) {
+        case 'Developer':
+            color = "#3B82F6";
+            break;
+        case 'Designer':
+            color = "#4EBC62";
+            break;
+        case 'Data & AI':
+            color = "#EC4899";
+            break;
+        case 'Security':
+            color = "#6366F1";
+            break;
+        case 'Cloud Management':
+            color = "#F59E0B";
+            break;
+        case 'QA & Tester':
+            color = "#EF4444";
+            break;
+        default:
+            color = "black";
+            break;
+    }
+    return color;
+};
