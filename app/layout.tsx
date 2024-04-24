@@ -7,6 +7,7 @@ import { SelectInsightProvider } from '@/contexts/SelectInsightContext';
 import { SidebarProvider } from '@/contexts/SidebarContext';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { Toaster } from '@/components/ui/toaster';
 
 const IBM_PLEX_SANS_THAI = IBM_Plex_Sans_Thai({
   subsets: ['thai'],
@@ -40,6 +41,7 @@ export default function RootLayout({
                     <main className='grow overflow-x-hidden px-6'>
                       {children}
                     </main>
+                    <Toaster />
                   </SelectInsightProvider>
                 </LocalStorageProvider>
 

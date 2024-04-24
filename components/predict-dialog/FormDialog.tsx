@@ -16,9 +16,15 @@ import Icon from "../Icon";
 import ConfirmAlertDialog from "../ConfirmAlertDialog";
 import InformAlertDialog from "./InformAlertDialog";
 import useAuth from "@/hooks/useAuth";
+import { useToast } from "../ui/use-toast";
+import { ToastAction } from "../ui/toast";
+import Link from "next/link";
+import useSidebar from "@/hooks/useSidebar";
 
 export function FormDialog() {
     const auth = useAuth();
+    const sidebar = useSidebar();
+    const { toast } = useToast();
     const [isPredicting, setPredicting] = useState(false);
     const [isPredictionLoading, setIsPredictionLoading] = useState(false);
     const [predictionResult, setPredictionResult] = useState<ICareerPredictionResult>();
@@ -103,6 +109,21 @@ export function FormDialog() {
         setIsFormDialogOpen(false);
     };
 
+    const openToast = () => {
+        toast({
+            duration: 3000,
+            title: "บันทึกผลทำนายของคุณเรียบร้อยแล้ว",
+            description: "สามารถกดไปดูเพื่อดูข้อมูลเชิงลึกของอาชีพที่ทำนายได้",
+            action: (
+                <Link href={"/career-insight"} className="h-full">
+                    <ToastAction altText="Watch Insight" className="bg-primary p-4 text-white" onClick={() => { sidebar.setActiveTab(1); }}>
+                        ไปดู
+                    </ToastAction>
+                </Link>
+            ),
+        })
+    };
+
     return (
         <>
             <Dialog open={isFormDialogOpen} onOpenChange={(open) => {
@@ -123,6 +144,7 @@ export function FormDialog() {
                         if (!isPredicting) {
                             setIsConfirmDialogOpen(true);
                         } else {
+                            openToast();
                             setIsFormDialogOpen(false);
                         }
                     }}
@@ -131,6 +153,7 @@ export function FormDialog() {
                         if (!isPredicting) {
                             setIsConfirmDialogOpen(true);
                         } else {
+                            openToast();
                             setIsFormDialogOpen(false);
                         }
                     }}
