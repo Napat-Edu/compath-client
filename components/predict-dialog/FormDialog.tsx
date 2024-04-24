@@ -129,6 +129,9 @@ export function FormDialog() {
             <Dialog open={isFormDialogOpen} onOpenChange={(open) => {
                 if (!open && !isPredicting) {
                     setIsConfirmDialogOpen(true);
+                } else if (!open && isPredicting) {
+                    openToast();
+                    setIsFormDialogOpen(false);
                 }
             }}>
                 <DialogTrigger asChild>
