@@ -121,7 +121,7 @@ export function InputForm(props: IInputForm) {
                         )}
                     />
                 </div>
-                <DialogFooter className="flex flex-col gap-4 sm:gap-0 sm:flex-row sm:justify-between pt-4 min-h-fit">
+                <DialogFooter className="flex flex-col gap-4 sm:gap-0 sm:flex-row sm:justify-between pt-4 min-h-fit px-1">
                     <div className="flex flex-row">
                         <FormField
                             name="agreement"
