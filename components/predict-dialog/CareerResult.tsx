@@ -125,7 +125,7 @@ export default function CareerResult(props: ICareerResult) {
                                 <Icon name={"Newspaper"} color="white" size={16} className="mr-[6px]" />
                                 ดูเพิ่มเติม
                             </Button>
-                            <Button className="p-3 rounded-lg h-full" onClick={props.togglePredictionState} variant="outline" disabled={props.isPredictionLoading}>
+                            <Button className="p-3 rounded-lg h-full border" onClick={props.togglePredictionState} variant="outline" disabled={props.isPredictionLoading}>
                                 <Icon name={"SquarePen"} color="black" size={16} />
                             </Button>
                         </div>

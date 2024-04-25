@@ -32,7 +32,7 @@ interface INavigate {
 
 function Sidebar({ handleTabClicked, sidebar }: INavigate) {
     return (
-        <nav className="min-w-60 max-w-60 border-r-2 hidden md:block">
+        <nav className="min-w-60 max-w-60 border-r-2 border-subgray hidden md:block">
             <div className="space-y-4 py-4 sticky top-0 h-screen">
                 <div className="flex flex-col justify-between h-full">
 
@@ -180,13 +180,13 @@ function SignInButton() {
     }
 
     return (
-        <div className="flex w-full max-h-14 border rounded-lg p-2 align-middle items-center">
+        <div className="flex w-full max-h-14 border rounded-xl p-2 align-middle items-center">
             <Image src={auth.authData.picture} alt={"user-profile"} width={64} height={64} className="w-10 h-10 rounded-full mr-2" />
             <div className="flex flex-col flex-grow truncate justify-center md:max-w-24">
                 <span className="text-sm font-medium truncate">{auth.authData.displayName}</span>
                 <span className="text-sm text-subtext truncate">{auth.authData.email}</span>
             </div>
-            <Button variant={"outline"} onClick={handleLogout} className="ml-2 flex gap-2 h-full w-fit md:h-fit md:p-2 items-center bg-white">
+            <Button variant={"outline"} onClick={handleLogout} className="border ml-2 flex gap-2 h-full w-fit md:h-fit md:p-2 items-center bg-white">
                 <Icon name={"LogOut"} size={16} color={"black"} />
                 <span className="md:hidden">Sign Out</span>
             </Button>

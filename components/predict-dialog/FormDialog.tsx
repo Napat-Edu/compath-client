@@ -116,7 +116,7 @@ export function FormDialog() {
             description: "สามารถกดไปดูเพื่อดูข้อมูลเชิงลึกของอาชีพที่ทำนายได้",
             action: (
                 <Link href={"/career-insight"} className="h-full">
-                    <ToastAction altText="Watch Insight" className="bg-primary p-4 text-white" onClick={() => { sidebar.setActiveTab(1); }}>
+                    <ToastAction altText="Watch Insight" className="bg-primary p-4 text-white hover:bg-[#3da150]" onClick={() => { sidebar.setActiveTab(1); }}>
                         ไปดู
                     </ToastAction>
                 </Link>
@@ -135,7 +135,7 @@ export function FormDialog() {
                 }
             }}>
                 <DialogTrigger asChild>
-                    <Button className="ml-auto mr-auto py-4 px-4" onClick={handleOpenForm}>
+                    <Button className="ml-auto mr-auto py-4 px-4 hover:bg-[#3da150]" onClick={handleOpenForm}>
                         <Icon name={"Sparkles"} color="white" size={16} className="mr-[6px]" />
                         ไปทำนายอาชีพ
                     </Button>
