@@ -12,6 +12,7 @@ import Icon from "../Icon";
 import Link from "next/link";
 import useSidebar from "@/hooks/useSidebar";
 import useSelectInsight from "@/hooks/useSelectInsight";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 interface IClassifySkillSection {
     careerPathInfo: ICareerPredictionResult;
@@ -110,26 +111,50 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         if (filteredDomain.length > 0) {
             return (
                 <React.Fragment key={`${related_careers[tabCareerIdx]}-learning-domain`}>
-                    {filteredDomain.map((domain, idx) => {
-                        return (
-                            <HoverCard key={`non-exist-domain-${idx}`} openDelay={0} closeDelay={0}>
-                                <HoverCardTrigger>
-                                    <Badge className="border-primary" variant={'outline'} key={`badge-${idx}`}>
-                                        {domain.name}
-                                    </Badge>
-                                </HoverCardTrigger>
-                                <HoverCardContent>
-                                    <div className="flex flex-row flex-wrap justify-center gap-1">
-                                        {domain.skill_list.map((skill, skillIdx) => (
-                                            <Badge key={`non-exist-domain-${idx}-skill-${skillIdx}`} variant={'outline'}>
-                                                {skill.name[0]}
-                                            </Badge>
-                                        ))}
-                                    </div>
-                                </HoverCardContent>
-                            </HoverCard>
-                        );
-                    })}
+                    <div className="hidden md:flex md:flex-row md:flex-wrap md:gap-1">
+                        {filteredDomain.map((domain, idx) => {
+                            return (
+                                <HoverCard key={`non-exist-domain-${idx}-hovercard`} openDelay={0} closeDelay={0}>
+                                    <HoverCardTrigger>
+                                        <Badge className="text-primary" variant={'outline'} key={`badge-${idx}`}>
+                                            {domain.name}
+                                        </Badge>
+                                    </HoverCardTrigger>
+                                    <HoverCardContent>
+                                        <div className="flex flex-row flex-wrap justify-center gap-1">
+                                            {domain.skill_list.map((skill, skillIdx) => (
+                                                <Badge key={`non-exist-domain-${idx}-skill-${skillIdx}`} variant={'outline'}>
+                                                    {skill.name[0]}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    </HoverCardContent>
+                                </HoverCard>
+                            );
+                        })}
+                    </div>
+                    <div className="flex flex-row flex-wrap gap-1 md:hidden">
+                        {filteredDomain.map((domain, idx) => {
+                            return (
+                                <Popover key={`non-exist-domain-${idx}-popover`}>
+                                    <PopoverTrigger>
+                                        <Badge className="text-primary" variant={'outline'} key={`badge-${idx}`}>
+                                            {domain.name}
+                                        </Badge>
+                                    </PopoverTrigger>
+                                    <PopoverContent>
+                                        <div className="flex flex-row flex-wrap justify-center gap-1">
+                                            {domain.skill_list.map((skill, skillIdx) => (
+                                                <Badge key={`non-exist-domain-${idx}-skill-${skillIdx}`} variant={'outline'}>
+                                                    {skill.name[0]}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    </PopoverContent>
+                                </Popover>
+                            );
+                        })}
+                    </div>
                 </React.Fragment>
             );
         } else {
@@ -180,21 +205,40 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
         return () => { };
     }, [props.isLoading]);
 
+    if (props.isLoading) {
+        return (
+            <>
+                <div className="w-1/4 bg-slate-100 rounded-lg h-10 animate-pulse bg-gradient-to-b" />
+                <div className="flex flex-row gap-6">
+                    <div className="basis-1/2 flex flex-col gap-6">
+                        <div className="bg-slate-100 rounded-lg h-20 animate-pulse bg-gradient-to-b" />
+                        <div className="bg-slate-100 rounded-lg h-20 animate-pulse bg-gradient-to-b" />
+                        <div className="bg-slate-100 rounded-lg h-20 animate-pulse bg-gradient-to-b" />
+                    </div>
+                    <div className="basis-1/2 bg-slate-100 rounded-lg h-auto animate-pulse bg-gradient-to-b" />
+                </div>
+            </>
+        );
+    }
+
     return (
-        !props.isLoading ?
-            <Tabs defaultValue={`${props.careerPathInfo.related_careers[0].career}`} className="w-full">
-                <TabsList>
-                    {
-                        props.careerPathInfo.related_careers.map((career, careerIndex) => {
-                            return <TabsTrigger value={`${career.career}`} key={`tab-list-${career.career}`} onClick={() => { handleCareerChange(careerIndex) }}>{career.career}</TabsTrigger>;
-                        })
-                    }
-                </TabsList>
+        <>
+            <Tabs defaultValue={`${props.careerPathInfo.related_careers[0].career}`} className="w-full hidden md:block">
+                <h3 className="font-semibold text-lg flex flex-row gap-[6px] mb-4"><Icon name={"Boxes"} />ทักษะ</h3>
+                <div className="overflow-x-auto">
+                    <TabsList>
+                        {
+                            props.careerPathInfo.related_careers.map((career, careerIndex) => {
+                                return <TabsTrigger value={`${career.career}`} key={`tab-list-${career.career}`} onClick={() => { handleCareerChange(careerIndex) }}>{career.career}</TabsTrigger>;
+                            })
+                        }
+                    </TabsList>
+                </div>
                 {
                     props.careerPathInfo.related_careers.map((career, tabCareerIdx) => {
                         return (
                             <TabsContent value={`${career.career}`} key={`tab-content-${career.career}`} className="mt-4">
-                                <div className="flex flex-row gap-4">
+                                <div className="flex flex-col lg:flex-row gap-4">
                                     <div className="flex flex-col gap-4 basis-1/2 h-full">
                                         <InsightBox
                                             title={"ทักษะที่เหมาะสม"}
@@ -210,9 +254,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                             subtitle={"ทักษะที่มักจะมีอยู่ในเรซูเมในสายอาชีพนี้  ที่คุณควรเรียนรู้เพิ่มเติม"}
                                             name={"PlusCircle"}
                                         >
-                                            <div className="flex flex-row flex-wrap gap-1">
-                                                {!props.isLoading && mapNonExistingDomain(props.careerPathInfo.related_careers, tabCareerIdx)}
-                                            </div>
+                                            {!props.isLoading && mapNonExistingDomain(props.careerPathInfo.related_careers, tabCareerIdx)}
                                         </InsightBox>
                                         <InsightBox
                                             title={"ทักษะอื่น ๆ"}
@@ -227,20 +269,20 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                         </InsightBox>
                                     </div>
                                     <InsightBox
-                                        title={"กราฟทักษะ"}
+                                        title={"สรุปผลทักษะ"}
                                         subtitle={"กราฟแสดงอัตราส่วนของทักษะในอาชีพนี้"}
-                                        name={"AreaChart"}
+                                        name={"PieChart"}
                                         className="basis-1/2"
                                     >
                                         <div className="flex flex-col h-full">
-                                            <div className="flex flex-row justify-center items-center gap-6 border-[1px] rounded-[8px] p-5 h-full">
+                                            <div className="flex flex-row justify-center items-center gap-1 border-[1px] rounded-[8px] p-5 h-full">
                                                 <div className="flex flex-row justify-center align-middle items-center h-full">
                                                     {!props.isLoading && <Doughnut className="max-h-full max-w-full" data={data} options={options}></Doughnut>}
                                                 </div>
                                                 <div className="flex flex-col gap-5">
-                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#4EBC62] mr-1" />เหมาะสม : {skillTypeCount.existSkill}</Badge>
-                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EDF8EF] mr-1" />ควรเรียนรู้ : {skillTypeCount.nonExistSkill}</Badge>
-                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EFEFEF] mr-1" />อื่น ๆ : {skillTypeCount.altSkill}</Badge>
+                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#4EBC62] mr-1" />ทักษะที่เหมาะสม : {skillTypeCount.existSkill}</Badge>
+                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EDF8EF] mr-1" />ทักษะที่ควรเรียนรู้ : {skillTypeCount.nonExistSkill}</Badge>
+                                                    <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EFEFEF] mr-1" />ทักษะอื่น ๆ : {skillTypeCount.altSkill}</Badge>
                                                 </div>
                                             </div>
                                             <div className="flex flex-row p-5 border-[1px] rounded-[8px] gap-3 items-center w-full justify-between mt-4">
@@ -248,7 +290,15 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                                     <h5 className="font-medium text-base">อาชีพและทักษะที่เกี่ยวข้อง</h5>
                                                     <p className="font-normal text-sm text-gray-500">คุณสามารถดูอาชีพและทักษะที่เกี่ยวข้องอื่น ๆ ได้</p>
                                                 </div>
-                                                <Link href={"/career-exploration"}><Button onClick={() => { handleExplorationClick(career.career) }}>ไปดู</Button></Link>
+                                                <Link href={"/career-exploration"}>
+                                                    <Button className="relative" onClick={() => { handleExplorationClick(career.career) }}>
+                                                        ไปดู
+                                                        <span className="absolute flex h-3 w-3 -right-1 -top-1">
+                                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
+                                                            <span className="relative inline-flex rounded-full h-3 w-3 bg-destructive"></span>
+                                                        </span>
+                                                    </Button>
+                                                </Link>
                                             </div>
                                         </div>
                                     </InsightBox>
@@ -257,17 +307,167 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                         );
                     })
                 }
-            </Tabs> :
-            <>
-                <div className="w-1/4 bg-slate-100 rounded-lg h-10 animate-pulse bg-gradient-to-b" />
-                <div className="flex flex-row gap-6">
-                    <div className="basis-1/2 flex flex-col gap-6">
-                        <div className="bg-slate-100 rounded-lg h-20 animate-pulse bg-gradient-to-b" />
-                        <div className="bg-slate-100 rounded-lg h-20 animate-pulse bg-gradient-to-b" />
-                        <div className="bg-slate-100 rounded-lg h-20 animate-pulse bg-gradient-to-b" />
-                    </div>
-                    <div className="basis-1/2 bg-slate-100 rounded-lg h-auto animate-pulse bg-gradient-to-b" />
+            </Tabs>
+            <ClassifySectionTab {...props}
+                findExistingSkill={findExistingSkill}
+                findNonExistingDomain={findNonExistingDomain}
+                mapExistingSkill={mapExistingSkill}
+                mapNonExistingDomain={mapNonExistingDomain}
+                mapAlternateSkill={mapAlternateSkill}
+                handleCareerChange={handleCareerChange}
+                handleExplorationClick={handleExplorationClick}
+                data={data}
+                options={options}
+                skillTypeCount={skillTypeCount}
+            />
+        </>
+    );
+}
+
+interface IClassifySectionTab extends IClassifySkillSection {
+    findExistingSkill: any;
+    findNonExistingDomain: any;
+    mapExistingSkill: any;
+    mapNonExistingDomain: any;
+    mapAlternateSkill: any;
+    handleCareerChange: any;
+    handleExplorationClick: any;
+    data: any;
+    options: any;
+    skillTypeCount: any;
+}
+
+function ClassifySectionTab(props: IClassifySectionTab) {
+    const [currentSelectedCareer, setCurrentSelectedCareer] = useState(props.careerPathInfo.related_careers[0].career);
+
+    return (
+        <>
+            <Tabs defaultValue="info" className="md:hidden">
+                <div className="flex flex-row justify-between mb-4">
+                    <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Icon name={"Boxes"} />ทักษะ</h3>
+                    <TabsList>
+                        <TabsTrigger value={`info`} key={`tab-info`} className="w-full h-full">
+                            <Icon name={"LayoutList"} size={16} />
+                        </TabsTrigger>
+                        <TabsTrigger value={`pie`} key={`tab-pie`} className="w-full h-full">
+                            <Icon name={"PieChart"} size={16} />
+                        </TabsTrigger>
+                    </TabsList>
                 </div>
-            </>
+
+                <TabsContent value={"info"} key={`tab-content-info`}>
+                    <Tabs defaultValue={`${currentSelectedCareer}`} className="w-full">
+                        <div className="overflow-x-auto">
+                            <TabsList>
+                                {
+                                    props.careerPathInfo.related_careers.map((career: { career: string; }, careerIndex: any) => {
+                                        return <TabsTrigger value={`${career.career}`} key={`tab-list-${career.career}`} onClick={() => { props.handleCareerChange(careerIndex); setCurrentSelectedCareer(career.career); }}>{career.career}</TabsTrigger>;
+                                    })
+                                }
+                            </TabsList>
+                        </div>
+                        {
+                            props.careerPathInfo.related_careers.map((career: { career: any; }, tabCareerIdx: any) => {
+                                return (
+                                    <TabsContent value={`${career.career}`} key={`tab-content-${career.career}`} className="mt-4">
+                                        <div className="flex flex-col lg:flex-row gap-4">
+                                            <div className="flex flex-col gap-4 basis-1/2 h-full">
+                                                <InsightBox
+                                                    title={"ทักษะที่เหมาะสม"}
+                                                    subtitle={"ทักษะที่มักจะมีอยู่ในเรซูเมในสายอาชีพนี้ ที่คุณมีอยู่แล้ว"}
+                                                    name={"CheckCircle"}
+                                                >
+                                                    <div className="flex flex-row flex-wrap gap-1">
+                                                        {!props.isLoading && props.mapExistingSkill(props.careerPathInfo.related_careers, tabCareerIdx)}
+                                                    </div>
+                                                </InsightBox>
+                                                <InsightBox
+                                                    title={"ทักษะที่ควรเรียนรู้"}
+                                                    subtitle={"ทักษะที่มักจะมีอยู่ในเรซูเมในสายอาชีพนี้  ที่คุณควรเรียนรู้เพิ่มเติม"}
+                                                    name={"PlusCircle"}
+                                                >
+                                                    <div className="flex flex-row flex-wrap gap-1">
+                                                        {!props.isLoading && props.mapNonExistingDomain(props.careerPathInfo.related_careers, tabCareerIdx)}
+                                                    </div>
+                                                </InsightBox>
+                                                <InsightBox
+                                                    title={"ทักษะอื่น ๆ"}
+                                                    subtitle={"ทักษะที่ไม่เกี่ยวข้องกับสายอาชีพนี้มากนัก แต่ที่คุณยังสามารถพัฒนาต่อไปได้"}
+                                                    name={"CircleDot"}
+                                                >
+                                                    <div className="flex flex-row flex-wrap gap-1">
+                                                        {
+                                                            !props.isLoading && props.mapAlternateSkill(props.careerPathInfo, tabCareerIdx)
+                                                        }
+                                                    </div>
+                                                </InsightBox>
+                                            </div>
+                                        </div>
+                                    </TabsContent>
+                                );
+                            })
+                        }
+                    </Tabs>
+                </TabsContent>
+                <TabsContent value={"pie"} key={`tab-content-pie`}>
+                    <Tabs defaultValue={`${currentSelectedCareer}`} className="w-full">
+                        <div className="overflow-x-auto">
+                            <TabsList>
+                                {
+                                    props.careerPathInfo.related_careers.map((career: { career: string; }, careerIndex: any) => {
+                                        return <TabsTrigger value={`${career.career}`} key={`tab-list-${career.career}`} onClick={() => { props.handleCareerChange(careerIndex); setCurrentSelectedCareer(career.career); }}>{career.career}</TabsTrigger>;
+                                    })
+                                }
+                            </TabsList>
+                        </div>
+                        {
+                            props.careerPathInfo.related_careers.map((career: { career: any; }, tabCareerIdx: any) => {
+                                return (
+                                    <TabsContent value={`${career.career}`} key={`tab-content-${career.career}`} className="mt-4">
+                                        <div className="flex flex-col lg:flex-row gap-4">
+                                            <InsightBox
+                                                title={"สรุปผลทักษะ"}
+                                                subtitle={"กราฟแสดงอัตราส่วนของทักษะในอาชีพนี้"}
+                                                name={"PieChart"}
+                                                className="basis-1/2"
+                                            >
+                                                <div className="flex flex-col h-full">
+                                                    <div className="flex flex-col justify-center items-center gap-4 p-5 h-full">
+                                                        <div className="flex flex-row justify-center align-middle items-center h-full">
+                                                            {!props.isLoading && <Doughnut className="h-auto w-full" data={props.data} options={props.options}></Doughnut>}
+                                                        </div>
+                                                        <div className="flex flex-col gap-5">
+                                                            <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#4EBC62] mr-1" />ทักษะที่เหมาะสม : {props.skillTypeCount.existSkill}</Badge>
+                                                            <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EDF8EF] mr-1" />ทักษะที่ควรเรียนรู้ : {props.skillTypeCount.nonExistSkill}</Badge>
+                                                            <Badge className="w-fit leading-5" variant={"outline"}><span className="w-3 h-3 rounded-full bg-[#EFEFEF] mr-1" />ทักษะอื่น ๆ : {props.skillTypeCount.altSkill}</Badge>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-col p-5 border-[1px] rounded-[8px] gap-3 items-center w-full justify-between mt-4">
+                                                        <div className="flex flex-col">
+                                                            <h5 className="font-medium text-base">อาชีพและทักษะที่เกี่ยวข้อง</h5>
+                                                            <p className="font-normal text-sm text-gray-500">คุณสามารถดูอาชีพและทักษะที่เกี่ยวข้องอื่น ๆ ได้</p>
+                                                        </div>
+                                                        <Link href={"/career-exploration"} className="w-full">
+                                                            <Button className="relative w-full" onClick={() => { props.handleExplorationClick(career.career) }}>
+                                                                ไปดู
+                                                                <span className="absolute flex h-3 w-3 -right-1 -top-1">
+                                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
+                                                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-destructive"></span>
+                                                                </span>
+                                                            </Button>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </InsightBox>
+                                        </div>
+                                    </TabsContent>
+                                );
+                            })
+                        }
+                    </Tabs>
+                </TabsContent>
+
+            </Tabs>
+        </>
     );
 }

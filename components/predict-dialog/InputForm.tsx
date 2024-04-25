@@ -22,12 +22,18 @@ import Icon from "../Icon"
 const FormSchema = z.object({
     educational: z.string().min(1, {
         message: "โปรดกรอกประวัติการศึกษาของคุณและกิจกรรมที่ทำในมหาวิทยาลัย"
+    }).regex(/^[a-zA-Z0-9!@#$%^&*()-_=+[\]{};:'",.<>/?\s]*$/, {
+        message: "โปรดกรอกข้อมูลเป็นภาษาอังกฤษเท่านั้น"
     }),
     skill: z.string().min(1, {
         message: "โปรดกรอกทักษะที่คุณถนัดทั้งในด้าน soft skill และ hard skill"
+    }).regex(/^[a-zA-Z0-9!@#$%^&*()-_=+[\]{};:'",.<>/?\s]*$/, {
+        message: "โปรดกรอกข้อมูลเป็นภาษาอังกฤษเท่านั้น"
     }),
     experience: z.string().min(1, {
         message: "โปรดกรอกประสบการณ์ทำงานหรือหน้าที่ที่เคยทำกับโปรเจ็คในมหาวิทยาลัย"
+    }).regex(/^[a-zA-Z0-9!@#$%^&*()-_=+[\]{};:'",.<>/?\s]*$/, {
+        message: "โปรดกรอกข้อมูลเป็นภาษาอังกฤษเท่านั้น"
     }),
     agreement: z.boolean().refine((value) => {
         return value == true;
@@ -61,59 +67,61 @@ export function InputForm(props: IInputForm) {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-1">
-                <FormField
-                    control={form.control}
-                    name="educational"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel className="text-primary text-lg font-semibold">การศึกษา</FormLabel>
-                            <FormControl>
-                                <Textarea className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Computer Engineering, KMUTT" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                <FormMessage>
-                                    กรอกประวัติการศึกษาของคุณและกิจกรรมที่ทำในมหาวิทยาลัย
-                                </FormMessage>
-                            </FormDescription>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="skill"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel className="text-primary text-lg font-semibold">ทักษะ</FormLabel>
-                            <FormControl>
-                                <Textarea className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Javascript, Typescript, Python, ..." {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                <FormMessage>
-                                    กรอกทักษะที่คุณถนัดทั้งในด้าน soft skill และ hard skill
-                                </FormMessage>
-                            </FormDescription>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="experience"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel className="text-primary text-lg font-semibold">ประสบการณ์</FormLabel>
-                            <FormControl>
-                                <Textarea className="focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. To do list with React" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                <FormMessage>
-                                    กรอกประสบการณ์ทำงานหรือหน้าที่ที่เคยทำกับโปรเจ็คในมหาวิทยาลัย
-                                </FormMessage>
-                            </FormDescription>
-                        </FormItem>
-                    )}
-                />
-                <DialogFooter className="flex flex-row lg:justify-between pt-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col justify-between h-full overflow-auto py-1">
+                <div className="flex flex-col p-1">
+                    <FormField
+                        control={form.control}
+                        name="educational"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="text-primary text-lg font-semibold">การศึกษา</FormLabel>
+                                <FormControl>
+                                    <Textarea className="text-base focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Computer Engineering, KMUTT" {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    <FormMessage>
+                                        กรอกประวัติการศึกษาของคุณและกิจกรรมที่ทำในมหาวิทยาลัย
+                                    </FormMessage>
+                                </FormDescription>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="skill"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="text-primary text-lg font-semibold">ทักษะ</FormLabel>
+                                <FormControl>
+                                    <Textarea className="text-base focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. Javascript, Typescript, Python, ..." {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    <FormMessage>
+                                        กรอกทักษะที่คุณถนัดทั้งในด้าน soft skill และ hard skill
+                                    </FormMessage>
+                                </FormDescription>
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="experience"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel className="text-primary text-lg font-semibold">ประสบการณ์</FormLabel>
+                                <FormControl>
+                                    <Textarea className="text-base focus-visible:ring-primary focus-visible:ring-2" placeholder="Ex. To do list with React" {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    <FormMessage>
+                                        กรอกประสบการณ์ทำงานหรือหน้าที่ที่เคยทำกับโปรเจ็คในมหาวิทยาลัย
+                                    </FormMessage>
+                                </FormDescription>
+                            </FormItem>
+                        )}
+                    />
+                </div>
+                <DialogFooter className="flex flex-col gap-4 sm:gap-0 sm:flex-row sm:justify-between pt-4 min-h-fit px-1">
                     <div className="flex flex-row">
                         <FormField
                             name="agreement"

@@ -46,17 +46,16 @@ export default function CareerInsightContainer() {
                 (localStorage.predictionHistory.length > 0) ?
                     <>
                         <section className="border-maingray border-[1px] rounded-3xl flex flex-col gap-4 p-6 mt-4">
-                            <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Icon name={"Boxes"} /> ข้อมูลทั่วไป</h3>
+                            <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Icon name={"Box"} /> ข้อมูลทั่วไป</h3>
                             <CareerInfoSection getCareerInfo={getCareerInfo} careerPathInfo={careerPathInfo!} isLoading={isLoading} setIsloading={setIsloading} />
                         </section>
 
                         <section className="border-maingray border-[1px] rounded-3xl flex flex-col gap-4 p-6 mt-6 mb-6">
-                            <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Icon name={"Box"} />ทักษะ</h3>
                             <ClassifySkillSection careerPathInfo={careerPathInfo!} isLoading={isLoading} />
                         </section>
                     </> :
                     <>
-                        <section className="flex flex-col justify-center border-2 border-primary border-dashed rounded-2xl min-h-96 mt-4">
+                        <section className="flex flex-col justify-center border-2 border-primary border-dashed rounded-2xl min-h-96 mt-4 px-4">
                             <Icon className="mx-auto" name={"Newspaper"} size={32} />
                             <div className="my-4">
                                 <p className="text-center font-semibold text-xl">คุณยังไม่ได้ทำนายอาชีพกับเรา</p>
