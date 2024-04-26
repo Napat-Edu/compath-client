@@ -261,8 +261,8 @@ export default function NodeTree() {
                 setExpandNode((prev) => [...prev, n.id]);
             }
             setEdges((eds: Edge[]) => eds.map(hideEdge(isHidden, n.id)))
+            setNodeLayout([])
         }
-        setNodeLayout([])
     }
 
     return (
