@@ -116,7 +116,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                             return (
                                 <HoverCard key={`non-exist-domain-${idx}-hovercard`} openDelay={0} closeDelay={0}>
                                     <HoverCardTrigger>
-                                        <Badge className="text-primary" variant={'outline'} key={`badge-${idx}`}>
+                                        <Badge className="text-primary cursor-pointer" variant={'outline'} key={`badge-${idx}`}>
                                             {domain.name}
                                         </Badge>
                                     </HoverCardTrigger>
