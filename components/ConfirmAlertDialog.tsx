@@ -23,8 +23,8 @@ export default function ConfirmAlertDialog(props: IConfirmAlertDialogProp) {
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter className="flex flex-col sm:flex-row sm:gap-0">
-                    <AlertDialogAction className="bg-destructive" onClick={() => { props.onAcceptClick() }}>ละทิ้ง</AlertDialogAction>
-                    <AlertDialogCancel onClick={() => { props.handleOpenChange(false); }}> <Icon name={"Undo2"} color={"black"} size={16} className="mr-1" /> ย้อนกลับ</AlertDialogCancel>
+                    <AlertDialogAction className="bg-destructive hover:bg-[#b64343]" onClick={() => { props.onAcceptClick() }}>ละทิ้ง</AlertDialogAction>
+                    <AlertDialogCancel onClick={() => { props.handleOpenChange(false); }} className="border"> <Icon name={"Undo2"} color={"black"} size={16} className="mr-1" /> ย้อนกลับ</AlertDialogCancel>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
