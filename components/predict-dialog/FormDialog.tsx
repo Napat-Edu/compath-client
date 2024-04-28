@@ -20,9 +20,13 @@ import { useToast } from "../ui/use-toast";
 import { ToastAction } from "../ui/toast";
 import Link from "next/link";
 import useSidebar from "@/hooks/useSidebar";
+import useSelectInsight from "@/hooks/useSelectInsight";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export function FormDialog() {
     const auth = useAuth();
+    const storage = useLocalStorage();
+    const selectInsight = useSelectInsight();
     const sidebar = useSidebar();
     const { toast } = useToast();
     const [isPredicting, setPredicting] = useState(false);
@@ -109,6 +113,12 @@ export function FormDialog() {
         setIsFormDialogOpen(false);
     };
 
+    const handleToastClick = () => {
+        sidebar.setActiveTab(1);
+        const history = storage.getLatestHistory();
+        selectInsight.upDateSelectedInsight(history.career_path, history.object_id);
+    };
+
     const openToast = () => {
         toast({
             duration: 3000,
@@ -116,7 +126,7 @@ export function FormDialog() {
             description: "สามารถกดไปดูเพื่อดูข้อมูลเชิงลึกของอาชีพที่ทำนายได้",
             action: (
                 <Link href={"/career-insight"} className="h-full">
-                    <ToastAction altText="Watch Insight" className="bg-primary p-4 text-white hover:bg-[#3da150]" onClick={() => { sidebar.setActiveTab(1); }}>
+                    <ToastAction altText="Watch Insight" className="bg-primary p-4 text-white hover:bg-[#3da150]" onClick={() => { handleToastClick(); }}>
                         ไปดู
                     </ToastAction>
                 </Link>
