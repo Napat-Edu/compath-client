@@ -147,7 +147,7 @@ export function InputForm(props: IInputForm) {
                             )}
                         />
                     </div>
-                    <Button type="submit">เริ่มทำนาย<Icon className="ml-[6px]" name={"ArrowRight"} color="white" size={16} /></Button>
+                    <Button type="submit" className="hover:bg-[#399049]">เริ่มทำนาย<Icon className="ml-[6px]" name={"ArrowRight"} color="white" size={16} /></Button>
                 </DialogFooter>
             </form>
         </Form>

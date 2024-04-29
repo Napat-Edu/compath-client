@@ -291,7 +291,7 @@ export default function ClassifySkillSection(props: IClassifySkillSection) {
                                                     <p className="font-normal text-sm text-gray-500">คุณสามารถดูอาชีพและทักษะที่เกี่ยวข้องอื่น ๆ ได้</p>
                                                 </div>
                                                 <Link href={"/career-exploration"}>
-                                                    <Button className="relative" onClick={() => { handleExplorationClick(career.career) }}>
+                                                    <Button className="relative hover:bg-[#399049]" onClick={() => { handleExplorationClick(career.career) }}>
                                                         ไปดู
                                                         <span className="absolute flex h-3 w-3 -right-1 -top-1">
                                                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>
@@ -448,7 +448,7 @@ function ClassifySectionTab(props: IClassifySectionTab) {
                                                             <p className="font-normal text-sm text-gray-500">คุณสามารถดูอาชีพและทักษะที่เกี่ยวข้องอื่น ๆ ได้</p>
                                                         </div>
                                                         <Link href={"/career-exploration"} className="w-full">
-                                                            <Button className="relative w-full" onClick={() => { props.handleExplorationClick(career.career) }}>
+                                                            <Button className="relative w-full hover:bg-[#399049]" onClick={() => { props.handleExplorationClick(career.career) }}>
                                                                 ไปดู
                                                                 <span className="absolute flex h-3 w-3 -right-1 -top-1">
                                                                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span>

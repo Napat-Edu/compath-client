@@ -6,7 +6,7 @@ import { createContext, useEffect, useState } from "react";
 
 type localStorageContent = {
     predictionHistory: IPredictionHistory[],
-    addPredictionHistory: (newPredictHistory: IPredictionHistory) => void,
+    addPredictionHistory: (newPredictHistory: IPredictionHistory, isEditing: boolean) => void,
     findPredictionHistory: (id: string) => any,
     isStorageReady: boolean,
     getLatestHistory: () => IFocusCareerInsight,
@@ -15,7 +15,7 @@ type localStorageContent = {
 
 export const LocalStorageContext = createContext<localStorageContent>({
     predictionHistory: [],
-    addPredictionHistory: function (newPredictHistory: IPredictionHistory): void {
+    addPredictionHistory: function (newPredictHistory: IPredictionHistory, isEditing: boolean): void {
         throw new Error("Function not implemented.");
     },
     isStorageReady: false,
@@ -67,7 +67,13 @@ export const LocalStorageProvider = ({ children }: any) => {
         setIsStorageReady(true);
     };
 
-    const addPredictionHistory = (newPredictHistory: IPredictionHistory) => {
+    const addPredictionHistory = (newPredictHistory: IPredictionHistory, isEditing: boolean = false) => {
+        if(isEditing && !auth.authData.email) {
+            predictionHistory.shift();
+        } else if(isEditing && auth.authData.email) {
+            const latestHistory = getLatestHistory();
+            deleteHistory(latestHistory.object_id);
+        }
         if (!auth.authData.email) {
             predictionHistory.push(newPredictHistory);
             setPredictionHistory(sortHistoryByDate([...predictionHistory]));

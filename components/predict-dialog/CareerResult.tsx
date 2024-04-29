@@ -14,7 +14,9 @@ import { IPredictionHistory } from "@/interfaces/storage.interface";
 interface ICareerResult {
     isPredictionLoading: boolean;
     predictionResult: ICareerPredictionResult | undefined;
-    togglePredictionState: MouseEventHandler<HTMLButtonElement> | undefined;
+    togglePredictionState: () => void;
+    isEdited: boolean;
+    setIsEdited: any;
 }
 
 export default function CareerResult(props: ICareerResult) {
@@ -25,13 +27,13 @@ export default function CareerResult(props: ICareerResult) {
     const router = useRouter()
 
     useEffect(() => {
-        if (props.predictionResult) {
+        if (props.predictionResult && !props.isPredictionLoading) {
             const newHistory: IPredictionHistory = {
                 career_path: props.predictionResult?.career_path_name!,
                 submit_date: props.predictionResult?.input_date.toString()!,
                 object_id: props.predictionResult?.object_id
-            };
-            localStorage.addPredictionHistory(newHistory);
+            }
+            localStorage.addPredictionHistory(newHistory, props.isEdited);
         }
         return () => { };
     }, [props.predictionResult]);
@@ -56,6 +58,11 @@ export default function CareerResult(props: ICareerResult) {
             return null;
         }
     };
+
+    const handleEditClick = () => {
+        props.togglePredictionState();
+        props.setIsEdited(true);
+    }
 
     return (
         <>
@@ -121,11 +128,11 @@ export default function CareerResult(props: ICareerResult) {
                             </p>
                         </div>
                         <div className="flex flex-row items-center gap-2 mt-3">
-                            <Button onClick={handleToInsightClick} className="grow px-4 py-2 h-full leading-6" disabled={props.isPredictionLoading}>
-                                <Icon name={"Newspaper"} color="white" size={16} className="mr-[6px]" />
-                                ดูเพิ่มเติม
+                            <Button onClick={handleToInsightClick} className="grow px-4 py-2 h-full leading-6 hover:bg-[#399049]" disabled={props.isPredictionLoading}>
+                                <Icon name={"MousePointerSquare"} color="white" size={16} className="mr-[6px]" />
+                                ดูข้อมูลเชิงลึก
                             </Button>
-                            <Button className="p-3 rounded-lg h-full border" onClick={props.togglePredictionState} variant="outline" disabled={props.isPredictionLoading}>
+                            <Button className="p-3 rounded-lg h-full border" onClick={handleEditClick} variant="outline" disabled={props.isPredictionLoading}>
                                 <Icon name={"SquarePen"} color="black" size={16} />
                             </Button>
                         </div>
