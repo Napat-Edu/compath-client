@@ -122,8 +122,8 @@ export default function CareerResult(props: ICareerResult) {
                         </div>
                         <div className="flex flex-row items-center gap-2 mt-3">
                             <Button onClick={handleToInsightClick} className="grow px-4 py-2 h-full leading-6 hover:bg-[#399049]" disabled={props.isPredictionLoading}>
-                                <Icon name={"Newspaper"} color="white" size={16} className="mr-[6px]" />
-                                ดูเพิ่มเติม
+                                <Icon name={"MousePointerSquare"} color="white" size={16} className="mr-[6px]" />
+                                ดูข้อมูลเชิงลึก
                             </Button>
                             <Button className="p-3 rounded-lg h-full border" onClick={props.togglePredictionState} variant="outline" disabled={props.isPredictionLoading}>
                                 <Icon name={"SquarePen"} color="black" size={16} />
