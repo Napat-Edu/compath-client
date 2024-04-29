@@ -35,6 +35,7 @@ export function FormDialog() {
 
     const [isFormDialogOpen, setIsFormDialogOpen] = useState(false);
     const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+    const [isEdited, setIsEdited] = useState(false);
 
     const [informHidden, setInformHidden] = useState<boolean>(false);
     useEffect(() => {
@@ -78,22 +79,19 @@ export function FormDialog() {
         setIsPredictionLoading(true);
 
         const owner = (!auth.authData || Object.keys(auth.authData).length === 0) ? undefined : auth.authData.email;
-        setPredictionResult(
-            await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_CAREER_ENDPOINT}`, {
-                method: "POST",
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    resume_owner: owner,
-                    resume_input: userResume
-                })
+        await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}${process.env.NEXT_PUBLIC_API_CAREER_ENDPOINT}`, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                resume_owner: owner,
+                resume_input: userResume
             })
-                .then((res) => res.json())
-                .then((data: ICareerPredictionResult) => {
-                    setPredictionResult(data);
-                    setIsPredictionLoading(false);
-                    return data;
-                })
-        );
+        })
+            .then((res) => res.json())
+            .then((data: ICareerPredictionResult) => {
+                setPredictionResult(data);
+                setIsPredictionLoading(false);
+            });
     };
 
     const togglePredictionState = () => {
@@ -111,6 +109,7 @@ export function FormDialog() {
         setPredicting(false);
         setIsConfirmDialogOpen(false);
         setIsFormDialogOpen(false);
+        setIsEdited(false);
     };
 
     const handleToastClick = () => {
@@ -142,6 +141,7 @@ export function FormDialog() {
                 } else if (!open && isPredicting) {
                     openToast();
                     setIsFormDialogOpen(false);
+                    setIsEdited(false);
                 }
             }}>
                 <DialogTrigger asChild>
@@ -159,6 +159,7 @@ export function FormDialog() {
                         } else {
                             openToast();
                             setIsFormDialogOpen(false);
+                            setIsEdited(false);
                         }
                     }}
                     onInteractOutside={(e) => {
@@ -168,6 +169,7 @@ export function FormDialog() {
                         } else {
                             openToast();
                             setIsFormDialogOpen(false);
+                            setIsEdited(false);
                         }
                     }}
                 >
@@ -192,6 +194,8 @@ export function FormDialog() {
                                     predictionResult={predictionResult}
                                     isPredictionLoading={isPredictionLoading}
                                     togglePredictionState={togglePredictionState}
+                                    isEdited={isEdited}
+                                    setIsEdited={setIsEdited}
                                 />
                         }
                     </div>
