@@ -69,7 +69,7 @@ export const LocalStorageProvider = ({ children }: any) => {
 
     const addPredictionHistory = (newPredictHistory: IPredictionHistory, isEditing: boolean = false) => {
         if(isEditing && !auth.authData.email) {
-            predictionHistory.pop();
+            predictionHistory.shift();
         } else if(isEditing && auth.authData.email) {
             const latestHistory = getLatestHistory();
             deleteHistory(latestHistory.object_id);
