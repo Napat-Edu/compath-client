@@ -32,7 +32,7 @@ jobs:
         run: docker build -t us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-prod --build-arg API_BASE_URL=${{secrets.API_BASE_URL}} --build-arg API_CAREER_ENDPOINT=${{secrets.API_CAREER_ENDPOINT}} --build-arg API_INSIGHT_ENDPOINT=${{secrets.API_INSIGHT_ENDPOINT}} --build-arg API_EXPLORATION_ENDPOINT=${{secrets.API_EXPLORATION_ENDPOINT}} --build-arg API_CLIENT_ID=${{secrets.API_CLIENT_ID}} .
 
       - name: Push Image to Artifact Registry
-        run: docker push us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-prod
+        run: docker push asia-southeast1-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-prod
 
       - name: Deploy to Cloud Run
         id: deploy
@@ -40,7 +40,7 @@ jobs:
         with:
           service: compath
           region: us-central1
-          image: us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-prod
+          image: asia-southeast1.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-prod
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
