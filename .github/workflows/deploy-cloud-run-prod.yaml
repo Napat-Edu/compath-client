@@ -26,10 +26,10 @@ jobs:
           credentials_json: "${{ secrets.GOOGLE_CREDENTIALS }}"
 
       - name: Login Docker
-        run: gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
+        run: gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://asia-southeast1-docker-docker.pkg.dev
 
       - name: Build Docker Image
-        run: docker build -t us-central1-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-prod --build-arg API_BASE_URL=${{secrets.API_BASE_URL}} --build-arg API_CAREER_ENDPOINT=${{secrets.API_CAREER_ENDPOINT}} --build-arg API_INSIGHT_ENDPOINT=${{secrets.API_INSIGHT_ENDPOINT}} --build-arg API_EXPLORATION_ENDPOINT=${{secrets.API_EXPLORATION_ENDPOINT}} --build-arg API_CLIENT_ID=${{secrets.API_CLIENT_ID}} .
+        run: docker build -t asia-southeast1-docker-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-prod --build-arg API_BASE_URL=${{secrets.API_BASE_URL}} --build-arg API_CAREER_ENDPOINT=${{secrets.API_CAREER_ENDPOINT}} --build-arg API_INSIGHT_ENDPOINT=${{secrets.API_INSIGHT_ENDPOINT}} --build-arg API_EXPLORATION_ENDPOINT=${{secrets.API_EXPLORATION_ENDPOINT}} --build-arg API_CLIENT_ID=${{secrets.API_CLIENT_ID}} .
 
       - name: Push Image to Artifact Registry
         run: docker push asia-southeast1-docker.pkg.dev/${{ env.PROJECT_ID }}/cloud-run-source-deploy/compath-client-prod
