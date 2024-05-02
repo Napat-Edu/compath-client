@@ -30,9 +30,9 @@ export default function NodeTree() {
     const [nodeLayout, setNodeLayout] = useState<string[]>([]);
 
     const landingViewport = {
-        x: 200,
-        y: 0,
-        zoom: 0,
+        x: 400,
+        y: 50,
+        zoom: 0.8,
     };
 
     const getCareerPathData = async () => {
