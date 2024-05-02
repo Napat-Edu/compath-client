@@ -8,6 +8,8 @@ type selectedInsightContent = {
     focusCareer: string,
     upDateFocusCareer: any,
     clearFocusCareer: any,
+    compareCareer: string,
+    updateCompareCareer: any
 }
 
 export const SelectInsightContext = createContext<selectedInsightContent>({
@@ -16,6 +18,8 @@ export const SelectInsightContext = createContext<selectedInsightContent>({
     focusCareer: '',
     upDateFocusCareer: (career: string): void => { },
     clearFocusCareer: (): void => { },
+    compareCareer: '',
+    updateCompareCareer: (value: string): void => { },
 });
 
 export const SelectInsightProvider = ({ children }: any) => {
@@ -24,6 +28,7 @@ export const SelectInsightProvider = ({ children }: any) => {
         object_id: ''
     });
     const [focusCareer, setFocusCareer] = useState<string>('');
+    const [compareCareer, setCompareCareer] = useState('');
 
     const upDateSelectedInsight = (career: string, id: string) => {
         setSelectedInsight({ career_path: career, object_id: id });
@@ -37,7 +42,13 @@ export const SelectInsightProvider = ({ children }: any) => {
         setFocusCareer('');
     };
 
+    const updateCompareCareer = (value: string) => {
+        setCompareCareer(value);
+    };
+
     return (
-        <SelectInsightContext.Provider value={{ selectedInsight, upDateSelectedInsight, focusCareer, upDateFocusCareer, clearFocusCareer }}>{children}</SelectInsightContext.Provider>
+        <SelectInsightContext.Provider value={{
+            selectedInsight, upDateSelectedInsight, focusCareer, upDateFocusCareer, clearFocusCareer, compareCareer, updateCompareCareer
+        }}>{children}</SelectInsightContext.Provider>
     );
 };

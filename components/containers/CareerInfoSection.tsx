@@ -16,7 +16,7 @@ interface ICareerInfoSection {
 }
 
 export default function CareerInfoSection(props: ICareerInfoSection) {
-    const { selectedInsight } = useSelectInsight();
+    const { selectedInsight, compareCareer } = useSelectInsight();
 
     useEffect(() => {
         if (
@@ -26,9 +26,13 @@ export default function CareerInfoSection(props: ICareerInfoSection) {
             selectedInsight.object_id
         ) {
             props.setIsloading(true);
-            props.getCareerInfo(selectedInsight.career_path, selectedInsight.object_id);
+            let currentCareer = selectedInsight.career_path;
+            if (compareCareer !== '') {
+                currentCareer = compareCareer;
+            }
+            props.getCareerInfo(currentCareer, selectedInsight.object_id);
         }
-    }, [selectedInsight.career_path]);
+    }, [selectedInsight.career_path, compareCareer]);
 
     return (
         <>

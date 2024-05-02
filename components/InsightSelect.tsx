@@ -28,6 +28,7 @@ export function InsightSelect() {
         setCurrentSelectCareer(id);
         const foundedHistory = localStorage.findPredictionHistory(id);
         selectInsight.upDateSelectedInsight(foundedHistory.career_path, foundedHistory.object_id);
+        selectInsight.updateCompareCareer('');
     };
 
     const handleCreateSelectClick = () => {
@@ -47,7 +48,7 @@ export function InsightSelect() {
 
     return (
         (localStorage.isStorageReady && localStorage.predictionHistory.length > 0) &&
-        <div className="flex flex-col md:flex-row gap-4 justify-between border-maingray border-[1px] rounded-3xl p-6 leading-9 max-w-3xl mt-4">
+        <div className="flex flex-col md:flex-row gap-4 justify-between border-maingray border-[1px] rounded-3xl p-6 leading-9 min-w-fit flex-grow">
             <Select onValueChange={(id) => { handleHistoryChange(id) }} value={currentSelectCareer}>
                 <div className="flex gap-1 min-w-fit">
                     <Icon name={"BookMarked"} className="my-auto" />

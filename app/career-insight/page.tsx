@@ -1,3 +1,4 @@
+import CompareSelect from "@/components/CompareSelect";
 import CareerInsightContainer from "@/components/containers/CareerInsightContainer";
 import { InsightSelect } from "@/components/InsightSelect";
 
@@ -11,7 +12,10 @@ export default function CareerInsightPage() {
                 </div>
             </section>
 
-            <InsightSelect></InsightSelect>
+            <div className="flex flex-col md:flex-row gap-4 mt-4 flex-wrap">
+                <InsightSelect></InsightSelect>
+                <CompareSelect></CompareSelect>
+            </div>
             <CareerInsightContainer />
         </>
     );
