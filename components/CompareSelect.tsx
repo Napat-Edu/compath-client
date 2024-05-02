@@ -15,7 +15,7 @@ export default function CompareSelect() {
         return () => { };
     }, []);
 
-    if (!localStorage.isStorageReady && !(localStorage.predictionHistory.length > 0)) {
+    if (!localStorage.isStorageReady || !(localStorage.predictionHistory.length > 0)) {
         return null;
     }
 
