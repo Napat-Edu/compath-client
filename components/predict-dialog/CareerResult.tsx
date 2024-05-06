@@ -143,10 +143,12 @@ export default function CareerResult(props: ICareerResult) {
                                 </Button>
                             }
                         </div>
+
                     </div>
 
                 </ul >
             </div >
+
             <Alert className="flex flex-row gap-3 p-4 items-start mt-4">
                 <Icon name={"Lightbulb"} color="black" size={16} />
                 <AlertDescription>
