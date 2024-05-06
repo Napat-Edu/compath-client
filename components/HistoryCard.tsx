@@ -45,7 +45,7 @@ export default function HistoryCard() {
         <>
             <div className="flex flex-row mb-4 gap-[6px]">
                 <Icon name={"BookMarked"} />
-                <h3 className="font-semibold text-lg">การ์ดที่ทำนายไว้</h3>
+                <h3 className="font-semibold text-lg">ประวัติการทำนาย</h3>
             </div>
             <ScrollArea>
                 <div className="flex flex-row gap-4 mb-4">

@@ -1,0 +1,19 @@
+{
+  "hosting": {
+    "source": ".",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "frameworksBackend": {
+      "region": "us-central1"
+    },
+    "rewrites": [
+      {
+        "source": "/cloud-run-source-deploy/compath-client-prod",
+        "run": {
+          "serviceId": "compath",
+          "region": "us-central1",
+          "pinTag": true
+        }
+      }
+    ]
+  }
+}

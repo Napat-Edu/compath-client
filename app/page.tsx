@@ -1,6 +1,7 @@
 import { FormDialog } from "@/components/predict-dialog/FormDialog";
 import HistoryCard from "@/components/HistoryCard";
 import Icon from "@/components/Icon";
+import OcrButton from "@/components/predict-dialog/OcrButton";
 
 export default function Home() {
 
@@ -18,7 +19,15 @@ export default function Home() {
           <p className="text-center font-semibold text-xl">เริ่มทำนายอาชีพของคุณ</p>
           <p className="text-center text-subtext">ให้ข้อมูลกับเราเพื่อทำนายอาชีพที่เหมาะสมกับคุณ</p>
         </div>
-        <FormDialog></FormDialog>
+        <div className="flex flex-col gap-2 w-fit mx-auto">
+          <FormDialog></FormDialog>
+          <div className="flex items-center gap-2 mx-2">
+            <div className="border-t border  border-maingray flex-grow"></div>
+            <div className="text-subtext font-medium">หรือ</div>
+            <div className="border-t border border-maingray flex-grow"></div>
+          </div>
+          <OcrButton></OcrButton>
+        </div>
       </section>
 
       <section className="flex flex-col mt-8">
