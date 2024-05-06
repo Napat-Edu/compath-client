@@ -145,9 +145,9 @@ export function FormDialog() {
                 }
             }}>
                 <DialogTrigger asChild>
-                    <Button className="ml-auto mr-auto py-4 px-4 hover:bg-[#3da150]" onClick={handleOpenForm}>
-                        <Icon name={"Sparkles"} color="white" size={16} className="mr-[6px]" />
-                        ไปทำนายอาชีพ
+                    <Button className="ml-auto mr-auto py-4 px-4 hover:bg-[#3da150] w-full" onClick={handleOpenForm}>
+                        <Icon name={"FilePen"} color="white" size={16} className="mr-[6px]" />
+                        กรอกข้อมูล
                     </Button>
                 </DialogTrigger>
                 <DialogContent

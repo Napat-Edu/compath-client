@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect } from "react";
+import { useEffect } from "react";
 import { Button } from "../ui/button";
 import { ICareer, ICareerPredictionResult } from "@/interfaces/career-prediction.interface";
 import { Alert, AlertDescription } from "../ui/alert"
@@ -14,7 +14,7 @@ import { IPredictionHistory } from "@/interfaces/storage.interface";
 interface ICareerResult {
     isPredictionLoading: boolean;
     predictionResult: ICareerPredictionResult | undefined;
-    togglePredictionState: () => void;
+    togglePredictionState: any;
     isEdited: boolean;
     setIsEdited: any;
 }
@@ -60,8 +60,12 @@ export default function CareerResult(props: ICareerResult) {
     };
 
     const handleEditClick = () => {
-        props.togglePredictionState();
-        props.setIsEdited(true);
+        if (props.togglePredictionState) {
+            props.togglePredictionState();
+        }
+        if (props.setIsEdited) {
+            props.setIsEdited(true);
+        }
     }
 
     return (
@@ -132,9 +136,12 @@ export default function CareerResult(props: ICareerResult) {
                                 <Icon name={"MousePointerSquare"} color="white" size={16} className="mr-[6px]" />
                                 ดูข้อมูลเชิงลึก
                             </Button>
-                            <Button className="p-3 rounded-lg h-full border" onClick={handleEditClick} variant="outline" disabled={props.isPredictionLoading}>
-                                <Icon name={"SquarePen"} color="black" size={16} />
-                            </Button>
+                            {
+                                props.togglePredictionState !== undefined &&
+                                <Button className="p-3 rounded-lg h-full border" onClick={handleEditClick} variant="outline" disabled={props.isPredictionLoading}>
+                                    <Icon name={"SquarePen"} color="black" size={16} />
+                                </Button>
+                            }
                         </div>
                     </div>
 
