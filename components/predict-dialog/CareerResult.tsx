@@ -127,7 +127,7 @@ export default function CareerResult(props: ICareerResult) {
                                 {
                                     props.isPredictionLoading ?
                                         null :
-                                        props.predictionResult?.careermate_count + ' คน'
+                                        props.predictionResult?.careermate_count + ' ครั้ง'
                                 }
                             </p>
                         </div>
