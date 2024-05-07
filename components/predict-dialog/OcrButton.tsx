@@ -60,7 +60,7 @@ export default function OcrButton() {
         <>
             <Button variant={"outline"} className="border" onClick={handleUploadFileClick}>
                 <Icon name={"FileUp"} color="black" className="mr-1" size={16}></Icon>
-                อัพโหลดไฟล์
+                อัปโหลดไฟล์
                 <div className="bg-black text-white rounded-full px-2 py-1 text-xs ml-2">
                     BETA
                 </div>
