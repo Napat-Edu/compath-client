@@ -66,7 +66,10 @@ export default function OcrButton() {
                 className="hidden"
             />
 
-            <Dialog open={isOpen}>
+            <Dialog open={isOpen} onOpenChange={() => {
+                setIsOpen(false);
+                setLoading(true);
+            }}>
                 <DialogContent
                     className="w-full sm:w-4/5 h-full sm:h-fit sm:max-h-fit"
                     onEscapeKeyDown={(e) => {
