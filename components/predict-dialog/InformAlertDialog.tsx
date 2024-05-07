@@ -22,9 +22,9 @@ export default function InformAlertDialog({ acceptInformStatus }: IInformAlertDi
     return (
         <AlertDialog>
             <AlertDialogTrigger asChild>
-                <Button className="ml-auto mr-auto py-4 px-4">
-                    <Icon name={"Sparkles"} color="white" size={16} className="mr-[6px]" />
-                    ไปทำนายอาชีพ
+                <Button className="ml-auto mr-auto py-4 px-4 w-full">
+                    <Icon name={"FilePen"} color="white" size={16} className="mr-[6px]" />
+                    กรอกข้อมูล
                 </Button>
             </AlertDialogTrigger>
             <AlertDialogContent className="w-full h-full sm:h-auto">

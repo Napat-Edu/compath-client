@@ -12,7 +12,7 @@ export default function CareerInsightPage() {
                 </div>
             </section>
 
-            <div className="flex flex-col md:flex-row gap-4 mt-4 flex-wrap">
+            <div className="flex flex-col md:flex-row gap-4 flex-wrap">
                 <InsightSelect></InsightSelect>
                 <CompareSelect></CompareSelect>
             </div>
