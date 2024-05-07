@@ -32,7 +32,7 @@ export default function CareerInfoSection(props: ICareerInfoSection) {
             }
             props.getCareerInfo(currentCareer, selectedInsight.object_id);
         }
-    }, [selectedInsight.career_path, compareCareer]);
+    }, [selectedInsight, compareCareer]);
 
     return (
         <>
