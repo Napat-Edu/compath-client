@@ -45,12 +45,12 @@ export default function CareerInsightContainer() {
             {
                 (localStorage.predictionHistory.length > 0) ?
                     <>
-                        <section className="border-maingray border-[1px] rounded-3xl flex flex-col gap-4 p-6 mt-4">
+                        <section className="border-maingray border rounded-3xl flex flex-col gap-4 p-6 mt-4">
                             <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Icon name={"Box"} /> ข้อมูลทั่วไป</h3>
                             <CareerInfoSection getCareerInfo={getCareerInfo} careerPathInfo={careerPathInfo!} isLoading={isLoading} setIsloading={setIsloading} />
                         </section>
 
-                        <section className="border-maingray border-[1px] rounded-3xl flex flex-col gap-4 p-6 mt-6 mb-6">
+                        <section className="border-maingray border rounded-3xl flex flex-col gap-4 p-6 mt-6 mb-6">
                             <ClassifySkillSection careerPathInfo={careerPathInfo!} isLoading={isLoading} />
                         </section>
                     </> :
