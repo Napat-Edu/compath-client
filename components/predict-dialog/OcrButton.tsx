@@ -24,9 +24,15 @@ export default function OcrButton() {
 
     const handleChange = (event: any) => {
         if (event.target.files.length > 0) {
-            const fileUploaded = event.target.files[0];
-            setIsOpen(true);
-            uploadFile(fileUploaded);
+            if (event.target.files[0].type === 'application/pdf') {
+                const fileUploaded = event.target.files[0];
+                setIsOpen(true);
+                uploadFile(fileUploaded);
+            } else {
+                alert('โปรดใช้ไฟล์ประเภท pdf เท่านั้น');
+                setIsOpen(false);
+                setLoading(true);
+            }
         } else {
             setIsOpen(false);
             setLoading(true);
