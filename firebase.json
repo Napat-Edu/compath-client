@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "compath-cpe",
     "source": ".",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "frameworksBackend": {
