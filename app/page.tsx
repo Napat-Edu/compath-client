@@ -7,11 +7,11 @@ export default function Home() {
 
   useEffect(() => {
 
-    const delayRedirect = setTimeout(() => {
-      window.location.href = 'https://compath-qc72cy7wuq-uc.a.run.app/';
-    }, 2000);
+    // const delayRedirect = setTimeout(() => {
+    //   window.location.href = 'https://compath-qc72cy7wuq-uc.a.run.app/';
+    // }, 2000);
 
-    return () => clearTimeout(delayRedirect);
+    // return () => clearTimeout(delayRedirect);
 
   }, []);
 
@@ -21,13 +21,13 @@ export default function Home() {
   };
 
   const { View } = useLottie(options, {
-    width: '100vw',
-    height: '100vh'
+    width: '100%',
+    height: '100%'
   });
 
   return (
     <>
-      <main>
+      <main className="w-screen h-screen md:w-1/2 md:m-auto">
         {View}
       </main>
     </>
