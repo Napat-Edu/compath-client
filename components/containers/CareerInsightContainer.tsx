@@ -8,6 +8,8 @@ import Icon from "../Icon";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import useSidebar from "@/hooks/useSidebar";
+import CompareSelect from "../CompareSelect";
+import { InsightSelect } from "../InsightSelect";
 
 export default function CareerInsightContainer() {
     const localStorage = useLocalStorage();
@@ -45,12 +47,16 @@ export default function CareerInsightContainer() {
             {
                 (localStorage.predictionHistory.length > 0) ?
                     <>
-                        <section className="border-maingray border-[1px] rounded-3xl flex flex-col gap-4 p-6 mt-4">
+                        <div className="flex flex-col md:flex-row gap-4 flex-wrap mt-4">
+                            <InsightSelect></InsightSelect>
+                            <CompareSelect></CompareSelect>
+                        </div>
+                        <section className="border-maingray border rounded-3xl flex flex-col gap-4 p-6 mt-4">
                             <h3 className="font-semibold text-lg flex flex-row gap-[6px]"><Icon name={"Box"} /> ข้อมูลทั่วไป</h3>
                             <CareerInfoSection getCareerInfo={getCareerInfo} careerPathInfo={careerPathInfo!} isLoading={isLoading} setIsloading={setIsloading} />
                         </section>
 
-                        <section className="border-maingray border-[1px] rounded-3xl flex flex-col gap-4 p-6 mt-6 mb-6">
+                        <section className="border-maingray border rounded-3xl flex flex-col gap-4 p-6 mt-6 mb-6">
                             <ClassifySkillSection careerPathInfo={careerPathInfo!} isLoading={isLoading} />
                         </section>
                     </> :

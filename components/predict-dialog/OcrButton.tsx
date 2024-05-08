@@ -24,9 +24,15 @@ export default function OcrButton() {
 
     const handleChange = (event: any) => {
         if (event.target.files.length > 0) {
-            const fileUploaded = event.target.files[0];
-            setIsOpen(true);
-            uploadFile(fileUploaded);
+            if (event.target.files[0].type === 'application/pdf') {
+                const fileUploaded = event.target.files[0];
+                setIsOpen(true);
+                uploadFile(fileUploaded);
+            } else {
+                alert('โปรดใช้ไฟล์ประเภท pdf เท่านั้น');
+                setIsOpen(false);
+                setLoading(true);
+            }
         } else {
             setIsOpen(false);
             setLoading(true);
@@ -54,7 +60,7 @@ export default function OcrButton() {
         <>
             <Button variant={"outline"} className="border" onClick={handleUploadFileClick}>
                 <Icon name={"FileUp"} color="black" className="mr-1" size={16}></Icon>
-                อัพโหลดไฟล์
+                อัปโหลดไฟล์
                 <div className="bg-black text-white rounded-full px-2 py-1 text-xs ml-2">
                     BETA
                 </div>
@@ -66,7 +72,10 @@ export default function OcrButton() {
                 className="hidden"
             />
 
-            <Dialog open={isOpen}>
+            <Dialog open={isOpen} onOpenChange={() => {
+                setIsOpen(false);
+                setLoading(true);
+            }}>
                 <DialogContent
                     className="w-full sm:w-4/5 h-full sm:h-fit sm:max-h-fit"
                     onEscapeKeyDown={(e) => {
