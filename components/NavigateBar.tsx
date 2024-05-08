@@ -9,6 +9,7 @@ import { useState } from "react";
 import { googleLogout } from "@react-oauth/google";
 import useAuth from "@/hooks/useAuth";
 import { useGoogleLogin } from '@react-oauth/google';
+import compathLogo from '../public/compath-logo.png';
 
 export default function NavigateBar() {
     const sidebar = useSidebar();
@@ -39,7 +40,7 @@ function Sidebar({ handleTabClicked, sidebar }: INavigate) {
                     <section className="px-4 py-2">
                         <div className="flex flex-row mb-2 px-4 gap-1">
                             <Image
-                                src="compath-logo.svg"
+                                src={compathLogo}
                                 alt="compath-logo icon"
                                 width={0}
                                 height={0}
@@ -97,7 +98,7 @@ function NavigateDrawer({ handleTabClicked, sidebar }: INavigate) {
                     <Icon name={"Menu"} color={"black"} size={24} />
                 </button>
                 <Image
-                    src="compath-logo.svg"
+                    src={compathLogo}
                     alt="compath-logo icon"
                     width={0}
                     height={0}
