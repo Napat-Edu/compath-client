@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={IBM_PLEX_SANS_THAI.className}>
+      <body className={IBM_PLEX_SANS_THAI.className + "m-0 p-0 w-full h-full"}>
         {children}
       </body>
     </html>

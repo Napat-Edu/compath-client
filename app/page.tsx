@@ -1,5 +1,7 @@
 'use client'
 import { useEffect } from "react"
+import { useLottie } from "lottie-react";
+import compathLogoAnimation from '../public/compath_logo_remix.json';
 
 export default function Home() {
 
@@ -13,11 +15,20 @@ export default function Home() {
 
   }, []);
 
+  const options = {
+    animationData: compathLogoAnimation,
+    loop: false
+  };
+
+  const { View } = useLottie(options, {
+    width: '100vw',
+    height: '100vh'
+  });
+
   return (
     <>
-      <main className="w-full min-h-screen flex flex-col gap-2 justify-center items-center">
-        <img src="compath-logo.svg" alt="compath-logo" className="animate-bounce w-80 h-auto" />
-        <p>กำลังพาคุณไปที่ compath โปรดรอสักครู่...</p>
+      <main>
+        {View}
       </main>
     </>
   )
