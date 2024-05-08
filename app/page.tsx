@@ -7,11 +7,11 @@ export default function Home() {
 
   useEffect(() => {
 
-    // const delayRedirect = setTimeout(() => {
-    //   window.location.href = 'https://compath-qc72cy7wuq-uc.a.run.app/';
-    // }, 2000);
+    const delayRedirect = setTimeout(() => {
+      window.location.href = 'https://compath-qc72cy7wuq-uc.a.run.app/';
+    }, 2000);
 
-    // return () => clearTimeout(delayRedirect);
+    return () => clearTimeout(delayRedirect);
 
   }, []);
 
