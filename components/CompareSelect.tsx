@@ -4,16 +4,10 @@ import Icon from "./Icon";
 import { Button } from "./ui/button";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import useSelectInsight from "@/hooks/useSelectInsight";
-import { useEffect } from "react";
 
 export default function CompareSelect() {
     const localStorage = useLocalStorage();
     const selectInsight = useSelectInsight();
-
-    useEffect(() => {
-        selectInsight.updateCompareCareer('');
-        return () => { };
-    }, []);
 
     if (!localStorage.isStorageReady || !(localStorage.predictionHistory.length > 0)) {
         return null;

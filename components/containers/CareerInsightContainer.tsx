@@ -1,7 +1,7 @@
 'use client'
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { ICareerPredictionResult } from "@/interfaces/career-prediction.interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CareerInfoSection from "./CareerInfoSection";
 import ClassifySkillSection from "./ClassifySkillSection";
 import Icon from "../Icon";
@@ -10,12 +10,21 @@ import Link from "next/link";
 import useSidebar from "@/hooks/useSidebar";
 import CompareSelect from "../CompareSelect";
 import { InsightSelect } from "../InsightSelect";
+import useSelectInsight from "@/hooks/useSelectInsight";
 
 export default function CareerInsightContainer() {
     const localStorage = useLocalStorage();
     const sidebar = useSidebar();
+    const selectInsight = useSelectInsight();
     const [isLoading, setIsloading] = useState(true);
+    const [isReset, setIsReset] = useState(false);
     const [careerPathInfo, setCareerPathInfo] = useState<ICareerPredictionResult>();
+
+    useEffect(() => {
+        selectInsight.updateCompareCareer('');
+        setIsReset(true);
+        return () => { };
+    }, []);
 
     const getCareerInfo = async (careerPath: string, objectId: string) => {
         const params = new URLSearchParams({ career_path: careerPath, object_id: objectId }).toString();
@@ -30,7 +39,7 @@ export default function CareerInsightContainer() {
         });
     };
 
-    if (!localStorage.isStorageReady) {
+    if (!localStorage.isStorageReady || !isReset) {
         return (
             <div className="h-full w-full flex justify-center items-center">
                 <Icon name={"Loader2"} className={`animate-spin`} size={64} />
